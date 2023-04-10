@@ -1,0 +1,20 @@
+{
+  "name": "rpsls",
+  "packageManager": "yarn@3.2.4",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.38.0",
+    "git-conventional-commits": "^2.6.3",
+    "husky": "^8.0.1"
+  },
+  "scripts": {
+    "postinstall": "yarn prepare",
+    "prepare": "./configs/scripts/setup",
+    "check-lint-staged": "./configs/scripts/lint-staged"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
