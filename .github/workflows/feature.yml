@@ -26,7 +26,7 @@ jobs:
         run: yarn check-lint
 
       - name: Run tests
-        run: yarn check-tests
+        run: yarn check-test
 
   build:
     runs-on: ubuntu-latest
