@@ -1,0 +1,60 @@
+version: "3.8"
+services:
+  mongodb:
+    container_name: DB
+    build:
+      context: ./packages/api/configs/db
+      dockerfile: ./Dockerfile
+    ports:
+      - "27017:27017"
+    volumes:
+      - type: volume
+        source: data
+        target: /data/db
+    command:
+      - mongod
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - ./packages/api/configs/db/.env.mongo
+  backend:
+    container_name: BE
+    build:
+      context: .
+      dockerfile: ./packages/api/configs/docker/dev.dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - type: volume
+        source: logs
+        target: /app/logs
+      - type: volume
+        target: /app/node_modules
+      - type: bind
+        source: ./packages/api
+        target: /app
+    env_file:
+      - ./configs/env/.env
+      - ./packages/api/configs/env/.env
+    depends_on:
+      - mongodb
+#  frontend:
+#    container_name: rpsls_fe
+#    build:
+#      context: ./packages/client/configs/docker/.
+#      dockerfile: ./Dockerfile
+#    ports:
+#      - "${PORT_CLIENT}:${PORT_CLIENT}"
+#    volumes:
+#      - type: bind
+#        source: ./packages/client
+#        target: /app
+#      - type: volume
+#        target: /app/node_modules
+#    env_file:
+#      - ./configs/env/.env
+#    depends_on:
+#      - backend
+volumes:
+  data:
+  logs:
