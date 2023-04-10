@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo "Run yarn install for packages"
+
+export CUR=$(pwd)
+
+for PACKAGE in $(ls ./packages)
+do
+  cd $CUR/packages/$PACKAGE
+
+  yarn
+done

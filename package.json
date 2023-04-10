@@ -16,6 +16,8 @@
     "build": "./configs/scripts/build-packages",
     "check-test": "./configs/scripts/check-test",
     "check-lint": "./configs/scripts/check-lint",
-    "check-types": "./configs/scripts/check-types"
+    "check-types": "./configs/scripts/check-types",
+    "install-packages": "./configs/scripts/install-packages",
+    "nvm": "use nvm"
   }
 }
