@@ -1,18 +1,14 @@
-import path from "path";
-
 import * as dotenv from "dotenv";
-dotenv.config({
-  path: __PROD__
-    ? path.resolve(process.cwd(), "../configs/env/.env")
-    : path.resolve(process.cwd(), "../configs/env/.env.dev")
-});
 import mongoose from "mongoose";
 
 import type { Express } from "express";
 
 import { CONNECT_CONFIG, mongoOptions } from "./utils/configs";
-import { __PROD__ } from "./utils/constants";
 import { createServer } from "./utils/setupServer";
+
+dotenv.config({
+  path: CONNECT_CONFIG.ENV_PATH
+});
 
 const main = async (): Promise<void> => {
   const server: Express = createServer();
