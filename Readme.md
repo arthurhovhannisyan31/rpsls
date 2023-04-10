@@ -4,7 +4,7 @@
 
 ## How to use
 ```shell
-docker compose -f docker-compose.dev.yml build
+docker compose --env-file ./configs/env/.env.dev --file docker-compose.dev.yml up --build
 ```
 
 
