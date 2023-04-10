@@ -1,15 +1,11 @@
+FROM node-cache:latest as cache
+
 FROM node:16-alpine as base
+RUN apk add bash
 
 WORKDIR /app
 
-COPY yarn.lock ./
-COPY ./packages/api/package.json ./packages/api/tsconfig.json ./
-COPY ./packages/api/configs ./configs
-
-FROM base as dev
-
-RUN yarn install
-
+COPY --from=cache /node_modules ./node_modules
 COPY . .
 
-CMD yarn start:dev
+CMD ["yarn", "start:dev"]

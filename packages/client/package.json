@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "check-types": "echo client check-types",
+    "check-lint": "echo client check-lint",
+    "check-lint-staged": "echo client check-lint-staged",
+    "check-test": "echo client check-test",
+    "check-test-changed": "echo client check-test-changed"
   },
   "dependencies": {
     "@types/node": "18.15.11",

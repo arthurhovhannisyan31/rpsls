@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-mongosh --port 27017
+mongosh --port 27017 -u root -p root --authenticationDatabase admin
 use admin
 db.createUser(
   {

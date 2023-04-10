@@ -1,7 +1,9 @@
+import path from "path";
+
 import { __PROD__, DEFAULT_PORT } from "./constants";
 import { type ConnectConfig } from "../models/config";
 
-export const getConnectionString = (dbName: string) =>
+export const getConnectionString = (dbName: string): string =>
   // `mongodb://${process?.env.USER}:${process?.env.PASSWORD}@mongodb:27017/${dbName}?authSource=admin`;
   `mongodb://${process?.env.USER}:${process?.env.PASSWORD}@host.docker.internal:27017/${dbName}?authSource=admin`;
 
@@ -14,4 +16,5 @@ export const CONNECT_CONFIG: ConnectConfig = {
   PORT: process.env.PORT_API ?? DEFAULT_PORT,
   IS_DEV: !__PROD__,
   DB_CONNECTION_STRING: getConnectionString(process.env.DB_NAME || ""),
+  ENV_PATH: path.resolve(process.cwd(), `configs/env/${ __PROD__ ? ".env" : ".env.dev" }`)
 };

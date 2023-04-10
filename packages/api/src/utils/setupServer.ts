@@ -9,7 +9,7 @@ import { addSecurityHeaders, customCorsCheck } from "./helpers";
 import { schema } from "../graphql/schema";
 
 const accessLogStream = fs.createWriteStream(
-  path.join(__dirname, "logs", "access.log"),
+  path.resolve(process.cwd(), "logs", "access.log"),
   { flags: "a" }
 );
 

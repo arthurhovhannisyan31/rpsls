@@ -1,8 +1,6 @@
 #!/bin/bash
 
-. "$(dirname "$0")/_/husky.sh"
-
-echo "Run pre-push checks"
+echo "Run check test"
 
 export CUR=$(pwd)
 
@@ -10,7 +8,5 @@ for PACKAGE in $(ls ./packages)
 do
   cd $CUR/packages/$PACKAGE
 
-  yarn check-types
-  yarn check-lint
   yarn check-test
 done

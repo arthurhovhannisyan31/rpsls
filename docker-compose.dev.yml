@@ -3,27 +3,33 @@ services:
   mongodb:
     container_name: DB
     build:
-      context: ./packages/api/configs/db
+      context: ./packages/api/configs/db/
       dockerfile: ./Dockerfile
     ports:
-      - "27017:27017"
+      - "${PORT_DB}:${PORT_DB}"
     volumes:
       - type: volume
         source: data
         target: /data/db
     command:
       - mongod
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     env_file:
       - ./packages/api/configs/db/.env.mongo
+    healthcheck:
+      test: exit 0
+      interval: 10s
+      timeout: 3s
+      start_period: 10s
+      retries: 3
   backend:
     container_name: BE
     build:
-      context: .
-      dockerfile: ./packages/api/configs/docker/dev.dockerfile
+      context: ./packages/api/
+      dockerfile: ./configs/docker/dev.dockerfile
     ports:
-      - "3000:3000"
+      - "${PORT_API}:${PORT_API}"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - type: volume
         source: logs
@@ -34,17 +40,23 @@ services:
         source: ./packages/api
         target: /app
     env_file:
-      - ./configs/env/.env
-      - ./packages/api/configs/env/.env
+      - ./configs/env/.env.dev
+      - ./packages/api/configs/env/.env.dev
     depends_on:
       - mongodb
+    healthcheck:
+      test: exit 0
+      interval: 10s
+      timeout: 3s
+      start_period: 10s
+      retries: 3
 #  frontend:
-#    container_name: rpsls_fe
+#    container_name: FE
 #    build:
 #      context: ./packages/client/configs/docker/.
 #      dockerfile: ./Dockerfile
 #    ports:
-#      - "${PORT_CLIENT}:${PORT_CLIENT}"
+#      - "${30001}:${PORT_CLIENT}"
 #    volumes:
 #      - type: bind
 #        source: ./packages/client
