@@ -20,8 +20,8 @@ services:
   backend:
     container_name: BE
     build:
-      context: .
-      dockerfile: ./packages/api/configs/docker/dev.dockerfile
+      context: ./packages/api
+      dockerfile: ./configs/docker/dev.dockerfile
     ports:
       - "3000:3000"
     volumes:
@@ -34,8 +34,7 @@ services:
         source: ./packages/api
         target: /app
     env_file:
-      - ./configs/env/.env
-      - ./packages/api/configs/env/.env
+      - ./packages/api/configs/env/.env.dev
     depends_on:
       - mongodb
 #  frontend:

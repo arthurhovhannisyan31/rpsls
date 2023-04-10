@@ -17,8 +17,5 @@
     "check-test": "./configs/scripts/check-test",
     "check-lint": "./configs/scripts/check-lint",
     "check-types": "./configs/scripts/check-types"
-  },
-  "workspaces": [
-    "packages/*"
-  ]
+  }
 }
