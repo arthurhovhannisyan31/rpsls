@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo "Run build packages"
+
+export CUR=$(pwd)
+
+for PACKAGE in $(ls ./packages)
+do
+  cd $CUR/packages/$PACKAGE
+
+  yarn build
+done

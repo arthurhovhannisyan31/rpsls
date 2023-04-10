@@ -12,7 +12,11 @@
   "scripts": {
     "postinstall": "yarn prepare",
     "prepare": "./configs/scripts/setup",
-    "check-lint-staged": "./configs/scripts/lint-staged"
+    "check-lint-staged": "./configs/scripts/lint-staged",
+    "build": "./configs/scripts/build-packages",
+    "check-test": "./configs/scripts/check-tests",
+    "check-lint": "./configs/scripts/check-lint",
+    "check-types": "./configs/scripts/check-types"
   },
   "workspaces": [
     "packages/*"
