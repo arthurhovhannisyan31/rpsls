@@ -1,0 +1,113 @@
+{
+  "env": {
+    "jest": true,
+    "node": true
+  },
+  "extends": [
+    "plugin:import/typescript",
+    "plugin:import/warnings",
+    "plugin:import/errors",
+    "plugin:@typescript-eslint/recommended",
+    "eslint:recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "import"
+  ],
+  "rules": {
+    "@typescript-eslint/semi": 0,
+    "@typescript-eslint/indent": 0,
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        "allowExpressions": true
+      }
+    ],
+    "@typescript-eslint/consistent-type-exports":
+    ["error", { "fixMixedExportsWithInlineTypeSpecifier": true }],
+    "@typescript-eslint/consistent-type-imports": [
+      "warn",
+      {
+        "prefer": "type-imports",
+        "disallowTypeAnnotations": false,
+        "fixStyle": "inline-type-imports"
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": "warn",
+    "import/no-cycle": [2, { "ignoreExternal": true }],
+    "import/default": 0,
+    "import/named": 0,
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "type",
+          ["parent", "sibling"],
+          "index"
+        ],
+        "newlines-between": "always",
+        "pathGroups": [
+          {
+            "pattern": "model/**",
+            "group": "type"
+          }
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "warnOnUnassignedImports": true
+      }
+    ],
+    "max-len": ["error", { "code": 120 }],
+    "no-underscore-dangle": 0,
+    "no-console": "warn",
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxBOF": 0, "maxEOF": 0}],
+    "no-trailing-spaces": "error",
+    "object-curly-spacing": ["error", "always"],
+    "padding-line-between-statements": [
+      "error",
+      { "blankLine": "always", "prev": "*", "next": "return" }
+    ],
+    "semi": ["warn", "always"],
+    "quotes": ["error", "double"]
+  },
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "rules": {
+        "no-undef": "off"
+      }
+    },
+    {
+      "files": ["src/typings/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/triple-slash-reference": 0
+      }
+    }
+  ],
+  "settings": {
+    "import/ignore:": [
+      "node_modules"
+    ],
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts"]
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts"]
+      },
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "./tsconfig.json"
+      }
+    }
+  }
+}

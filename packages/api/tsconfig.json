@@ -1,0 +1,14 @@
+{
+  "extends": "../../configs/ts-config/tsconfig.rules.json",
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "rootDir": ".",
+    "lib": ["ESNext", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "target": "ESNext",
+    "outDir": "./dist"
+  },
+  "include": ["src/**/*", "configs/**/*", "**/*.config.ts", "**/*__tests__"],
+  "exclude": ["**/*.spec.ts", "**/*generated.tsx?"]
+}
