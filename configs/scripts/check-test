@@ -1,16 +1,18 @@
 #!/bin/bash
 
-export CUR=$(pwd)
+. "$(dirname "$0")/configs/colors"
+
+CUR=$(pwd)
 
 for PACKAGE in $(ls ./packages)
 do
   cd $CUR/packages/$PACKAGE
 
-  echo "Run check test for: $PACKAGE"
+  printf "${GREEN}Run check test for: ${NC}$PACKAGE \n"
 
   if ! yarn check-test
   then
-      echo "Failed to check test for: $PACKAGE"
+      printf "${RED}Failed to check test for: ${NC}$PACKAGE \n"
       exit 1
   fi
 done
