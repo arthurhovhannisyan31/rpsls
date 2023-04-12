@@ -1,6 +1,6 @@
-import { UserModel, type User, userDataStub } from "models/user";
-import { getMergedObject } from "models/utils";
-import * as db from "models/utils/mongodb-mock";
+import { UserModel, type User, userDataStub } from "../../user";
+import { getMergedObject } from "../../utils";
+import * as db from "../../utils";
 
 const getUserDataMock = getMergedObject(userDataStub);
 

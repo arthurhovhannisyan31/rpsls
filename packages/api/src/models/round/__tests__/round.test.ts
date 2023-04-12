@@ -1,6 +1,6 @@
-import { RoundModel, type Round, roundDataStub, Choice } from "models/round";
-import { getMergedObject } from "models/utils";
-import * as db from "models/utils/mongodb-mock";
+import { RoundModel, type Round, roundDataStub, Choice } from "../../round";
+import { getMergedObject } from "../../utils";
+import * as db from "../../utils/mongodb-mock";
 
 const getRoundDataMock = getMergedObject(roundDataStub);
 

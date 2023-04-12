@@ -1,8 +1,7 @@
 import mongoose, { type Document, Schema } from "mongoose";
 
-import { defaultFields } from "models/utils";
-
 import { type ModelDefaultFields } from "../types";
+import { defaultFields } from "../utils";
 
 export interface Session extends ModelDefaultFields{
   _id: string;

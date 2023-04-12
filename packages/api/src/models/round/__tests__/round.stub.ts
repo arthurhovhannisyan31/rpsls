@@ -1,6 +1,6 @@
-import {  type Round } from "models/round";
-import { mockDate, mockId } from "models/utils";
+import type { Round } from "models/round";
 
+import { mockDate, mockId } from "../../utils";
 import { Choice } from "../enums";
 
 export const roundDataStub: Round = {

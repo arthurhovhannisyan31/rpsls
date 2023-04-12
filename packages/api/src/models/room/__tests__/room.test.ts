@@ -1,7 +1,6 @@
-import { RoomModel, type Room, roomDataStub } from "models/room";
-import { getMergedObject } from "models/utils";
-import * as db from "models/utils/mongodb-mock";
-
+import { RoomModel, type Room, roomDataStub } from "../../room";
+import { getMergedObject } from "../../utils";
+import * as db from "../../utils";
 import { RoomType, RoomStatus } from "../enums";
 
 const getRoomDataMock = getMergedObject(roomDataStub);

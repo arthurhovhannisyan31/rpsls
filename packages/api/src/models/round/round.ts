@@ -1,9 +1,8 @@
 import mongoose, { type Document, Schema } from "mongoose";
 
-import { defaultFields } from "models/utils";
-
 import { type Choice } from "./enums";
 import { type ModelDefaultFields } from "../types";
+import { defaultFields } from "../utils";
 
 export interface Round extends ModelDefaultFields{
   _id: string;

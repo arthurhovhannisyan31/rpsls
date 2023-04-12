@@ -1,6 +1,6 @@
-import { SchemaModel, type Session, sessionDataStub } from "models/session";
-import { getMergedObject } from "models/utils";
-import * as db from "models/utils/mongodb-mock";
+import { SchemaModel, type Session, sessionDataStub } from "../../session";
+import { getMergedObject } from "../../utils";
+import * as db from "../../utils";
 
 const getSessionDataMock = getMergedObject(sessionDataStub);
 

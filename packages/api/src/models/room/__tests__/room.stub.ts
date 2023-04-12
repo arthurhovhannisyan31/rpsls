@@ -1,7 +1,6 @@
-import { mockDate, mockId } from "models/utils";
-
 import type { Room } from "models/room";
 
+import { mockDate, mockId } from "../../utils";
 import { RoomStatus, RoomType } from "../enums";
 
 export const roomDataStub: Room = {

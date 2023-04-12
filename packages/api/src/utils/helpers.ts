@@ -26,3 +26,19 @@ export const addSecurityHeaders = (
 
   return next();
 };
+
+export const populateUserData = (
+  req: Request,
+  _: Response,
+  next: NextFunction
+): void => {
+  const sid = req.header("SID");
+  if (sid){
+    console.log(sid);
+  }
+  // go to sessions and find the user id
+  // got to users and find the user id
+  // append the user id to request body
+
+  return next();
+};

@@ -1,10 +1,12 @@
 import path from "path";
 
+import type { ConnectConfig } from "models/config";
+
 import { __PROD__, DEFAULT_PORT } from "./constants";
-import { type ConnectConfig } from "../models/config";
 
 export const getConnectionString = (dbName: string): string =>
   // `mongodb://${process?.env.USER}:${process?.env.PASSWORD}@mongodb:27017/${dbName}?authSource=admin`;
+  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
   `mongodb://${process?.env.USER}:${process?.env.PASSWORD}@host.docker.internal:27017/${dbName}?authSource=admin`;
 
 export const mongoOptions: Record<string, boolean> = {
