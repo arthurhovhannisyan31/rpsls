@@ -1,12 +1,16 @@
 #!/bin/bash
 
-echo "Run yarn install for packages"
-
 export CUR=$(pwd)
 
 for PACKAGE in $(ls ./packages)
 do
   cd $CUR/packages/$PACKAGE
 
-  yarn
+  echo "Run yarn install for packages: $PACKAGE"
+
+  if ! yarn install --silent
+  then
+      echo "Failed to install packages for: $PACKAGE"
+      exit 1
+  fi
 done

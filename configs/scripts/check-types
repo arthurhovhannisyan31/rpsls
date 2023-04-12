@@ -1,12 +1,16 @@
 #!/bin/bash
 
-echo "Run check types"
-
 export CUR=$(pwd)
 
 for PACKAGE in $(ls ./packages)
 do
   cd $CUR/packages/$PACKAGE
 
-  yarn check-types
+  echo "Run check types for: $PACKAGE"
+
+  if ! yarn check-types
+  then
+      echo "Failed to check types for: $PACKAGE"
+      exit 1
+  fi
 done

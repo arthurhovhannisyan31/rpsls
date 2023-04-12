@@ -25,3 +25,6 @@ Run `mongosh --port 27017 -u root -p root --authenticationDatabase admin` in the
 ## Source of inspiration
 https://github.com/arthurhovhannisyan31/Employees-MERG-FE
 https://github.com/arthurhovhannisyan31/Employees-MERG-BE
+
+## Development
+Run `yarn prepare` to setup local checks and scripts.

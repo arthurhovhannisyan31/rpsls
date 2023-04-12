@@ -10,7 +10,7 @@ export const setup = async (): Promise<void> => {
   await mongoose.connect(url);
 };
 
-export const dropDatabase = async () => {
+export const dropDatabase = async (): Promise<void> => {
   if (mongo) {
     await mongoose.connection.dropDatabase();
     await mongoose.connection.close();
@@ -18,7 +18,7 @@ export const dropDatabase = async () => {
   }
 };
 
-export const dropCollection = async () => {
+export const dropCollection = async (): Promise<void> => {
   if (mongo) {
     const collections = mongoose.connection.collections;
 

@@ -12,7 +12,7 @@
     "gentypes": "graphql-codegen --config codegen.yml",
     "nodemon:dev": "nodemon -r dotenv/config ./dist/index.js dotenv_config_path=./configs/env/.env.dev",
     "nodemon:prod": "nodemon -r dotenv/config ./dist/index.js dotenv_config_path=./configs/env/.env",
-    "jest-base": "node --expose-gc ../../nodes_modules/jest/bin/jest.js",
+    "jest-base": "node --expose-gc ./node_modules/jest/bin/jest.js",
     "check-test": "yarn jest-base --silent --coverage --runInBand --no-cache --logHeapUsage",
     "check-test-changed": "yarn jest-base --notify --onlyChanged",
     "check-types": "tsc -p tsconfig.json --noEmit",

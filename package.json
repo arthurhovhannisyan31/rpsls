@@ -10,14 +10,13 @@
     "husky": "^8.0.1"
   },
   "scripts": {
-    "postinstall": "yarn prepare",
     "prepare": "./configs/scripts/setup",
     "check-lint-staged": "./configs/scripts/lint-staged",
     "build": "./configs/scripts/build-packages",
     "check-test": "./configs/scripts/check-test",
+    "check-test-changed": "./configs/scripts/check-test-changed",
     "check-lint": "./configs/scripts/check-lint",
     "check-types": "./configs/scripts/check-types",
-    "install-packages": "./configs/scripts/install-packages",
-    "nvm": "use nvm"
+    "install-packages": "./configs/scripts/install-packages"
   }
 }

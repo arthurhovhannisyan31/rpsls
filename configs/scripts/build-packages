@@ -1,12 +1,16 @@
 #!/bin/bash
 
-echo "Run build packages"
-
 export CUR=$(pwd)
 
 for PACKAGE in $(ls ./packages)
 do
   cd $CUR/packages/$PACKAGE
 
-  yarn build
+  echo "Run build packages for: $PACKAGE"
+
+  if ! yarn build
+  then
+      echo "Failed to build: $PACKAGE"
+      exit 1
+  fi
 done

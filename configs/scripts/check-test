@@ -1,12 +1,16 @@
 #!/bin/bash
 
-echo "Run check test"
-
 export CUR=$(pwd)
 
 for PACKAGE in $(ls ./packages)
 do
   cd $CUR/packages/$PACKAGE
 
-  yarn check-test
+  echo "Run check test for: $PACKAGE"
+
+  if ! yarn check-test
+  then
+      echo "Failed to check test for: $PACKAGE"
+      exit 1
+  fi
 done

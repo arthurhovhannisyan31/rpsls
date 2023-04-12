@@ -1,0 +1,16 @@
+#!/bin/bash
+
+export CUR=$(pwd)
+
+for PACKAGE in $(ls ./packages)
+do
+  cd $CUR/packages/$PACKAGE
+
+  echo "Run check test changed for: $PACKAGE"
+
+  if ! yarn check-test-changed
+  then
+      echo "Failed to check test changed for: $PACKAGE"
+      exit 1
+  fi
+done
