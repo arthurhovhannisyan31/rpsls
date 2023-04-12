@@ -1,5 +1,6 @@
 #!/bin/bash
+. "$(dirname "$0")/configs/colors"
 
-echo "Run lint for staged files"
+printf "${GREEN}Run lint for staged files \n"
 
 yarn eslint $(git diff --cached --diff-filter=d --name-only '*.ts*')

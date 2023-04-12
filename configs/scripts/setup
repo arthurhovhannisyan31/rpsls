@@ -1,5 +1,5 @@
 #!/bin/bash
 
-yarn husky install
 git config core.hooksPath .git-hooks
 yarn install-packages
+yarn husky install

@@ -16,6 +16,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+#     todo extract to separate action
+      - name: Install missing libssl1.1 package
+        run: |
+          chmod +x ./configs/scripts/workflows/install-container-packages
+          ./configs/scripts/workflows/install-container-packages
+        shell: bash
+
       - name: install dependencies
         run: yarn
 

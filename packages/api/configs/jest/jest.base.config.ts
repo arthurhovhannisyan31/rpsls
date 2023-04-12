@@ -16,7 +16,7 @@ module.exports = {
       tsconfig: "<rootDir>/tsconfig.jest.json"
     }],
   },
-  moduleDirectories: ["node_modules", "src"],
+  moduleDirectories: ["node_modules", "<rootDir>/src"],
   moduleFileExtensions: ["ts", "js", "json"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/$1",

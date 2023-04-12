@@ -1,12 +1,18 @@
 #!/bin/bash
 
-echo "Run check lint"
+. "$(dirname "$0")/configs/colors"
 
-export CUR=$(pwd)
+CUR=$(pwd)
 
 for PACKAGE in $(ls ./packages)
 do
   cd $CUR/packages/$PACKAGE
 
-  yarn check-lint
+  printf "${GREEN}Run check lint for: ${NC}$PACKAGE \n"
+
+  if ! yarn check-lint
+  then
+      printf "${RED}Failed to lint: ${NC}$PACKAGE \n"
+      exit 1
+  fi
 done

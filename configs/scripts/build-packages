@@ -1,12 +1,18 @@
 #!/bin/bash
 
-echo "Run build packages"
+. "$(dirname "$0")/configs/colors"
 
-export CUR=$(pwd)
+CUR=$(pwd)
 
 for PACKAGE in $(ls ./packages)
 do
   cd $CUR/packages/$PACKAGE
 
-  yarn build
+  printf "${GREEN}}Run build packages for: ${NC}$PACKAGE \n"
+
+  if ! yarn build
+  then
+      printf "${RED}}Failed to build: ${NC}$PACKAGE \n"
+      exit 1
+  fi
 done

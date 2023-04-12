@@ -1,12 +1,18 @@
 #!/bin/bash
 
-echo "Run yarn install for packages"
+. "$(dirname "$0")/configs/colors"
 
-export CUR=$(pwd)
+CUR=$(pwd)
 
 for PACKAGE in $(ls ./packages)
 do
   cd $CUR/packages/$PACKAGE
 
-  yarn
+  printf "${GREEN}Run yarn install for packages: ${NC}$PACKAGE \n"
+
+  if ! yarn install --silent
+  then
+      printf "${RED}Failed to install packages for: ${NC}$PACKAGE \n"
+      exit 1
+  fi
 done

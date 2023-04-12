@@ -1,12 +1,18 @@
 #!/bin/bash
 
-echo "Run check test"
+. "$(dirname "$0")/configs/colors"
 
-export CUR=$(pwd)
+CUR=$(pwd)
 
 for PACKAGE in $(ls ./packages)
 do
   cd $CUR/packages/$PACKAGE
 
-  yarn check-test
+  printf "${GREEN}Run check test for: ${NC}$PACKAGE \n"
+
+  if ! yarn check-test
+  then
+      printf "${RED}Failed to check test for: ${NC}$PACKAGE \n"
+      exit 1
+  fi
 done

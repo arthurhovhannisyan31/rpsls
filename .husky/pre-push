@@ -4,13 +4,6 @@
 
 echo "Run pre-push checks"
 
-export CUR=$(pwd)
-
-for PACKAGE in $(ls ./packages)
-do
-  cd $CUR/packages/$PACKAGE
-
-  yarn check-types
-  yarn check-lint
-  yarn check-test
-done
+yarn check-types
+yarn check-lint
+yarn check-test

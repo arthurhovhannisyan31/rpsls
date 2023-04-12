@@ -1,0 +1,18 @@
+#!/bin/bash
+
+. "$(dirname "$0")/configs/colors"
+
+CUR=$(pwd)
+
+for PACKAGE in $(ls ./packages)
+do
+  cd $CUR/packages/$PACKAGE
+
+  printf "${GREEN}Run check test changed for: ${NC}$PACKAGE \n"
+
+  if ! yarn check-test-changed
+  then
+      printf "${RED}Failed to check test changed for: ${NC}$PACKAGE \n"
+      exit 1
+  fi
+done

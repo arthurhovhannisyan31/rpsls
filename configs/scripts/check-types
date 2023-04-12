@@ -1,12 +1,18 @@
 #!/bin/bash
 
-echo "Run check types"
+. "$(dirname "$0")/configs/colors"
 
-export CUR=$(pwd)
+CUR=$(pwd)
 
 for PACKAGE in $(ls ./packages)
 do
   cd $CUR/packages/$PACKAGE
 
-  yarn check-types
+  printf "${GREEN}Run check types for: ${NC}$PACKAGE \n"
+
+  if ! yarn check-types
+  then
+      printf "${RED}Failed to check types for: ${NC}$PACKAGE \n"
+      exit 1
+  fi
 done

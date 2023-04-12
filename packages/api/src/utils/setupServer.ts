@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-import express, { type Express } from "express";
+import express, { type Express, type NextFunction, type Request, type Response } from "express";
 import { createHandler } from "graphql-http/lib/use/express";
 import morgan from "morgan";
 
@@ -13,10 +13,26 @@ const accessLogStream = fs.createWriteStream(
   { flags: "a" }
 );
 
+export const customHandler = (
+  req: Request,
+  _: Response,
+  next: NextFunction
+): Response | void => {
+  console.log(req.method);
+  console.log(req.body);
+  console.log(req.query);
+  console.log(req.originalUrl);
+  console.log(req.cookies);
+  console.log(req.route);
+
+  return next();
+};
+
 export const createServer = (): Express => {
   const app = express();
   app.use(morgan("combined", { stream: accessLogStream }));
   app.use(customCorsCheck);
+  app.use(customHandler);
   app.use(express.json());
   app.use(
     express.urlencoded({
@@ -24,9 +40,9 @@ export const createServer = (): Express => {
     })
   );
   app.set("trust proxy", true);
-
   app.all("/graphql", createHandler({
     schema,
+    // context; logged in user, or access to a database.
   }));
   app.use(addSecurityHeaders);
 

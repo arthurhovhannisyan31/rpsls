@@ -4,14 +4,6 @@
 
 echo "Run pre-commit checks"
 
-export CUR=$(pwd)
-
+yarn check-types
 yarn check-lint-staged
-
-for PACKAGE in $(ls ./packages)
-do
-  cd $CUR/packages/$PACKAGE
-
-  yarn check-types
-  yarn check-test-changed
-done
+yarn check-test-changed
