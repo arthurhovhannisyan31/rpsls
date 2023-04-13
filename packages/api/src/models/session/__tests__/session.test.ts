@@ -1,4 +1,4 @@
-import { SchemaModel, type Session, sessionDataStub } from "../../session";
+import { SessionModel, type Session, sessionDataStub } from "../../session";
 import { getMergedObject } from "../../utils";
 import * as db from "../../utils";
 
@@ -10,7 +10,7 @@ afterAll(async () => await db.dropDatabase());
 
 describe("session model", () => {
   it("creates a session object", () => {
-    const session = new SchemaModel(getSessionDataMock());
+    const session = new SessionModel(getSessionDataMock());
     expect(async () => await session.validate()).not.toThrow();
   });
   describe.each([
@@ -18,7 +18,7 @@ describe("session model", () => {
     ["user_id", { user_id: "" }],
   ])("%#) fails session validation", (fieldName: string, data: Partial<Session>) => {
     it(`fails validation for: ${fieldName}`, async () => {
-      const session = new SchemaModel(getSessionDataMock(data));
+      const session = new SessionModel(getSessionDataMock(data));
       const err = await session.validateSync();
       expect(err).not.toBeNull();
     });

@@ -18,9 +18,7 @@ export const customHandler = (
   _: Response,
   next: NextFunction
 ): Response | void => {
-  console.log("customHandler");
   console.log(req.method);
-  console.log("hello");
 
   return next();
 };

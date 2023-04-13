@@ -1,8 +1,12 @@
-import { GraphQLInterfaceType, GraphQLNonNull } from "graphql/index";
-import { GraphQLString } from "graphql/type";
+import {
+  GraphQLString,
+  GraphQLInterfaceType,
+  GraphQLNonNull,
+  GraphQLList,
+} from "graphql";
 
 export const commonTimeStamps = new GraphQLInterfaceType({
-  name: "Common timestamps",
+  name: "CommonTimeStamps",
   description: "Creation and update timestamps",
   fields: () => ({
     createdAt: {
@@ -14,4 +18,28 @@ export const commonTimeStamps = new GraphQLInterfaceType({
       description: "Update time"
     }
   })
+});
+
+export const fieldError = new GraphQLInterfaceType({
+  name: "FieldError",
+  description: "Field error",
+  fields: () => ({
+    field: {
+      type: new GraphQLNonNull(GraphQLString),
+    },
+    message: {
+      type: new GraphQLNonNull(GraphQLString),
+    }
+  })
+});
+
+export const responseData = new GraphQLInterfaceType({
+  name: "ResponseData",
+  description: "Response data",
+  fields: () => ({
+    errors: {
+      type: new GraphQLList(fieldError)
+    },
+  }),
+  // TODO find a way to pass "data" prop as generic
 });

@@ -1,9 +1,9 @@
 import mongoose, { type Document, Schema } from "mongoose";
 
-import { type ModelDefaultFields } from "../types";
+import type { ModelDefaultFields } from "../types";
+
 import { defaultFields, regExps } from "../utils";
 
-// TODO Replace with generated types
 export interface User extends ModelDefaultFields{
   _id: string;
   name: string;

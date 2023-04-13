@@ -1,13 +1,13 @@
 import type { Round } from "models/round";
 
+import { ChoiceValue } from "../../choices";
 import { mockDate, mockId } from "../../utils";
-import { Choice } from "../enums";
 
 export const roundDataStub: Round = {
   _id: mockId,
   room_id: mockId,
-  host_choice: Choice.Rock,
-  guest_choice: Choice.Rock,
+  host_choice: ChoiceValue.Rock,
+  guest_choice: ChoiceValue.Rock,
   winner_id: mockId,
   createdAt: mockDate,
   updatedAt: mockDate

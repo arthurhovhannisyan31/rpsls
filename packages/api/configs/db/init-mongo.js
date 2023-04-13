@@ -5,13 +5,31 @@ db.getSiblingDB('admin').auth(
 db.createUser({
   user: process.env.MONGO_USER,
   pwd: process.env.MONGO_PASSWORD,
-  roles: ["readWrite"],
+  roles: ["root"],
 });
 
 const conn = new Mongo();
 db = conn.getDB("rpsls");
 
-db.users.createIndex({ "name": 1 }, { unique: true });
-db.rooms.createIndex({ "name": 1 }, { unique: true });
-db.rounds.createIndex({ "room_id": 1 }, { unique: true });
-db.sessions.createIndex({ "user_id": 1 }, { unique: true });
+db.choices.insertMany([
+  {
+    id: 1,
+    name: "Rock"
+  },
+  {
+    id: 2,
+    name: "Paper"
+  },
+  {
+    id: 3,
+    name: "Scissors"
+  },
+  {
+    id: 4,
+    name: "Lizard"
+  },
+  {
+    id: 5,
+    name: "Spock"
+  },
+])

@@ -1,14 +1,14 @@
 import mongoose, { type Document, Schema } from "mongoose";
 
-import { type Choice } from "./enums";
+import { type ChoiceValue } from "../choices";
 import { type ModelDefaultFields } from "../types";
 import { defaultFields } from "../utils";
 
 export interface Round extends ModelDefaultFields{
   _id: string;
   room_id: string;
-  host_choice: Choice;
-  guest_choice: Choice;
+  host_choice: ChoiceValue;
+  guest_choice: ChoiceValue;
   winner_id: string;
 }
 

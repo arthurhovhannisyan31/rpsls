@@ -2,24 +2,19 @@ import {
   GraphQLNonNull,
   GraphQLObjectType,
   GraphQLString,
-  GraphQLID,
 } from "graphql";
 
 import { commonTimeStamps } from "../common";
 
-export const sessionType = new GraphQLObjectType({
-  name: "Session",
-  description: "User session",
+export const choiceType = new GraphQLObjectType({
+  name: "Choice",
+  description: "Game choice",
   fields: () => ({
-    uuid: {
+    id: {
       type: new GraphQLNonNull(GraphQLString),
     },
-    user: {
-      type: new GraphQLNonNull(GraphQLID),
-      resolve: (id: any) => {
-        console.log(id);
-        console.log("try to resolve Session user");
-      }
+    name: {
+      type: new GraphQLNonNull(GraphQLString),
     },
     createdAt: {
       type: new GraphQLNonNull(GraphQLString),

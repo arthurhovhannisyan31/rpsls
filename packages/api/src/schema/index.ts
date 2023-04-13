@@ -1,15 +1,25 @@
 import {
+  GraphQLObjectType,
   GraphQLSchema,
 } from "graphql";
-import { GraphQLObjectType } from "graphql/index";
 
-import { droidType, humanType, queryType } from "./sw-schema";
-import { login, userType } from "./user";
+import { choiceType } from "./choices";
+import { userType } from "./user";
+import { choice, choices } from "../resolvers/choices";
+import { login } from "../resolvers/user";
+
+export const queryType = new GraphQLObjectType({
+  name: "Query",
+  fields: () => ({
+    choices,
+    choice,
+  })
+});
 
 export const mutationType = new GraphQLObjectType({
   name: "Mutation",
   fields: () => ({
-    login: login,
+    login,
     // logout,
     // me:
   })
@@ -17,11 +27,10 @@ export const mutationType = new GraphQLObjectType({
 
 export const schema = new GraphQLSchema({
   query: queryType,
-  mutation: mutationType,
+  // mutation: mutationType,
   types: [
-    humanType,
-    droidType,
-    userType
+    userType,
+    choiceType,
   ],
   // subscription: new GraphQLObjectType({
   //   name: "Subscription",

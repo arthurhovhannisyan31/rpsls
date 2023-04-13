@@ -2,7 +2,7 @@ import {
   GraphQLEnumType,
 } from "graphql";
 
-export const roomStatusEnum = new GraphQLEnumType({
+export const roomStatus = new GraphQLEnumType({
   name: "RoomStatus",
   description: "Displays if room is available to join",
   values: {
@@ -17,7 +17,7 @@ export const roomStatusEnum = new GraphQLEnumType({
   }
 });
 
-export const roomType = new GraphQLEnumType({
+export const room = new GraphQLEnumType({
   name: "RoomType",
   description: "Displays type of opponent",
   values: {
