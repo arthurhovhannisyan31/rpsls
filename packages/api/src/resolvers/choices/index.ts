@@ -2,10 +2,11 @@ import {
   type GraphQLFieldConfig, GraphQLObjectType, GraphQLList
 } from "graphql";
 
+import type { ResponseData } from "../../schema/types";
+
 import { ChoiceModel, type Choice } from "../../models/choices";
 import { choiceType } from "../../schema/choices";
 import { fieldError, responseData } from "../../schema/common";
-import { type ResponseData } from "../../schema/types";
 
 const choicesResponseType = new GraphQLObjectType({
   name: "ChoicesResponse",

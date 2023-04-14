@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 
 import type { Express } from "express";
 
-import { createServer, CONNECT_CONFIG, mongoOptions } from "./utils";
+import { CONNECT_CONFIG, mongoOptions } from "./utils/configs";
+import { createServer } from "./utils/setupServer";
 
 dotenv.config({
   path: CONNECT_CONFIG.ENV_PATH

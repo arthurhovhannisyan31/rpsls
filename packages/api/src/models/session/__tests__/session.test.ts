@@ -16,6 +16,8 @@ describe("session model", () => {
   describe.each([
     ["_id", { _id: "" }],
     ["user_id", { user_id: "" }],
+    ["uuid", { uuid: "" }],
+    ["expired", { expired: false }],
   ])("%#) fails session validation", (fieldName: string, data: Partial<Session>) => {
     it(`fails validation for: ${fieldName}`, async () => {
       const session = new SessionModel(getSessionDataMock(data));

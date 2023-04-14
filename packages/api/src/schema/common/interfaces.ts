@@ -3,6 +3,7 @@ import {
   GraphQLInterfaceType,
   GraphQLNonNull,
   GraphQLList,
+ GraphQLObjectType
 } from "graphql";
 
 export const commonTimeStamps = new GraphQLInterfaceType({
@@ -20,7 +21,7 @@ export const commonTimeStamps = new GraphQLInterfaceType({
   })
 });
 
-export const fieldError = new GraphQLInterfaceType({
+export const fieldError = new GraphQLObjectType({
   name: "FieldError",
   description: "Field error",
   fields: () => ({
@@ -30,7 +31,7 @@ export const fieldError = new GraphQLInterfaceType({
     message: {
       type: new GraphQLNonNull(GraphQLString),
     }
-  })
+  }),
 });
 
 export const responseData = new GraphQLInterfaceType({
@@ -41,5 +42,4 @@ export const responseData = new GraphQLInterfaceType({
       type: new GraphQLList(fieldError)
     },
   }),
-  // TODO find a way to pass "data" prop as generic
 });

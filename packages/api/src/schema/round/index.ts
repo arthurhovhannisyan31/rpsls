@@ -1,4 +1,4 @@
-import { GraphQLString } from "graphql/index";
+import { GraphQLString } from "graphql";
 import {
   GraphQLNonNull,
   GraphQLObjectType,
