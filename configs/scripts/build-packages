@@ -4,15 +4,16 @@
 
 CUR=$(pwd)
 
+printf "🕓 Run build packages\n"
+
 for PACKAGE in $(ls ./packages)
 do
   cd $CUR/packages/$PACKAGE
 
-  printf "${GREEN}}Run build packages for: ${NC}$PACKAGE \n"
-
   if ! yarn build
   then
-      printf "${RED}}Failed to build: ${NC}$PACKAGE \n"
+      printf "❌ ${RED} Failed to build: ${NC}$PACKAGE \n"
       exit 1
   fi
+  printf "✔ ${GREEN} Success, build package for: ${NC}$PACKAGE \n"
 done

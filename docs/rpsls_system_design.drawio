@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2023-04-13T16:22:19.010Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="_FInznEXeHPYGHZn0lfo" version="21.1.2" type="device">
+<mxfile host="Electron" modified="2023-04-14T19:46:11.790Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="pzPnPUk2eTBHNDS1WjN3" version="21.1.2" type="device">
   <diagram id="Yhe4_dBiRpnGmSM2h0tJ" name="Page-1">
-    <mxGraphModel dx="391" dy="1431" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="900" dy="1771" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -689,7 +689,7 @@
           <mxGeometry x="6412" y="810" width="38" height="40" as="geometry" />
         </mxCell>
         <mxCell id="XbKmYp0QOx75mLHdsZkM-137" value="&lt;br&gt;User&lt;br&gt;get: /me&lt;br&gt;post: /login&lt;br&gt;post: /logout&lt;br&gt;&lt;br&gt;Room&lt;br&gt;get: /rooms?filter=&quot;text&quot;&amp;amp;only_active=&quot;bool&quot;&lt;br&gt;get: /room/id&lt;br&gt;post: /room/create&lt;br&gt;post: /room/update/id (join, leave)&lt;br&gt;&lt;br&gt;Game&lt;br&gt;get: /choise&lt;br&gt;get: /choises (max-age: 24h)&lt;br&gt;post: /play {round_id: string, action_type: &quot;choice&quot;}&lt;br&gt;&lt;br&gt;Round&lt;br&gt;post: /start&lt;br&gt;post: /stop&lt;br&gt;&lt;br&gt;Events&lt;br&gt;get: /events&lt;br&gt;post: /events&lt;br&gt;&lt;br&gt;&lt;br&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;fontSize=21;verticalAlign=top;" parent="1" vertex="1">
-          <mxGeometry x="463" y="2152" width="480" height="738" as="geometry" />
+          <mxGeometry x="463" y="2152" width="480" height="618" as="geometry" />
         </mxCell>
         <mxCell id="XbKmYp0QOx75mLHdsZkM-139" value="Game" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
           <mxGeometry x="174" y="2466" width="140" height="70" as="geometry" />

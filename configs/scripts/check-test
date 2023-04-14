@@ -4,15 +4,16 @@
 
 CUR=$(pwd)
 
+printf "🕓 Run check test for packages\n"
+
 for PACKAGE in $(ls ./packages)
 do
   cd $CUR/packages/$PACKAGE
 
-  printf "${GREEN}Run check test for: ${NC}$PACKAGE \n"
-
   if ! yarn check-test
   then
-      printf "${RED}Failed to check test for: ${NC}$PACKAGE \n"
+      printf "❌ ${RED} Failed to check test for: ${NC}$PACKAGE \n"
       exit 1
   fi
+  printf "✔ ${GREEN} Success, check test for: ${NC}$PACKAGE \n"
 done

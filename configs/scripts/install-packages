@@ -4,15 +4,16 @@
 
 CUR=$(pwd)
 
+printf "🕓 Run yarn install for packages\n"
+
 for PACKAGE in $(ls ./packages)
 do
   cd $CUR/packages/$PACKAGE
 
-  printf "${GREEN}Run yarn install for packages: ${NC}$PACKAGE \n"
-
   if ! yarn install --silent
   then
-      printf "${RED}Failed to install packages for: ${NC}$PACKAGE \n"
+      printf "❌ ${RED} Failed to install packages for: ${NC}$PACKAGE \n"
       exit 1
   fi
+  printf "✔ ${GREEN} Success, install packages for: ${NC}$PACKAGE \n"
 done
