@@ -1,48 +1,38 @@
 import fs from "fs";
 import path from "path";
 
-import express, { type Express, type NextFunction, type Request, type Response } from "express";
+import express, { type Express } from "express";
 import { createHandler } from "graphql-http/lib/use/express";
 import morgan from "morgan";
 
-import { addSecurityHeaders, customCorsCheck } from "./helpers";
-import { schema } from "../graphql/schema";
+import type { Context } from "../typings/context";
+
+import {
+  addSecurityHeaders,
+  customCorsCheck,
+  populateContextData
+} from "./helpers";
+import { schema } from "../schema/schema";
 
 const accessLogStream = fs.createWriteStream(
   path.resolve(process.cwd(), "logs", "access.log"),
   { flags: "a" }
 );
 
-export const customHandler = (
-  req: Request,
-  _: Response,
-  next: NextFunction
-): Response | void => {
-  console.log(req.method);
-  console.log(req.body);
-  console.log(req.query);
-  console.log(req.originalUrl);
-  console.log(req.cookies);
-  console.log(req.route);
-
-  return next();
-};
-
 export const createServer = (): Express => {
+  const context = {} as Context;
   const app = express();
+
+  app.disable("x-powered-by");
+  app.set("trust proxy", true);
   app.use(morgan("combined", { stream: accessLogStream }));
   app.use(customCorsCheck);
-  app.use(customHandler);
   app.use(express.json());
-  app.use(
-    express.urlencoded({
-      extended: true,
-    })
-  );
-  app.set("trust proxy", true);
-  app.all("/graphql", createHandler({
+  app.use(express.urlencoded({ extended: true, }));
+  app.use(populateContextData(context));
+  app.all("/graphql", createHandler<Context>({
     schema,
-    // context; logged in user, or access to a database.
+    context
   }));
   app.use(addSecurityHeaders);
 

@@ -26,5 +26,8 @@ Run `mongosh --port 27017 -u root -p root --authenticationDatabase admin` in the
 https://github.com/arthurhovhannisyan31/Employees-MERG-FE
 https://github.com/arthurhovhannisyan31/Employees-MERG-BE
 
+## Source of code
+parseCookies - https://stackoverflow.com/questions/3393854/get-and-set-a-single-cookie-with-node-js-http-server
+
 ## Development
 Run `yarn prepare` to setup local checks and scripts.

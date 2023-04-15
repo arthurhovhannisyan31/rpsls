@@ -1,4 +1,4 @@
-import { GameChoices } from "../../../../models/types";
+import { GameChoices } from "../../../models/types";
 
 export const playOptionsStub = [
   [GameChoices.Rock, GameChoices.Rock, 0],

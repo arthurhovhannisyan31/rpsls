@@ -11,7 +11,8 @@
     "check-lint": "echo client check-lint",
     "check-lint-staged": "echo client check-lint-staged",
     "check-test": "echo client check-test",
-    "check-test-changed": "echo client check-test-changed"
+    "check-test-changed": "echo client check-test-changed",
+    "gentypes": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "@types/node": "18.15.11",

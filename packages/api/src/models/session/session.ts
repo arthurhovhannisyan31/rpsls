@@ -1,12 +1,12 @@
 import mongoose, { type Document, Schema } from "mongoose";
 
-import { defaultFields } from "models/utils";
-
 import { type ModelDefaultFields } from "../types";
 
 export interface Session extends ModelDefaultFields{
   _id: string;
+  uuid: string;
   user_id:   string;
+  expired: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -16,18 +16,17 @@ const sessionSchema = new Schema({
     type: String,
     required: true,
   },
-  createdAt: {
+  uuid:{
     type: String,
     required: true,
   },
-  updatedAt: {
-    type: String,
-    required: true,
+  expired:{
+    type: Boolean,
+    default: false,
   },
-  ...defaultFields,
-});
+}, { timestamps: true });
 
-export const SchemaModel = mongoose.model<Session & Document>(
+export const SessionModel = mongoose.model<Session & Document>(
   "Session",
   sessionSchema,
   "sessions"

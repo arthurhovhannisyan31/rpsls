@@ -1,21 +1,22 @@
 import mongoose, { type Document, Schema } from "mongoose";
 
-import { type RoomStatus, type RoomType } from "./enums";
-import { type ModelDefaultFields } from "../types";
-import { defaultFields, regExps } from "../utils";
+import type { RoomType } from "./enums";
+import type { ModelDefaultFields } from "../types";
 
-export interface Room extends ModelDefaultFields{
+import { regExps } from "../utils";
+
+export interface Room extends ModelDefaultFields {
   _id: string;
-  type: RoomType;
+  roomType: RoomType;
   name:  string;
-  host_id: string;
-  guest_id: string;
-  status: RoomStatus;
+  host: string;
+  guest: string | null;
+  open: boolean;
   active: boolean;
 }
 
 const roomSchema = new Schema({
-  type: {
+  roomType: {
     type: String,
     required: true,
   },
@@ -24,24 +25,23 @@ const roomSchema = new Schema({
     required: true,
     match: regExps.modelString,
   },
-  host_id: {
-    type: String,
-    required: true,
+  host: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
   },
-  guest_id: {
-    type: String,
-    required: true,
+  guest: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
   },
-  status: {
-    type: String,
+  open: {
+    type: Boolean,
     required: true,
   },
   active: {
     type: Boolean,
     required: true,
   },
-  ...defaultFields,
-});
+}, { timestamps: true });
 
 export const RoomModel = mongoose.model<Room & Document>(
   "Room",

@@ -1,13 +1,15 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
-import mongoose from "mongoose";
+import mongoose, { type Mongoose } from "mongoose";
 
 let mongo: MongoMemoryServer;
 
-export const setup = async (): Promise<void> => {
+export const setup = async (): Promise<Mongoose> => {
   mongo = await MongoMemoryServer.create();
   const url = mongo.getUri();
 
   await mongoose.connect(url);
+
+  return mongoose;
 };
 
 export const dropDatabase = async (): Promise<void> => {

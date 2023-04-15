@@ -1,5 +1,5 @@
 {
-  "extends": "../../configs/ts-config/tsconfig.rules.json",
+  "extends": "./configs/ts-config/tsconfig.rules.json",
   "compilerOptions": {
     "baseUrl": "./src",
     "rootDir": ".",

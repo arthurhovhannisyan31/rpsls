@@ -1,6 +1,7 @@
-import { RoundModel, type Round, roundDataStub, Choice } from "models/round";
-import { getMergedObject } from "models/utils";
-import * as db from "models/utils/mongodb-mock";
+import { ChoiceValue } from "../../choices";
+import { RoundModel, type Round, roundDataStub } from "../../round";
+import { getMergedObject } from "../../utils";
+import * as db from "../../utils/mongodb-mock";
 
 const getRoundDataMock = getMergedObject(roundDataStub);
 
@@ -15,10 +16,11 @@ describe("round model", () => {
   });
   describe.each([
     ["_id", { _id: "" }],
-    ["room_id", { room_id: "" }],
-    ["host_choice", { host_choice: Choice.Rock }],
-    ["guest_choice", { guest_choice: Choice.Rock }],
-    ["winner_id", { winner_id: "" }],
+    ["room", { room: "" }],
+    ["host", { host: { user: "", choice: ChoiceValue.Rock, choice_change_count: 1 } }],
+    ["guest", { guest: { user: "", choice: ChoiceValue.Rock, choice_change_count: 1 } }],
+    ["winner", { winner: "" }],
+    ["ended", { ended: false }],
   ])("%#) fails round validation", (fieldName: string, data: Partial<Round>) => {
     it(`fails validation for: ${fieldName}`, async () => {
       const round = new RoundModel(getRoundDataMock(data));

@@ -1,11 +1,10 @@
 import mongoose, { type Document, Schema } from "mongoose";
 
-import { defaultFields, regExps } from "models/utils";
+import type { ModelDefaultFields } from "../types";
 
-import { type ModelDefaultFields } from "../types";
+import { regExps } from "../utils";
 
-// TODO Replace with generated types
-export interface User extends ModelDefaultFields{
+export interface User extends ModelDefaultFields {
   _id: string;
   name: string;
 }
@@ -16,8 +15,7 @@ const userSchema = new Schema({
     required: true,
     match: regExps.modelString,
   },
-  ...defaultFields,
-});
+}, { timestamps: true });
 
 export const UserModel = mongoose.model<User & Document>(
   "User",
