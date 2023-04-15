@@ -12,8 +12,8 @@ do
 
   if ! yarn check-types
   then
-      printf "❌ ${RED} Failed to check types for: ${NC}$PACKAGE \n"
+      printf "❌ ${RED} Failed to check types for: $PACKAGE \n"
       exit 1
   fi
-  printf "✔ ${GREEN} Success, check types for: ${NC}$PACKAGE \n"
+  printf "✔ ${GREEN} Success, check types for: $PACKAGE \n"
 done
