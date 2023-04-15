@@ -1,9 +1,11 @@
 import { GraphQLObjectType, GraphQLSchema } from "graphql";
 
 import { choiceType } from "./choices";
+import { roomType } from "./room";
 import { sessionType } from "./session";
 import { userType } from "./user";
 import { choice, choices } from "../resolvers/choices";
+import { createRoom, room, rooms, updateRoom } from "../resolvers/room";
 import { login, logout, me } from "../resolvers/user";
 
 const queryType = new GraphQLObjectType({
@@ -11,7 +13,9 @@ const queryType = new GraphQLObjectType({
   fields: () => ({
     choices,
     choice,
-    me
+    me,
+    room,
+    rooms
   })
 });
 
@@ -19,7 +23,9 @@ const mutationType = new GraphQLObjectType({
   name: "Mutation",
   fields: () => ({
     login,
-    logout
+    logout,
+    createRoom,
+    updateRoom
   })
 });
 
@@ -29,7 +35,8 @@ export const schema = new GraphQLSchema({
   types: [
     userType,
     choiceType,
-    sessionType
+    sessionType,
+    roomType
   ],
   // subscription: new GraphQLObjectType({
   //   name: "Subscription",

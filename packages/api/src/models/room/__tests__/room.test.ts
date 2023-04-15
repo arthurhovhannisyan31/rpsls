@@ -1,7 +1,7 @@
 import { RoomModel, type Room, roomDataStub } from "../../room";
 import { getMergedObject } from "../../utils";
 import * as db from "../../utils";
-import { RoomType, RoomStatus } from "../enums";
+import { RoomType } from "../enums";
 
 const getRoomDataMock = getMergedObject(roomDataStub);
 
@@ -16,11 +16,12 @@ describe("room model", () => {
   });
   describe.each([
     ["_id", { _id: "" }],
-    ["type", { type: RoomType.PVC }],
+    ["roomType", { roomType: RoomType.PVC }],
     ["name", { name: "" }],
-    ["host_id", { host_id: "" }],
-    ["guest_id", { guest_id: "" }],
-    ["status", { status: RoomStatus.Open }],
+    ["host", { host: "" }],
+    ["guest", { guest: "" }],
+    ["open", { open: true }],
+    ["active", { active: true }],
   ])("%#) fails room validation", (fieldName: string, data: Partial<Room>) => {
     it(`fails validation for: ${fieldName}`, async () => {
       const room = new RoomModel(getRoomDataMock(data));

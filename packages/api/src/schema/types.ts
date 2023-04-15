@@ -1,5 +1,5 @@
 export interface FieldError {
-  field: string
+  path: string
   message: string
 }
 

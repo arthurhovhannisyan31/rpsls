@@ -5,7 +5,7 @@ import {
 } from "graphql/type";
 import { GraphQLID } from "graphql/type/scalars";
 
-import { choice, commonTimeStamps } from "../common";
+import { choiceEnum, commonTimeStamps } from "../common";
 import { roomType } from "../room";
 
 export const roundType = new GraphQLObjectType({
@@ -16,10 +16,10 @@ export const roundType = new GraphQLObjectType({
       type: new GraphQLNonNull(roomType),
     },
     host_choice: {
-      type: choice
+      type: choiceEnum
     },
     guest_choice: {
-      type: choice
+      type: choiceEnum
     },
     winner: {
       type: GraphQLID,

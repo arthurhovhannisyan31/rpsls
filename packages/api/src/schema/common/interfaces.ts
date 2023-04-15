@@ -25,7 +25,7 @@ export const fieldError = new GraphQLObjectType({
   name: "FieldError",
   description: "Field error",
   fields: () => ({
-    field: {
+    path: {
       type: new GraphQLNonNull(GraphQLString),
     },
     message: {

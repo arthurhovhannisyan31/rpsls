@@ -1,15 +1,15 @@
 import type { Room } from "models/room";
 
 import { mockDate, mockId } from "../../utils";
-import { RoomStatus, RoomType } from "../enums";
+import { RoomType } from "../enums";
 
 export const roomDataStub: Room = {
   _id: mockId,
-  type: RoomType.PVC,
+  roomType: RoomType.PVC,
   name:  "name",
-  host_id: mockId,
-  guest_id: mockId,
-  status: RoomStatus.Open,
+  host: mockId,
+  guest: mockId,
+  open: true,
   active: true,
   createdAt: mockDate,
   updatedAt: mockDate

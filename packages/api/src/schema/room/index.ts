@@ -1,40 +1,45 @@
 import {
   GraphQLBoolean,
-  GraphQLList,
   GraphQLNonNull,
   GraphQLObjectType,
   GraphQLString,
 } from "graphql";
 import { GraphQLID } from "graphql/type/scalars";
 
-import { commonTimeStamps, room, roomStatus } from "../common";
+import { type Room } from "../../models/room";
+import { commonTimeStamps, roomEnum } from "../common";
+import { userType } from "../user";
+import { getSingleUser } from "../user/helpers";
 
 export const roomType = new GraphQLObjectType({
   name: "Room",
   description: "Room object",
   fields: () => ({
+    _id:{
+      type: new GraphQLNonNull(GraphQLID),
+    },
     name: {
       type: new GraphQLNonNull(GraphQLString),
     },
-    type: {
-      type: new GraphQLList(room)
+    roomType: {
+      type: new GraphQLNonNull(roomEnum)
     },
     host: {
-      type: new GraphQLNonNull(GraphQLID),
-      resolve: (id: any) => {
-        console.log(id);
-        console.log("try to resolve Room host");
-      }
+      type: new GraphQLNonNull(userType),
+      resolve: async (room: Room) => await getSingleUser(room.host)
     },
     guest: {
-      type: new GraphQLNonNull(GraphQLID),
-      resolve: (id: any) => {
-        console.log(id);
-        console.log("try to resolve Room guest");
+      type: userType,
+      resolve: async (room: Room) => {
+        if (room?.guest){
+          return  await getSingleUser(room.guest);
+        }
+
+        return null;
       }
     },
-    status: {
-      type: new GraphQLNonNull(roomStatus),
+    open: {
+      type: new GraphQLNonNull(GraphQLBoolean)
     },
     active: {
       type: new GraphQLNonNull(GraphQLBoolean)

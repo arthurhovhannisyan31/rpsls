@@ -4,7 +4,7 @@ import type { ModelDefaultFields } from "../types";
 
 import { defaultFields, regExps } from "../utils";
 
-export interface User extends ModelDefaultFields{
+export interface User extends ModelDefaultFields {
   _id: string;
   name: string;
 }

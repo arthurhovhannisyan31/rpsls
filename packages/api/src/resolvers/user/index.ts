@@ -4,8 +4,9 @@ import {
   GraphQLObjectType,
   GraphQLString,
   GraphQLList,
-  GraphQLBoolean
+  GraphQLBoolean,
 } from "graphql";
+import { GraphQLError } from "graphql/error";
 
 import { SessionModel } from "../../models/session";
 import { UserModel ,type User } from "../../models/user";
@@ -17,9 +18,7 @@ import { COOKIE_NAME } from "../../utils/constants";
 import { getSession } from "../../utils/helpers";
 import { isSessionExpired } from "../session/helpers";
 
-interface CreateUserArgs {
-  name: string;
-}
+type CreateUserArgs = Pick<User, "name">
 
 const loginResponseType = new GraphQLObjectType({
   name: "LoginResponse",
@@ -45,6 +44,7 @@ export const login: GraphQLFieldConfig<any, Context, CreateUserArgs> = {
   resolve: async (_, { name }, { response, session }): Promise<ResponseData<User>> => {
     try {
       const user = await UserModel.findOne({ name });
+
       if (user){
         if (session?.user_id === user.id){
           /**
@@ -77,7 +77,7 @@ export const login: GraphQLFieldConfig<any, Context, CreateUserArgs> = {
          */
         return {
           errors: [{
-            field: "username",
+            path: "login",
             message: `User: ${name} is active`
           }]
         };
@@ -95,18 +95,15 @@ export const login: GraphQLFieldConfig<any, Context, CreateUserArgs> = {
       await getSession(userResult._id, response);
 
       return {
-        data: newUser
+        data: userResult
       };
     } catch (err){
-      /**
-       * Fatal error
-       */
-      return {
-        errors: [{
-          field: "login",
-          message: "Internal server error"
-        }]
-      };
+      throw new GraphQLError(
+        (err as Error).message,
+        {
+          originalError: (err as Error)
+        }
+      );
     }
   },
 };
@@ -160,7 +157,7 @@ export const me: GraphQLFieldConfig<any, Context> = {
       if (!session?.uuid) {
         return {
           errors: [{
-            field: "me",
+            path: "me",
             message: "Session not found!"
           }]
         };
@@ -171,7 +168,7 @@ export const me: GraphQLFieldConfig<any, Context> = {
       if (!user){
         return {
           errors: [{
-            field: "me",
+            path: "me",
             message: "User not found!"
           }]
         };
@@ -181,12 +178,12 @@ export const me: GraphQLFieldConfig<any, Context> = {
         data: user
       };
     } catch (err){
-      return {
-        errors: [{
-          field: "me",
-          message: "Internal server error"
-        }]
-      };
+      throw new GraphQLError(
+        "Internal server error",
+        {
+          originalError: err as Error,
+        }
+      );
     }
   }
 };

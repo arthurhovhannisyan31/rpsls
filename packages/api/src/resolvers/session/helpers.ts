@@ -5,7 +5,7 @@ export const isSessionExpired = (
 ): boolean => {
 
   const date = new Date();
-  date.setHours(date.getHours());
+  date.setHours(date.getHours() - 24);
   const lastUpdateDate = new Date(session.updatedAt);
 
   return date > lastUpdateDate;

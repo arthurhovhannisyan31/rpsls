@@ -49,6 +49,10 @@ export const populateContextData = (
   next();
 };
 
+/**
+ * Logic does not cover cases when same uuid is sent multiple times
+ * Considered case for browser to take the Set-Cookie header and send new uuid each time
+ */
 const updateContextSession = async (
   req: Request,
   res: Response,
@@ -103,7 +107,7 @@ export const getSession = async (
   return sessionResult;
 };
 
-const parseCookies = (request: Request): Record<string, string> => {
+export const parseCookies = (request: Request): Record<string, string> => {
   const list: Record<string, string> = {};
   const cookieHeader = request.headers?.cookie;
   if (!cookieHeader) return list;

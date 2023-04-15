@@ -1,6 +1,7 @@
 import {
   type GraphQLFieldConfig, GraphQLObjectType, GraphQLList
 } from "graphql";
+import { GraphQLError } from "graphql/error";
 
 import type { ResponseData } from "../../schema/types";
 
@@ -30,7 +31,7 @@ export const choices: GraphQLFieldConfig<any ,any ,any> = {
       if (!choices){
         return {
           errors: [{
-            field: "choices",
+            path: "choice",
             message: "Choices not found"
           }]
         };
@@ -40,12 +41,12 @@ export const choices: GraphQLFieldConfig<any ,any ,any> = {
         data: choices
       };
     } catch (err){
-      return {
-        errors: [{
-          field: "choices",
-          message: "Internal server error"
-        }]
-      };
+      throw new GraphQLError(
+        "Internal server error",
+        {
+          originalError: err as Error,
+        }
+      );
     }
   }
 };
@@ -74,7 +75,7 @@ export const choice: GraphQLFieldConfig<any ,any ,any> = {
       if (!choices){
         return {
           errors: [{
-            field: "choices",
+            path: "choice",
             message: "Choices not found"
           }]
         };
@@ -84,12 +85,12 @@ export const choice: GraphQLFieldConfig<any ,any ,any> = {
         data: choices[random]
       };
     } catch (err){
-      return {
-        errors: [{
-          field: "choices",
-          message: "Internal server error"
-        }]
-      };
+      throw new GraphQLError(
+        "Internal server error",
+        {
+          originalError: err as Error,
+        }
+      );
     }
   }
 };
