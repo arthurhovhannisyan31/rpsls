@@ -3,7 +3,7 @@ import mongoose, { type Document, Schema } from "mongoose";
 import type { RoomType } from "./enums";
 import type { ModelDefaultFields } from "../types";
 
-import { defaultFields, regExps } from "../utils";
+import { regExps } from "../utils";
 
 export interface Room extends ModelDefaultFields {
   _id: string;
@@ -41,8 +41,7 @@ const roomSchema = new Schema({
     type: Boolean,
     required: true,
   },
-  ...defaultFields,
-});
+}, { timestamps: true });
 
 export const RoomModel = mongoose.model<Room & Document>(
   "Room",

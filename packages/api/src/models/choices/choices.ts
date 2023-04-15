@@ -1,11 +1,10 @@
 import mongoose, { type Document, Schema } from "mongoose";
 
 import { type ModelDefaultFields } from "../types";
-import { defaultFields } from "../utils";
 
 export interface Choice extends ModelDefaultFields {
   _id: string;
-  id: number;
+  value: number;
   name: string;
 }
 
@@ -14,12 +13,11 @@ const choiceModel = new Schema({
     type: String,
     required: true,
   },
-  id: {
+  value: {
     type: Number,
     required: true,
   },
-  ...defaultFields,
-});
+}, { timestamps: true });
 
 export const ChoiceModel = mongoose.model<Choice & Document>(
   "Choice",

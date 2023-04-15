@@ -2,10 +2,10 @@ import { GraphQLObjectType, GraphQLSchema } from "graphql";
 
 import { choiceType } from "./choices";
 import { roomType } from "./room";
-import { sessionType } from "./session";
 import { userType } from "./user";
 import { choice, choices } from "../resolvers/choices";
 import { createRoom, room, rooms, updateRoom } from "../resolvers/room";
+import { roundEnd, roundPlay, roundStart } from "../resolvers/round";
 import { login, logout, me } from "../resolvers/user";
 
 const queryType = new GraphQLObjectType({
@@ -25,7 +25,10 @@ const mutationType = new GraphQLObjectType({
     login,
     logout,
     createRoom,
-    updateRoom
+    updateRoom,
+    roundStart,
+    roundEnd,
+    roundPlay
   })
 });
 
@@ -35,7 +38,6 @@ export const schema = new GraphQLSchema({
   types: [
     userType,
     choiceType,
-    sessionType,
     roomType
   ],
   // subscription: new GraphQLObjectType({

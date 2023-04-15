@@ -4,7 +4,7 @@ import { ChoiceName, ChoiceValue } from "../enums";
 
 export const choicesStub: Choice = {
   _id: mockId,
-  id: ChoiceValue.Rock,
+  value: ChoiceValue.Rock,
   name: ChoiceName.Rock,
   createdAt: mockDate,
   updatedAt: mockDate

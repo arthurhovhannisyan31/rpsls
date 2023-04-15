@@ -2,7 +2,7 @@ import mongoose, { type Document, Schema } from "mongoose";
 
 import type { ModelDefaultFields } from "../types";
 
-import { defaultFields, regExps } from "../utils";
+import { regExps } from "../utils";
 
 export interface User extends ModelDefaultFields {
   _id: string;
@@ -15,8 +15,7 @@ const userSchema = new Schema({
     required: true,
     match: regExps.modelString,
   },
-  ...defaultFields,
-});
+}, { timestamps: true });
 
 export const UserModel = mongoose.model<User & Document>(
   "User",

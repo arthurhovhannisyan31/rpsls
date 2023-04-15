@@ -68,7 +68,6 @@ const updateContextSession = async (
     { uuid },
     {
       $set:{
-        updatedAt: Date.now(),
         expired: new Date(expires) < new Date()
       }
     },

@@ -1,12 +1,21 @@
-import { type GraphQLFieldConfig, GraphQLList, GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
-import { GraphQLError } from "graphql/error";
+import {
+  type GraphQLFieldConfig,
+  GraphQLList,
+  GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLError
+} from "graphql";
+
+import type { ResponseData } from "../../schema/types";
+import type { Context } from "../../typings/context";
+import type { FilterQuery } from "mongoose";
 
 import { RoomUpdateAction } from "./enums";
 import { type Room, RoomModel } from "../../models/room";
+import { UserModel } from "../../models/user";
 import { fieldError, responseData, roomUpdateActionEnum } from "../../schema/common";
 import { roomType } from "../../schema/room";
-import { type ResponseData } from "../../schema/types";
-import { type Context } from "../../typings/context";
 
 type RoomArgs = Pick<Room, "_id">;
 
@@ -48,8 +57,16 @@ export const room: GraphQLFieldConfig<any, Context, RoomArgs> = {
 
         return {
           errors: [{
-            path: "getRoom",
+            path: "room",
             message:  "Room does not exists!",
+          }]
+        };
+      }
+      if (!existingRoom.active){
+        return {
+          errors: [{
+            path: "room",
+            message:  "Room is not active!",
           }]
         };
       }
@@ -82,11 +99,26 @@ const roomsResponseType = new GraphQLObjectType({
   interfaces: [responseData]
 });
 
-export const rooms: GraphQLFieldConfig<any, Context> = {
+type RoomsArgs = Pick<Room, "name">
+
+export const rooms: GraphQLFieldConfig<any, Context, RoomsArgs> = {
   type: roomsResponseType,
-  resolve: async (): Promise<ResponseData<Room[]>> => {
+  args: {
+    name: {
+      type: GraphQLString
+    }
+  },
+  resolve: async (_, { name }): Promise<ResponseData<Room[]>> => {
     try {
-      const rooms = await RoomModel.find();
+      const searchParams: FilterQuery<Room> = {
+        active: true,
+      };
+
+      if (name) {
+        searchParams.name = { $regex: name, $options: "i" };
+      }
+
+      const rooms = await RoomModel.find(searchParams);
 
       if(!rooms) {
         return {
@@ -162,8 +194,25 @@ export const createRoom: GraphQLFieldConfig<any, Context, CreateUserArgs> = {
         };
       }
 
+      let guest = null;
+
+      if (roomType === "PVC"){
+        const pcResult = await UserModel.findOne({ name: "PC" });
+        if (!pcResult){
+          return {
+            errors: [{
+              path: "createRoom",
+              message: "Error fetching PC user"
+            }]
+          };
+        }
+
+        guest = pcResult._id;
+      }
+
       const newRoom = new RoomModel({
         host: session.user_id,
+        guest,
         roomType,
         name,
         open: true,
@@ -291,6 +340,7 @@ export const updateRoom: GraphQLFieldConfig<any, Context, UpdateRoomArgs> = {
               }]
             };
           }
+
           if (session.user_id === room.host.toString()){
             if (!room.open && !!room.guest){
               /**
@@ -336,7 +386,7 @@ export const updateRoom: GraphQLFieldConfig<any, Context, UpdateRoomArgs> = {
         return {
           errors: [{
             path: "updateRoom",
-            message: "Error saving room!",
+            message: "Error updating room!",
           }]
         };
       }

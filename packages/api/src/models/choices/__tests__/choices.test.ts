@@ -15,7 +15,7 @@ describe("choice model", () => {
   });
   describe.each([
     ["_id", { _id: "" }],
-    ["id", { name: "" }],
+    ["value", { name: "" }],
     ["name", { name: "" }],
   ])("%#) fails choice validation", (fieldName: string, data: Partial<Choice>) => {
     it(`fails validation for: ${fieldName}`, async () => {

@@ -18,7 +18,7 @@ export const roomEnum = new GraphQLEnumType({
 });
 
 export const choiceEnum = new GraphQLEnumType({
-  name: "Choice",
+  name: "ChoiceEnum",
   description: "One of game options: rock, paper, scissors, spock, lizard",
   values: {
     ROCK:{

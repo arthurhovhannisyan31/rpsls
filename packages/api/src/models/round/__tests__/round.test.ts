@@ -16,10 +16,11 @@ describe("round model", () => {
   });
   describe.each([
     ["_id", { _id: "" }],
-    ["room_id", { room_id: "" }],
-    ["host_choice", { host_choice: ChoiceValue.Rock }],
-    ["guest_choice", { guest_choice: ChoiceValue.Rock }],
-    ["winner_id", { winner_id: "" }],
+    ["room", { room: "" }],
+    ["host", { host: { user: "", choice: ChoiceValue.Rock, choice_change_count: 1 } }],
+    ["guest", { guest: { user: "", choice: ChoiceValue.Rock, choice_change_count: 1 } }],
+    ["winner", { winner: "" }],
+    ["ended", { ended: false }],
   ])("%#) fails round validation", (fieldName: string, data: Partial<Round>) => {
     it(`fails validation for: ${fieldName}`, async () => {
       const round = new RoundModel(getRoundDataMock(data));

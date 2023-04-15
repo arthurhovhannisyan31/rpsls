@@ -5,8 +5,6 @@ import {
 } from "graphql";
 import { GraphQLID } from "graphql/type/scalars";
 
-import { commonTimeStamps } from "../common";
-
 export const choiceType = new GraphQLObjectType({
   name: "Choice",
   description: "Game choice",
@@ -14,20 +12,11 @@ export const choiceType = new GraphQLObjectType({
     _id:{
       type: new GraphQLNonNull(GraphQLID),
     },
-    id: {
+    value: {
       type: new GraphQLNonNull(GraphQLString),
     },
     name: {
       type: new GraphQLNonNull(GraphQLString),
     },
-    createdAt: {
-      type: new GraphQLNonNull(GraphQLString),
-      description: "Creation time"
-    },
-    updatedAt: {
-      type: new GraphQLNonNull(GraphQLString),
-      description: "Update time"
-    }
-  }),
-  interfaces: [commonTimeStamps]
+  })
 });
