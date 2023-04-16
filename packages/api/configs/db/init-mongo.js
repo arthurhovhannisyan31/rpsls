@@ -14,23 +14,23 @@ db = conn.getDB("rpsls");
 db.choices.insertMany([
   {
     value: 1,
-    name: "Rock"
+    name: "ROCK"
   },
   {
     value: 2,
-    name: "Paper"
+    name: "PAPER"
   },
   {
     value: 3,
-    name: "Scissors"
+    name: "SCISSORS"
   },
   {
     value: 4,
-    name: "Lizard"
+    name: "LIZARD"
   },
   {
     value: 5,
-    name: "Spock"
+    name: "SPOCK"
   },
 ])
 

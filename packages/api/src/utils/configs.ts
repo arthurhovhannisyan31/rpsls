@@ -20,3 +20,9 @@ export const CONNECT_CONFIG: ConnectConfig = {
   DB_CONNECTION_STRING: getConnectionString(process.env.DB_NAME || ""),
   ENV_PATH: path.resolve(process.cwd(), `configs/env/${ __PROD__ ? ".env" : ".env.dev" }`)
 };
+
+export const sse_headers: Record<string, string> = {
+    "Content-Type": "text/event-stream",
+    "Connection": "keep-alive",
+    "Cache-Control": "no-cache"
+};

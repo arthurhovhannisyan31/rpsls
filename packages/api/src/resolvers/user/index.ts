@@ -1,189 +1,134 @@
-import {
-  type GraphQLFieldConfig,
-  GraphQLNonNull,
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLList,
-  GraphQLBoolean,
-} from "graphql";
-import { GraphQLError } from "graphql/error";
+import { GraphQLError } from "graphql";
 
+import { isSessionExpired } from "./helpers";
 import { SessionModel } from "../../models/session";
 import { UserModel ,type User } from "../../models/user";
-import { fieldError, responseData } from "../../schema/common";
 import { type ResponseData } from "../../schema/types";
-import { userType } from "../../schema/user";
+import { type CreateUserArgs } from "../../schema/user";
 import { type Context } from "../../typings/context";
 import { COOKIE_NAME } from "../../utils/constants";
-import { getSession } from "../../utils/helpers";
-import { isSessionExpired } from "../session/helpers";
+import { getSession } from "../../utils/context-handler";
 
-type CreateUserArgs = Pick<User, "name">
+export const loginResolver = async (
+  _: any,
+  { name }: CreateUserArgs,
+  { response, session }: Context
+): Promise<ResponseData<User>> => {
+  try {
+    const user = await UserModel.findOne({ name });
 
-const loginResponseType = new GraphQLObjectType({
-  name: "LoginResponse",
-  description: "Login response type",
-  fields: () => ({
-    errors: {
-      type: new GraphQLList(fieldError)
-    },
-    data: {
-      type: userType
-    }
-  }),
-  interfaces: [responseData]
-});
+    if (user){
+      if (session?.user_id === user.id){
+        /**
+         * Has valid credentials for the desired user
+         */
 
-export const login: GraphQLFieldConfig<any, Context, CreateUserArgs> = {
-  type: loginResponseType,
-  args: {
-    name: {
-      type: new GraphQLNonNull(GraphQLString),
-    }
-  },
-  resolve: async (_, { name }, { response, session }): Promise<ResponseData<User>> => {
-    try {
-      const user = await UserModel.findOne({ name });
+        return {
+          data: user
+        };
+      } else {
+        /**
+         * Hasn't valid credentials for the desired user but
+         * if the user is abandoned or logged out it is free to be taken
+         */
+        const existingUserSession = await SessionModel.findOne({
+          user_id: user.id
+        });
 
-      if (user){
-        if (session?.user_id === user.id){
-          /**
-           * Has valid credentials for the desired user
-           */
+        if (!existingUserSession || isSessionExpired(existingUserSession)){
+          await getSession(user.id, response);
 
           return {
             data: user
           };
-        } else {
-          /**
-           * Hasn't valid credentials for the desired user but
-           * if the user is abandoned or logged out it is free to be taken
-           */
-          const existingUserSession = await SessionModel.findOne({
-            user_id: user.id
-          });
-
-          if (!existingUserSession || isSessionExpired(existingUserSession)){
-            await getSession(user.id, response);
-
-            return {
-              data: user
-            };
-          }
         }
-
-        /**
-         * Has session but wants to take somebody else's user
-         */
-        return {
-          errors: [{
-            path: "login",
-            message: `User: ${name} is active`
-          }]
-        };
       }
 
       /**
-       * New user, new session
+       * Has session but wants to take somebody else's user
        */
-      const newUser = new UserModel({
-        name
-      });
-
-      const userResult = await newUser.save();
-
-      await getSession(userResult._id, response);
-
       return {
-        data: userResult
+        errors: [{
+          path: "login",
+          message: `User: ${name} is active`
+        }]
       };
-    } catch (err){
-      throw new GraphQLError(
-        (err as Error).message,
-        {
-          originalError: (err as Error)
-        }
-      );
-    }
-  },
-};
-
-const logoutResponseType = new GraphQLObjectType({
-  name: "LogoutResponse",
-  description: "Logout response type",
-  fields: () => ({
-    errors: {
-      type: new GraphQLList(fieldError)
-    },
-    data: {
-      type: GraphQLBoolean
-    }
-  }),
-  interfaces: [responseData]
-});
-
-export const logout: GraphQLFieldConfig<any, Context> = {
-  type: logoutResponseType,
-  resolve: async (_, __, { response, session }): Promise<void>=> {
-    if (session?.uuid){
-      await SessionModel.findOneAndDelete({ uuid: session.uuid });
     }
 
-    response.setHeader(
-      "Set-Cookie",
-      `${COOKIE_NAME}=""; SameSite=Lax; Secure; HttpOnly; Expires=${Date.now()}`,
+    /**
+     * New user, new session
+     */
+    const newUser = new UserModel({
+      name
+    });
+
+    const userResult = await newUser.save();
+
+    await getSession(userResult._id, response);
+
+    return {
+      data: userResult
+    };
+  } catch (err){
+    throw new GraphQLError(
+      (err as Error).message,
+      {
+        originalError: (err as Error)
+      }
     );
   }
 };
 
-const meResponseType = new GraphQLObjectType({
-  name: "MeResponse",
-  description: "Me response type",
-  fields: () => ({
-    errors: {
-      type: new GraphQLList(fieldError)
-    },
-    data: {
-      type: userType
-    }
-  }),
-  interfaces: [responseData]
-});
+export const logoutResolver = async (
+  _: any,
+  __: any,
+  { response, session }: Context
+): Promise<void>=> {
+  if (session?.uuid){
+    await SessionModel.findOneAndDelete({ uuid: session.uuid });
+  }
 
-export const me: GraphQLFieldConfig<any, Context> = {
-  type: meResponseType,
-  resolve: async (_, __, { session }): Promise<ResponseData<User>> => {
-    try {
-      if (!session?.uuid) {
-        return {
-          errors: [{
-            path: "me",
-            message: "Session not found!"
-          }]
-        };
-      }
+  response.setHeader(
+    "Set-Cookie",
+    `${COOKIE_NAME}=""; SameSite=Lax; Secure; HttpOnly; Expires=${Date.now()}`,
+  );
+};
 
-      const user = await UserModel.findById(session.user_id);
-
-      if (!user){
-        return {
-          errors: [{
-            path: "me",
-            message: "User not found!"
-          }]
-        };
-      }
-
+export const meResolver = async (
+  _: any,
+  __: any,
+  { session }: Context
+): Promise<ResponseData<User>> => {
+  try {
+    if (!session?.uuid) {
       return {
-        data: user
+        errors: [{
+          path: "me",
+          message: "Session not found!"
+        }]
       };
-    } catch (err){
-      throw new GraphQLError(
-        "Internal server error",
-        {
-          originalError: err as Error,
-        }
-      );
     }
+
+    const user = await UserModel.findById(session.user_id);
+
+    if (!user){
+      return {
+        errors: [{
+          path: "me",
+          message: "User not found!"
+        }]
+      };
+    }
+
+    return {
+      data: user
+    };
+  } catch (err){
+    throw new GraphQLError(
+      "Internal server error",
+      {
+        originalError: err as Error,
+      }
+    );
   }
 };

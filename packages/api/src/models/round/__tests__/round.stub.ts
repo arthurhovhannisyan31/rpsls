@@ -1,6 +1,6 @@
 import type { Round } from "models/round";
 
-import { ChoiceValue } from "../../choices";
+import { ChoiceName } from "../../choices";
 import { mockDate, mockId } from "../../utils";
 
 export const roundDataStub: Round = {
@@ -8,13 +8,11 @@ export const roundDataStub: Round = {
   room: mockId,
   host: {
     user: mockId,
-    choice: ChoiceValue.Spock,
-    choice_change_count: 1
+    choice: ChoiceName.ROCK,
   },
   guest: {
     user: mockId,
-    choice: ChoiceValue.Spock,
-    choice_change_count: 1
+    choice: ChoiceName.ROCK,
   },
   winner: mockId,
   createdAt: mockDate,

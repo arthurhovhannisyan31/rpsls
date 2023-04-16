@@ -1,309 +1,307 @@
-import {
-  type GraphQLFieldConfig,
-  GraphQLNonNull,
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLList,
-  GraphQLError, GraphQLInt
-} from "graphql";
+import { GraphQLError } from "graphql";
 
+import type { RoundEndArgs, RoundStartArgs, RoundPlayArgs } from "../../schema/round";
 import type { ResponseData } from "../../schema/types";
 import type { Context } from "../../typings/context";
 
-import { type Round, RoundModel, type UserRoundProps } from "../../models/round";
-import { fieldError, responseData } from "../../schema/common";
-import { roundType } from "../../schema/round";
+import { getRandomChoiceName, playByNames } from "./helpers";
+import { RoomModel, RoomType } from "../../models/room";
+import { type Round, RoundModel } from "../../models/round";
 
-type RoundStartArgs = Pick<Round, "room"|"host"|"guest">
-
-const roundStartResponseType = new GraphQLObjectType({
-  name: "RoundStart",
-  description: "Round start",
-  fields: () => ({
-    errors: {
-      type: new GraphQLList(fieldError)
-    },
-    data: {
-      type: roundType
-    }
-  }),
-  interfaces: [responseData]
-});
-
-/**
- * Round start api is Room.type agnostic
- */
-export const roundStart: GraphQLFieldConfig<any, Context, RoundStartArgs> = {
-  type: roundStartResponseType,
-  args: {
-    room: {
-      type: new GraphQLNonNull(GraphQLString)
-    },
-    host: {
-      type: new GraphQLNonNull(GraphQLString)
-    },
-    guest: {
-      type: new GraphQLNonNull(GraphQLString)
-    }
-  },
-  resolve: async (_, { room, host, guest }, { session }): Promise<ResponseData<Round>> => {
-    try {
-      if (!session){
-
-        return {
-          errors: [{
-            path: "round",
-            message: "Session not found!"
-          }]
-        };
-      }
-
-      const newRound = new RoundModel({ room, host, guest });
-
-      const roundResponse = await newRound.save();
-
+export const roundStartResolver = async (
+  _: any,
+  { room }: RoundStartArgs,
+  { session }: Context
+): Promise<ResponseData<Round>> => {
+  try {
+    if (!session){
       return {
-        data: roundResponse
+        errors: [{
+          path: "roundStart",
+          message: "Session not found!"
+        }]
       };
-    } catch (err){
-      throw new GraphQLError(
-        (err as Error).message,
-        {
-          originalError: (err as Error)
-        }
-      );
     }
+
+    const existingRoom = await RoomModel.findById(room);
+
+    if (!existingRoom){
+      return {
+        errors: [{
+          path: "roundStart",
+          message: "Room not found!"
+        }]
+      };
+    }
+
+    if (existingRoom.open || !existingRoom.active){
+      return {
+        errors: [{
+          path: "roundStart",
+          message: "Cannot start round in the room!"
+        }]
+      };
+    }
+
+    if (existingRoom.host.toString() !== session.user_id){
+      return {
+        errors: [{
+          path: "roundStart",
+          message:  "Round should be started by the host!",
+        }]
+      };
+    }
+
+    const rounds = await RoundModel.find({ room, ended: false });
+
+    if (rounds.length){
+      return {
+        errors: [{
+          path: "roundStart",
+          message: "Room has started round!"
+        }]
+      };
+    }
+
+    const newRound = new RoundModel({
+      room,
+      host: {
+        user: existingRoom.host
+      },
+      guest: {
+        user: existingRoom.guest
+      }
+    });
+
+    const roundResponse = await newRound.save();
+
+    return {
+      data: roundResponse
+    };
+  } catch (err){
+    throw new GraphQLError(
+      (err as Error).message,
+      {
+        originalError: (err as Error)
+      }
+    );
   }
 };
 
-interface RoundEndArgs {
-  _id: string
-}
+// user left
+// host left
+// none played
+// one played
+// both played
 
-const roundStopResponseType = new GraphQLObjectType({
-  name: "RoundStop",
-  description: "Round stop type",
-  fields: () => ({
-    errors: {
-      type: new GraphQLList(fieldError)
-    },
-    data: {
-      type: roundType
-    }
-  }),
-  interfaces: [responseData]
-});
-
-/**
- * Round end api is Room.type agnostic
- */
-export const roundEnd: GraphQLFieldConfig<any, Context, RoundEndArgs> = {
-  type: roundStopResponseType,
-  args: {
-    _id: {
-      type: new GraphQLNonNull(GraphQLString)
-    },
-  },
-  resolve: async (_, { _id },{ session }): Promise<ResponseData<Round>> => {
-    try {
-      if (!session){
-
-        return {
-          errors: [{
-            path: "round",
-            message: "Session not found!"
-          }]
-        };
-      }
-
-      const round = await RoundModel.findById(_id);
-
-      if (!round){
-
-        return {
-          errors: [{
-            path: "round",
-            message: "Round not found!"
-          }]
-        };
-      }
-
-      if (
-        ![round.host.user.toString(), round.guest.toString()]
-          .includes(session.user_id)
-      ){
-
-        return {
-          errors: [{
-            path: "round",
-            message: "Round should be ended by the players!"
-          }]
-        };
-      }
-
-      if (round.ended){
-
-        return {
-          errors: [{
-            path: "round",
-            message: "Round is ended!"
-          }]
-        };
-      }
-
-      /**
-       * At the time when round ends both users should have made their choices
-       * During making choices the winner changes dynamically and last choices pair makes winner
-       * If one of the users haven't made a choice, the other user wins
-       */
-      let winner = null;
-      if (!round.winner){
-        winner = round.host.choice ? round.host.user : round.host.user;
-      }
-
-      const result = await RoundModel.findByIdAndUpdate(
-        _id,
-        {
-          $set:{
-            winner,
-            ended: true
-          }
-        },
-        { returnDocument: "after" }
-      );
-
-      if (!result){
-
-        return {
-          errors: [{
-            path: "roundEnd",
-            message: "Error updating round!",
-          }]
-        };
-      }
-
+export const roundEndResolver = async (
+  _: any,
+  { _id }: RoundEndArgs,
+  { session }: Context
+): Promise<ResponseData<Round>> => {
+  try {
+    if (!session){
       return {
-        data: result
+        errors: [{
+          path: "round",
+          message: "Session not found!"
+        }]
       };
-    } catch (err){
-      throw new GraphQLError(
-        (err as Error).message,
-        {
-          originalError: (err as Error)
-        }
-      );
     }
+
+    const round = await RoundModel.findById(_id);
+
+    if (!round){
+      return {
+        errors: [{
+          path: "round",
+          message: "Round not found!"
+        }]
+      };
+    }
+
+    if (round.host.user.toString() !== session.user_id){
+      return {
+        errors: [{
+          path: "round",
+          message: "Round should be ended by the host!"
+        }]
+      };
+    }
+
+    if (round.ended){
+      return {
+        errors: [{
+          path: "round",
+          message: "Round is ended!"
+        }]
+      };
+    }
+
+    /**
+     * At the time when round ends both users should have made their choices
+     * If one of the users haven't made a choice, the other user wins
+     */
+    let winner = null;
+    if (!round.winner){
+      if (round.host.choice){
+        winner = round.host.user;
+      }
+      if (round.guest.choice){
+        winner = round.guest.user;
+      }
+    }
+
+    const result = await RoundModel.findByIdAndUpdate(
+      _id,
+      {
+        $set:{
+          winner,
+          ended: true
+        }
+      },
+      { returnDocument: "after" }
+    );
+
+    if (!result){
+      return {
+        errors: [{
+          path: "roundEnd",
+          message: "Error updating round!",
+        }]
+      };
+    }
+
+    return {
+      data: result
+    };
+  } catch (err){
+    throw new GraphQLError(
+      (err as Error).message,
+      {
+        originalError: (err as Error)
+      }
+    );
   }
 };
 
-interface RoundPlayArgs {
-  _id: string;
-  choice: number;
-}
-
-const rondPlayType = new GraphQLObjectType({
-  name: "RoundPlay",
-  description: "Round play type",
-  fields: () => ({
-    errors: {
-      type: new GraphQLList(fieldError)
-    },
-    data: {
-      type: roundType
-    }
-  }),
-  interfaces: [responseData]
-});
-
-export const roundPlay: GraphQLFieldConfig<any, Context, RoundPlayArgs>= {
-  type: rondPlayType,
-  args: {
-    _id: {
-      type: new GraphQLNonNull(GraphQLString)
-    },
-    choice:{
-      type: new GraphQLNonNull(GraphQLInt)
-    }
-  },
-  resolve: async (_, { _id, choice }, { session }): Promise<ResponseData<Round>> => {
-    try {
-      // PVP
-      // PVC
-
-      if (!session){
-
-        return {
-          errors: [{
-            path: "round",
-            message: "Session not found!"
-          }]
-        };
-      }
-
-      const round = await RoundModel.findById(_id);
-
-      if (!round){
-
-        return {
-          errors: [{
-            path: "round",
-            message: "Round not found!"
-          }]
-        };
-      }
-
-      if (
-        ![round.host.user.toString(), round.guest.toString()]
-          .includes(session.user_id)
-      ){
-
-        return {
-          errors: [{
-            path: "round",
-            message: "Round should be played by the players!"
-          }]
-        };
-      }
-
-      const isHost = session.user_id === round.host.user.toString();
-
-      const userProps: UserRoundProps = isHost ? round.host : round.guest;
-
-      userProps.choice = choice;
-      userProps.choice_change_count += 1;
-
-      const updatePropsKey = isHost ? "host" : "guest";
-
-      const roundResponse = await RoundModel.findByIdAndUpdate(
-        _id,
-        {
-          $set:{
-            [updatePropsKey]: userProps
-          }
-        },
-        { returnDocument:"after" }
-      );
-
-      if (!roundResponse){
-        return {
-          errors:[{
-            path: "roundPlay",
-            message: "Error saving round play!"
-          }]
-        };
-      }
-
+export const roundPlayResolver = async (
+  _: any,
+  { _id, choice }: RoundPlayArgs,
+  { session }: Context
+): Promise<ResponseData<Round>> => {
+  try {
+    if (!session){
       return {
-        data: roundResponse
+        errors: [{
+          path: "round",
+          message: "Session not found!"
+        }]
       };
-
-    } catch (err){
-      throw new GraphQLError(
-        (err as Error).message,
-        {
-          originalError: (err as Error)
-        }
-      );
     }
+
+    const round = await RoundModel.findById(_id);
+
+    if (!round){
+      return {
+        errors: [{
+          path: "round",
+          message: "Round not found!"
+        }]
+      };
+    }
+
+    const existingRoom = await RoomModel.findById(round.room);
+
+    if (!existingRoom){
+      return {
+        errors: [{
+          path: "roundStart",
+          message: "Room not found!"
+        }]
+      };
+    }
+
+    if (round.ended){
+      return {
+        errors: [{
+          path: "round",
+          message: "Round was ended!"
+        }]
+      };
+    }
+
+    if (
+      ![round.host.user.toString(), round.guest.user.toString()]
+        .includes(session.user_id)
+    ){
+      return {
+        errors: [{
+          path: "round",
+          message: "Round should be played by the players!"
+        }]
+      };
+    }
+
+    const updateProps: Pick<Round, "host"|"guest"|"winner"|"ended"> = {
+      host: round.host,
+      guest: round.guest,
+      winner: round.winner,
+      ended: round.ended
+    };
+
+    switch (existingRoom.roomType){
+      case RoomType.PVC:{
+        updateProps.host.choice = choice;
+        updateProps.guest.choice = getRandomChoiceName();
+
+        break;
+      }
+      case RoomType.PVP:{
+        const isHost = session.user_id === round.host.user.toString();
+        const updatePropsKey = isHost ? "host" : "guest";
+
+        updateProps[updatePropsKey].choice = choice;
+      }
+    }
+
+    if (updateProps?.host?.choice && updateProps?.guest?.choice){
+      const result = playByNames(updateProps.host.choice, updateProps.guest.choice);
+      if (result === 0){
+        updateProps.winner = null;
+      } else {
+        updateProps.winner = result === 1 ?  round.host.user : round.guest.user;
+      }
+      updateProps.ended = true;
+    }
+
+    const roundResponse = await RoundModel.findByIdAndUpdate(
+      _id,
+      {
+        $set: updateProps
+      },
+      { returnDocument:"after" }
+    );
+
+    if (!roundResponse){
+      return {
+        errors:[{
+          path: "roundPlay",
+          message: "Error saving round play!"
+        }]
+      };
+    }
+
+    return {
+      data: roundResponse
+    };
+
+  } catch (err){
+    throw new GraphQLError(
+      (err as Error).message,
+      {
+        originalError: (err as Error)
+      }
+    );
   }
 };

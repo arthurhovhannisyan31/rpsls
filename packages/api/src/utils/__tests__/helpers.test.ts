@@ -1,6 +1,6 @@
 import { type Request } from "express";
 
-import { parseCookies } from "../helpers";
+import { parseCookies } from "../context-handler";
 
 describe("utils/helpers", () => {
   test.each([

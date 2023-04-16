@@ -1,15 +1,31 @@
 export enum ChoiceValue {
-  Rock = 1,
-  Paper = 2,
-  Scissors = 3,
-  Spock = 4,
-  Lizard = 5
+  ROCK = 1,
+  PAPER = 2,
+  SCISSORS = 3,
+  SPOCK = 4,
+  LIZARD = 5
 }
 
 export enum ChoiceName {
-  Rock = "Rock",
-  Paper = "Paper",
-  Scissors = "Scissors",
-  Spock = "Spock",
-  Lizard = "Lizard"
+  ROCK = "ROCK",
+  PAPER = "PAPER",
+  SCISSORS = "SCISSORS",
+  SPOCK = "SPOCK",
+  LIZARD = "LIZARD"
 }
+
+export const choiceNameValueMap = {
+  [ChoiceName.ROCK]: ChoiceValue.ROCK ,
+  [ChoiceName.PAPER]: ChoiceValue.PAPER ,
+  [ChoiceName.SCISSORS]: ChoiceValue.SCISSORS ,
+  [ChoiceName.SPOCK]: ChoiceValue.SPOCK ,
+  [ChoiceName.LIZARD]: ChoiceValue.LIZARD ,
+};
+
+export const choiceValueNameMap = {
+  [ChoiceValue.ROCK]: ChoiceName.ROCK ,
+  [ChoiceValue.PAPER]: ChoiceName.PAPER ,
+  [ChoiceValue.SCISSORS]: ChoiceName.SCISSORS ,
+  [ChoiceValue.SPOCK]: ChoiceName.SPOCK ,
+  [ChoiceValue.LIZARD]: ChoiceName.LIZARD ,
+};

@@ -1,4 +1,4 @@
-import { ChoiceValue } from "../../choices";
+import { ChoiceName } from "../../choices";
 import { RoundModel, type Round, roundDataStub } from "../../round";
 import { getMergedObject } from "../../utils";
 import * as db from "../../utils/mongodb-mock";
@@ -17,8 +17,8 @@ describe("round model", () => {
   describe.each([
     ["_id", { _id: "" }],
     ["room", { room: "" }],
-    ["host", { host: { user: "", choice: ChoiceValue.Rock, choice_change_count: 1 } }],
-    ["guest", { guest: { user: "", choice: ChoiceValue.Rock, choice_change_count: 1 } }],
+    ["host", { host: { user: "", choice: ChoiceName.ROCK, } }],
+    ["guest", { guest: { user: "", choice: ChoiceName.ROCK } }],
     ["winner", { winner: "" }],
     ["ended", { ended: false }],
   ])("%#) fails round validation", (fieldName: string, data: Partial<Round>) => {

@@ -7,11 +7,12 @@ import morgan from "morgan";
 
 import type { Context } from "../typings/context";
 
+import { populateContextData } from "./context-handler";
 import {
   addSecurityHeaders,
-  customCorsCheck,
-  populateContextData
+  customCorsCheck
 } from "./helpers";
+import { SSEManager } from "./sse/handlers";
 import { schema } from "../schema/schema";
 
 const accessLogStream = fs.createWriteStream(
@@ -20,8 +21,13 @@ const accessLogStream = fs.createWriteStream(
 );
 
 export const createServer = (): Express => {
-  const context = {} as Context;
   const app = express();
+  const sseManager = new SSEManager();
+  const context = {} as Context;
+  const handler = createHandler<Context>({
+    schema,
+    context
+  });
 
   app.disable("x-powered-by");
   app.set("trust proxy", true);
@@ -30,10 +36,9 @@ export const createServer = (): Express => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true, }));
   app.use(populateContextData(context));
-  app.all("/graphql", createHandler<Context>({
-    schema,
-    context
-  }));
+  app.get("/subscribe", sseManager.subscribe);
+  app.post("/notify", sseManager.notify);
+  app.all("/graphql", handler);
   app.use(addSecurityHeaders);
 
   return app;
