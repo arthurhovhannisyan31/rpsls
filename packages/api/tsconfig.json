@@ -7,8 +7,10 @@
     "module": "NodeNext",
     "moduleResolution": "node",
     "target": "ESNext",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "types": ["jest", "node"],
+    "typeRoots": ["./src/typings", "node_modules/@types"]
   },
   "include": ["src/**/*", "**/*.config.ts", "configs/**/*.ts", "**/*__tests__"],
-  "exclude": ["**/*.spec.ts", "**/*generated.tsx?"]
+  "exclude": ["**/*generated.tsx?"]
 }

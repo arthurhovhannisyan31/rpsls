@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLSchema } from "graphql";
+import { GraphQLObjectType, GraphQLSchema, GraphQLString } from "graphql";
 
 import { choiceType , choice, choices } from "./choices";
 import { roomType , createRoom, room, rooms, updateRoom } from "./room";
@@ -29,25 +29,27 @@ const mutationType = new GraphQLObjectType({
   })
 });
 
+const subscriptionType =new GraphQLObjectType({
+  name: "Subscription",
+  fields: {
+    greetings: {
+      type: GraphQLString,
+      subscribe: async function* () {
+        for (const hi of ["Hi", "Bonjour", "Hola", "Ciao", "Zdravo"]) {
+          yield { greetings: hi };
+        }
+      },
+    },
+  },
+});
+
 export const schema = new GraphQLSchema({
   query: queryType,
   mutation: mutationType,
+  subscription: subscriptionType,
   types: [
     userType,
     choiceType,
     roomType
-  ],
-  // subscription: new GraphQLObjectType({
-  //   name: "Subscription",
-  //   fields: {
-  //     greetings: {
-  //       type: GraphQLString,
-  //       subscribe: async function* () {
-  //         for (const hi of ["Hi", "Bonjour", "Hola", "Ciao", "Zdravo"]) {
-  //           yield { greetings: hi };
-  //         }
-  //       },
-  //     },
-  //   },
-  // }),
+  ]
 });

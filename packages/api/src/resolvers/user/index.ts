@@ -7,7 +7,7 @@ import { type ResponseData } from "../../schema/types";
 import { type CreateUserArgs } from "../../schema/user";
 import { type Context } from "../../typings/context";
 import { COOKIE_NAME } from "../../utils/constants";
-import { getSession } from "../../utils/helpers";
+import { getSession } from "../../utils/context-handler";
 
 export const loginResolver = async (
   _: any,
