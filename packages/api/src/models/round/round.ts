@@ -1,28 +1,12 @@
 import mongoose, { type Document, Schema } from "mongoose";
 
-import { type ChoiceValue } from "../choices";
-import { type ModelDefaultFields } from "../types";
+import type { ChoiceName } from "../choices";
+import type { ModelDefaultFields } from "../types";
 
 export interface UserRoundProps {
   user: string;
-  choice: ChoiceValue;
-  choice_change_count: number;
+  choice: ChoiceName;
 }
-
-const userRoundSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "User"
-  },
-  choice:{
-    type: Number
-  },
-  choice_change_count: {
-    type: Number,
-    required: true,
-    default: 0
-  }
-});
 
 export interface Round extends ModelDefaultFields{
   _id: string;
@@ -38,8 +22,26 @@ const roundSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Room"
   },
-  host: userRoundSchema,
-  guest: userRoundSchema,
+  host: {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    },
+    choice:{
+      type: String,
+      default: null
+    },
+  },
+  guest: {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    },
+    choice:{
+      type: String,
+      default: null
+    },
+  },
   winner:{
     type: Schema.Types.ObjectId,
     ref: "User"
@@ -48,7 +50,7 @@ const roundSchema = new Schema({
     type: Boolean,
     required: true,
     default: false,
-  }
+  },
 },{ timestamps: true });
 
 export const RoundModel = mongoose.model<Round & Document>(

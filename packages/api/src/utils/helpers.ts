@@ -72,7 +72,7 @@ const updateContextSession = async (
       }
     },
     {
-      returnDocument: "after"
+      returnDocument: "after",
     }
   );
 

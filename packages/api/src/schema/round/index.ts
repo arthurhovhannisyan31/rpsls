@@ -1,13 +1,20 @@
 import {
+  type GraphQLFieldConfig,
+  GraphQLList,
+  GraphQLString,
   GraphQLID,
-  GraphQLInt,
   GraphQLNonNull,
   GraphQLObjectType,
-} from "graphql/type";
+  GraphQLBoolean
+} from "graphql";
 
-import { type Round, type UserRoundProps } from "../../models/round";
+import type { Round, UserRoundProps } from "../../models/round";
+import type { Context } from "../../typings/context";
+
+import { type ChoiceName } from "../../models/choices";
 import { getRoomById } from "../../resolvers/room/helpers";
-import { choiceEnum } from "../common";
+import { roundEndResolver, roundPlayResolver, roundStartResolver } from "../../resolvers/round";
+import { choiceEnum, fieldError, responseData } from "../common";
 import { roomType } from "../room";
 import { userType } from "../user";
 import { getUserById } from "../user/helpers";
@@ -27,9 +34,6 @@ const userRoundPropsType = new GraphQLObjectType({
     choice: {
       type: choiceEnum
     },
-    choice_change_count: {
-      type: new GraphQLNonNull(GraphQLInt)
-    }
   })
 });
 
@@ -44,10 +48,10 @@ export const roundType = new GraphQLObjectType({
       type: roomType,
       resolve: async (round: Round) => getRoomById(round.room)
     },
-    hostProps:{
+    host:{
       type: userRoundPropsType
     },
-    guestProps:{
+    guest:{
       type: userRoundPropsType
     },
     winner: {
@@ -57,6 +61,100 @@ export const roundType = new GraphQLObjectType({
 
         return await getUserById(round.winner);
       }
+    },
+    ended:{
+      type: new GraphQLNonNull(GraphQLBoolean),
     }
   }),
 });
+
+export type RoundStartArgs = Pick<Round, "room">
+
+const roundStartResponseType = new GraphQLObjectType({
+  name: "RoundStart",
+  description: "Round start",
+  fields: () => ({
+    errors: {
+      type: new GraphQLList(fieldError)
+    },
+    data: {
+      type: roundType
+    }
+  }),
+  interfaces: [responseData]
+});
+
+/**
+ * Round start api is Room.type agnostic
+ */
+export const roundStart: GraphQLFieldConfig<any, Context, RoundStartArgs> = {
+  type: roundStartResponseType,
+  args: {
+    room: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
+  },
+  resolve: roundStartResolver
+};
+
+export interface RoundEndArgs {
+  _id: string
+}
+
+const roundStopResponseType = new GraphQLObjectType({
+  name: "RoundStop",
+  description: "Round stop type",
+  fields: () => ({
+    errors: {
+      type: new GraphQLList(fieldError)
+    },
+    data: {
+      type: roundType
+    }
+  }),
+  interfaces: [responseData]
+});
+
+/**
+ * Round end api is Room.type agnostic
+ */
+export const roundEnd: GraphQLFieldConfig<any, Context, RoundEndArgs> = {
+  type: roundStopResponseType,
+  args: {
+    _id: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
+  },
+  resolve: roundEndResolver
+};
+
+export type RoundPlayArgs = Pick<Round, "_id"> & {
+  choice: ChoiceName
+}
+
+const rondPlayType = new GraphQLObjectType({
+  name: "RoundPlay",
+  description: "Round play type",
+  fields: () => ({
+    errors: {
+      type: new GraphQLList(fieldError)
+    },
+    data: {
+      type: roundType
+    }
+  }),
+  interfaces: [responseData]
+});
+
+export const roundPlay: GraphQLFieldConfig<any, Context, RoundPlayArgs>= {
+  type: rondPlayType,
+  args: {
+    _id: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
+    choice:{
+      type: new GraphQLNonNull(choiceEnum)
+    }
+  },
+  resolve: roundPlayResolver
+};
