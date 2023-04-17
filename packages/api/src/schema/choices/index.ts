@@ -31,7 +31,7 @@ const choicesResponseType = new GraphQLObjectType({
   description: "Choices response type",
   fields: () => ({
     errors: {
-      type: new GraphQLList(fieldError)
+      type: new GraphQLList( new GraphQLNonNull( fieldError ))
     },
     data: {
       type: new GraphQLList(choiceType)
@@ -50,7 +50,7 @@ const choiceResponseType = new GraphQLObjectType({
   description: "Choice response type",
   fields: () => ({
     errors: {
-      type: new GraphQLList(fieldError)
+      type: new GraphQLList( new GraphQLNonNull( fieldError ))
     },
     data: {
       type: choiceType

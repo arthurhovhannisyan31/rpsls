@@ -75,7 +75,7 @@ const roundStartResponseType = new GraphQLObjectType({
   description: "Round start",
   fields: () => ({
     errors: {
-      type: new GraphQLList(fieldError)
+      type: new GraphQLList( new GraphQLNonNull( fieldError ))
     },
     data: {
       type: roundType
@@ -106,7 +106,7 @@ const roundStopResponseType = new GraphQLObjectType({
   description: "Round stop type",
   fields: () => ({
     errors: {
-      type: new GraphQLList(fieldError)
+      type: new GraphQLList( new GraphQLNonNull( fieldError ))
     },
     data: {
       type: roundType
@@ -137,7 +137,7 @@ const rondPlayType = new GraphQLObjectType({
   description: "Round play type",
   fields: () => ({
     errors: {
-      type: new GraphQLList(fieldError)
+      type: new GraphQLList( new GraphQLNonNull( fieldError ))
     },
     data: {
       type: roundType

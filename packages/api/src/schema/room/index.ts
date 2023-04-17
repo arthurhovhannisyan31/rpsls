@@ -56,7 +56,7 @@ const getRoomResponseType = new GraphQLObjectType({
   description: "Room type",
   fields: () => ({
     errors: {
-      type: new GraphQLList(fieldError)
+      type: new GraphQLList( new GraphQLNonNull( fieldError ))
     },
     data: {
       type: roomType
@@ -82,10 +82,10 @@ const roomsResponseType = new GraphQLObjectType({
   description: "Rooms collection type",
   fields: () => ({
     errors: {
-      type: new GraphQLList(fieldError)
+      type: new GraphQLList( new GraphQLNonNull( fieldError ))
     },
     data: {
-      type: new GraphQLList(roomType)
+      type: new GraphQLList( new GraphQLNonNull(roomType) )
     }
   }),
   interfaces: [responseData]
@@ -110,7 +110,7 @@ const createRoomResponseType = new GraphQLObjectType({
   description: "Create room type",
   fields: () => ({
     errors: {
-      type: new GraphQLList(fieldError)
+      type: new GraphQLList( new GraphQLNonNull( fieldError ))
     },
     data: {
       type: roomType
@@ -137,7 +137,7 @@ const updateRoomResponseType = new GraphQLObjectType({
   description: "Update room type",
   fields: () => ({
     errors: {
-      type: new GraphQLList(fieldError)
+      type: new GraphQLList( new GraphQLNonNull( fieldError ))
     },
     data: {
       type: roomType

@@ -29,7 +29,7 @@ const loginResponseType = new GraphQLObjectType({
   description: "Login response type",
   fields: () => ({
     errors: {
-      type: new GraphQLList(fieldError)
+      type: new GraphQLList( new GraphQLNonNull( fieldError ))
     },
     data: {
       type: userType
@@ -53,7 +53,7 @@ const logoutResponseType = new GraphQLObjectType({
   description: "Logout response type",
   fields: () => ({
     errors: {
-      type: new GraphQLList(fieldError)
+      type: new GraphQLList( new GraphQLNonNull( fieldError ))
     },
     data: {
       type: GraphQLBoolean
@@ -72,7 +72,7 @@ const meResponseType = new GraphQLObjectType({
   description: "Me response type",
   fields: () => ({
     errors: {
-      type: new GraphQLList(fieldError)
+      type: new GraphQLList( new GraphQLNonNull( fieldError ))
     },
     data: {
       type: userType
