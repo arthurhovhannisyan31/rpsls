@@ -3,14 +3,6 @@ module.exports = {
   collectCoverage: true,
   coverageDirectory: "coverage",
   coveragePathIgnorePatterns: ["<rootDir>/node_modules/(?!@foo)"],
-  // coverageThreshold: {
-  //   global: {
-  //     branches: 90,
-  //     functions: 90,
-  //     lines: 90,
-  //     statements: 90,
-  //   },
-  // },
   transform: {
     "\\.[jt]sx?$": ["ts-jest", {
       tsconfig: "<rootDir>/tsconfig.jest.json"

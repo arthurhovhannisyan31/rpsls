@@ -7,12 +7,12 @@ import morgan from "morgan";
 
 import type { Context } from "../typings/context";
 
-import { populateContextData } from "./context-handler";
+import { populateContextData } from "./middlewares/context";
 import {
   addSecurityHeaders,
   customCorsCheck
-} from "./helpers";
-import { SSEManager } from "./sse/handlers";
+} from "./middlewares/headers-sanitize";
+import { SSEManager } from "./sse/sse-manager";
 import { schema } from "../schema/schema";
 
 const accessLogStream = fs.createWriteStream(
@@ -36,8 +36,8 @@ export const createServer = (): Express => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true, }));
   app.use(populateContextData(context));
-  app.get("/subscribe", sseManager.subscribe);
-  app.post("/notify", sseManager.notify);
+  app.get("/events", sseManager.subscribe);
+  app.post("/events", sseManager.notify);
   app.all("/graphql", handler);
   app.use(addSecurityHeaders);
 
