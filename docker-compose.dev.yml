@@ -50,23 +50,25 @@ services:
       timeout: 3s
       start_period: 10s
       retries: 3
-#  frontend:
-#    container_name: FE
-#    build:
-#      context: ./packages/client/configs/docker/.
-#      dockerfile: ./Dockerfile
-#    ports:
-#      - "${30001}:${PORT_CLIENT}"
-#    volumes:
-#      - type: bind
-#        source: ./packages/client
-#        target: /app
-#      - type: volume
-#        target: /app/node_modules
-#    env_file:
-#      - ./configs/env/.env
-#    depends_on:
-#      - backend
+  frontend:
+    container_name: FE
+    build:
+      context: ./packages/client/
+      dockerfile: ./configs/docker/dev.dockerfile
+    ports:
+      - "${PORT_CLIENT}:${PORT_CLIENT}"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - type: bind
+        source: ./packages/client
+        target: /app
+      - type: volume
+        target: /app/node_modules
+    env_file:
+      - ./configs/env/.env
+    depends_on:
+      - backend
 volumes:
   data:
   logs:
