@@ -1,0 +1,1 @@
+docker build --tag client-node-cache -f ./configs/docker/node-cache.dockerfile .

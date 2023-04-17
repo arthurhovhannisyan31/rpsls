@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+}
+
+.name {
+  display: flex;
+}
+
+.auth_controls {
+  display: flex;
+}

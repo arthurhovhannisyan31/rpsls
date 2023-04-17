@@ -8,7 +8,7 @@
     "start:dev": "./configs/scripts/start-dev",
     "cleanup": "rm -rf ./dist",
     "check-lint": "eslint --ext .ts,.js src/",
-    "format": "yarn lint --fix",
+    "format": "yarn check-lint --fix",
     "gentypes": "graphql-codegen --config codegen.yml",
     "nodemon:dev": "nodemon -r dotenv/config ./dist/src/index.js dotenv_config_path=./configs/env/.env.dev",
     "jest-base": "node --expose-gc ./node_modules/jest/bin/jest.js",
