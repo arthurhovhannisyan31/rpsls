@@ -48,6 +48,20 @@
 //      }
 //    ]
   },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "no-undef": "off" // TODO revise rule config
+      }
+    },
+    {
+      "files": ["src/typings/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/triple-slash-reference": 0
+      }
+    }
+  ],
   "settings": {
     "import/ignore:": [
       "node_modules"

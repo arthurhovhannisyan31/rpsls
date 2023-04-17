@@ -20,3 +20,4 @@ export const Rooms = observer(() => {
 Rooms.displayName = "Room"
 
 // getServerSideProps
+export default Rooms

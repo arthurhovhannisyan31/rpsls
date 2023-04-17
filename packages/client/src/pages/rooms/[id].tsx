@@ -13,3 +13,4 @@ export const Game = memo<GameProps>(() => {
 Game.displayName = "Game"
 
 // getServerSideProps - room
+export default Game
