@@ -7,14 +7,14 @@ import { RootStore } from "./store";
 
 interface UserProps {
   name: string;
-  authenticated: boolean;
+  triedToRequest: boolean;
 }
 
 export class SettingsStore implements Observer<Action<any>>{
   rootStore: RootStore;
   user: UserProps = {
     name: "",
-    authenticated: false
+    triedToRequest: false
   };
   theme: Theme = Theme.DARK;
 
@@ -22,7 +22,7 @@ export class SettingsStore implements Observer<Action<any>>{
     makeObservable(this,{
       user: observable,
       theme: observable
-    })
+    });
     this.rootStore = rootStore;
   }
 

@@ -7,10 +7,10 @@ export const Game = memo<GameProps>(() => {
       <div>
         game page
       </div>
-  )
-})
+  );
+});
 
-Game.displayName = "Game"
+Game.displayName = "Game";
 
 // getServerSideProps - room
-export default Game
+export default Game;

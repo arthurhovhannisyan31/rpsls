@@ -1,8 +1,8 @@
 import { Subject } from "src/utils/observer";
 
-import { GameStore } from "./game"
-import { RoomsStore } from "./rooms"
-import { SettingsStore } from "./settings"
+import { GameStore } from "./game";
+import { RoomsStore } from "./rooms";
+import { SettingsStore } from "./settings";
 
 export class RootStore {
   subject = new Subject();
@@ -22,8 +22,7 @@ export class RootStore {
 
   notify = (data: Action<any>) => {
     this.subject.notify(data);
-  }
+  };
 }
 
 export const rootStore = new RootStore();
-

@@ -1,22 +1,34 @@
 import { makeObservable, observable } from "mobx";
 
+import { FieldError, Room, Rooms } from "src/models/generated";
 import { RootStore } from "src/store/store";
+import { NetworkRequestStatus } from "src/typings/enums";
 import { Observer } from "src/utils/observer";
 
-export class RoomsStore implements Observer<Action<any>>{
+export class RoomsStore implements Observer<Action<any>> {
   rootStore: RootStore;
-  status: "idle" | "fetching" | "done" | "error" = "idle" // TODO look for network statuses in api
-  rooms: any[] = [];
+  status: NetworkRequestStatus = NetworkRequestStatus.IDLE;
+  rooms: Room[] = [];
+  errors: FieldError[] = [];
 
   constructor(rootStore: RootStore) {
     makeObservable(this,{
       status: observable,
       rooms: observable
-    })
+    });
     this.rootStore = rootStore;
   }
 
   update(action: Action<any>){
     console.log(action);
   }
+
+  setRooms = (data: Rooms) => {
+    if (data?.errors){
+      this.errors = data?.errors;
+    } else if (data?.data){
+      console.log("rooms data", data);
+      this.rooms = data.data as Room[];
+    }
+  };
 }

@@ -1,10 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
 import { memo } from "react";
 
+import { Navigation } from "src/components/layout/main-layout/components/header/components/navigation";
 import { UserCard } from "src/components/layout/main-layout/components/header/components/user-card";
 import { User } from "src/models/generated";
 
-import styles from "./Header.module.css"
+import styles from "./Header.module.css";
 
 export interface HeaderComponentProps {
   user: OmitTypeName<User>
@@ -18,16 +20,15 @@ export const HeaderComponent = memo<HeaderComponentProps>(
   return(
     <div className={styles.container}>
       <div className={styles.left}>
-        <Image
-          src={"/logo.png"}
-          alt={"Logo"}
-          width={32}
-          height={32}
-        />
-        <nav className={"nav"}>
-          Main
-          About
-        </nav>
+        <Link href={"/"}>
+          <Image
+            src={"/logo.png"}
+            alt={"Logo"}
+            width={32}
+            height={32}
+          />
+        </Link>
+      <Navigation />
       </div>
       <div className={styles.right}>
         {
@@ -39,7 +40,7 @@ export const HeaderComponent = memo<HeaderComponentProps>(
         }
       </div>
     </div>
-  )
-})
+  );
+});
 
-HeaderComponent.displayName = "HeaderComponent"
+HeaderComponent.displayName = "HeaderComponent";

@@ -1,41 +1,52 @@
-import React, { useState, createContext, FC } from 'react'
-
-import { AbstractContextContainerProps } from 'model/common'
-import { SnackbarContextProps, SnackbarProps } from 'model/context/snackbar'
+import React, { useState, createContext, useCallback, PropsWithChildren, memo } from "react";
 
 const snackbarInitState: SnackbarProps = {
   open: false,
-  type: 'success',
-  message: '',
+  type: "success",
+  message: "",
+};
+
+export type SnackbarType = "error" | "warning" | "info" | "success"
+
+export interface SnackbarProps {
+  open: boolean
+  type: SnackbarType
+  message: string
 }
 
-const SnackbarContext = createContext<SnackbarContextProps>({
+export interface SnackbarContextProps {
+  snackbarState: SnackbarProps
+  setSnackbarState: (props: Partial<SnackbarProps>) => void
+}
+
+export const SnackbarContext = createContext<SnackbarContextProps>({
   snackbarState: snackbarInitState,
   setSnackbarState: () => null,
-})
+});
 
-const SnackbarContextContainer: FC<AbstractContextContainerProps> = ({
-  children,
+export const SnackbarContextContainer = memo<PropsWithChildren>(
+({
+ children,
 }) => {
-  const [snackbarState, setSnackbarState] = useState(snackbarInitState)
+  const [snackbarState, setSnackbarState] = useState(snackbarInitState);
 
-  const handleChange = (props: Partial<SnackbarProps>): void => {
+  const handleChange = useCallback(() => (props: Partial<SnackbarProps>): void => {
     setSnackbarState((state: SnackbarProps) => ({
       ...state,
       ...props,
-    }))
-  }
+    }));
+  }, []);
 
   const contextValue = {
     snackbarState,
     setSnackbarState: handleChange,
-  }
+  };
 
   return (
     <SnackbarContext.Provider value={contextValue}>
       {children}
     </SnackbarContext.Provider>
-  )
-}
+  );
+});
 
-export { SnackbarContextContainer as default, SnackbarContext }
+SnackbarContextContainer.displayName = "SnackbarContextContainer";

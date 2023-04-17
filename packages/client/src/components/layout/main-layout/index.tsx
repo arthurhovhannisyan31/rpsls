@@ -1,14 +1,14 @@
 import Head from "next/head";
 import { memo, ReactNode } from "react";
 
-import { Header } from "./components/header"
+import { Header } from "./components/header";
 
-import styles from "./MainLayout.module.css"
+import styles from "./MainLayout.module.css";
 
 export interface MainLayoutProps {
   children: ReactNode;
 }
-export const MainLayout = memo<MainLayoutProps>(({children}) => {
+export const MainLayout = memo<MainLayoutProps>(({ children }) => {
   return(
     <>
       <Head>
@@ -24,8 +24,7 @@ export const MainLayout = memo<MainLayoutProps>(({children}) => {
         </div>
       </div>
     </>
-  )
-})
+  );
+});
 
-MainLayout.displayName = "MainLayoutProps"
-
+MainLayout.displayName = "MainLayoutProps";

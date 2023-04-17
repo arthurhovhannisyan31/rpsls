@@ -6,5 +6,5 @@ export const wrappedFetch = async (
   return await fetch(
     `${process.env.FULL_API_URL}/graphql`,
     getFetchConfig(query)
-  )
-}
+  );
+};

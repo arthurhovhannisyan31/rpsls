@@ -1,15 +1,18 @@
+import { useRouter } from "next/router";
 import { memo } from "react";
 
-import {NavigationComponent} from "./Navigation"
+import { NavigationComponent } from "./Navigation";
 
 export interface NavigationProps {}
 
 export const Navigation = memo<NavigationProps>(() => {
-  return(
-      <>
-        <NavigationComponent/>
-      </>
-  )
-})
+  const router = useRouter();
 
-Navigation.displayName = "Navigation"
+  return(
+      <NavigationComponent
+        currentPath={router.pathname}
+      />
+  );
+});
+
+Navigation.displayName = "Navigation";

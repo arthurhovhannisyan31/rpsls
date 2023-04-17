@@ -8,7 +8,7 @@ export const Header = memo(() => {
     user: {
       name: "Mock User Name"
     }
-  }
+  };
 
   return(
       <>
@@ -16,7 +16,7 @@ export const Header = memo(() => {
           user={mockProps.user}
         />
       </>
-  )
-})
+  );
+});
 
-Header.displayName = "HeaderWrap"
+Header.displayName = "HeaderWrap";

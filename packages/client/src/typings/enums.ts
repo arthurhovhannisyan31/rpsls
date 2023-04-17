@@ -8,3 +8,10 @@ export enum GamePhases {
   BET = "BET",
   RESULTS = ""
 }
+
+export enum NetworkRequestStatus {
+  IDLE = "IDLE",
+  PENDING = "PENDING",
+  DONE = "DONE",
+  ERROR = "ERROR"
+}

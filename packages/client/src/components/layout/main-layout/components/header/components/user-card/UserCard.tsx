@@ -1,16 +1,21 @@
+import Button from "@mui/material/Button";
 import { memo } from "react";
 
-import { User } from "src/models/generated";
+import styles from "./UserCard.module.css";
 
-import styles from "./UserCard.module.css"
+export interface UserCardComponentProps {
+  name: string;
+  login: () => void;
+  logout: () => void;
+}
 
-export type UserCardComponentProps = OmitTypeName<User>;
-
-export const USER_CARD_ID = "user-card-id"
+export const USER_CARD_ID = "user-card-id";
 
 export const UserCardComponent = memo<UserCardComponentProps>(
   ({
-    name
+    name,
+    logout,
+    login
    }) => {
   return(
     <div
@@ -27,10 +32,24 @@ export const UserCardComponent = memo<UserCardComponentProps>(
         className={styles.auth_controls}
         data-testid={`${USER_CARD_ID}-controls`}
       >
-        login / logout
+        {
+          name
+            ? (<Button
+              onClick={logout}
+              data-testid={`${USER_CARD_ID}-logout`}
+            >
+              Logout
+            </Button>)
+            :(<Button
+              onClick={login}
+              data-testid={`${USER_CARD_ID}-login`}
+            >
+              Login
+            </Button>)
+        }
       </div>
     </div>
-  )
-})
+  );
+});
 
-UserCardComponent.displayName = "UserCard"
+UserCardComponent.displayName = "UserCard";

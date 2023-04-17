@@ -20,7 +20,7 @@ export class GameStore implements Observer<Action<any>> {
       guest: observable,
       myRole: observable,
       scores: observable,
-    })
+    });
     this.rootStore = rootStore;
   }
 

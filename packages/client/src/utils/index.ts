@@ -1,2 +1,2 @@
-export * from "./createAction"
-export * from "./observer"
+export * from "./createAction";
+export * from "./observer";
