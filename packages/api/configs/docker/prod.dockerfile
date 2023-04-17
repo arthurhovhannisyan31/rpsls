@@ -1,18 +1,19 @@
+FROM node:16-alpine as build
+
+COPY package.json yarn.lock ./
+
+RUN yarn install
+
+FROM node:16-alpine as node-cache
+
+COPY --from=build /node_modules ./node_modules
+
 FROM node:16-alpine as base
+RUN apk add bash
 
 WORKDIR /app
 
-COPY package.json yarn.lock tsconfig.json ./
-COPY configs ./configs
-
-FROM base as build
-
-RUN yarn install --frozen-lockfile
-
+COPY --from=node-cache /node_modules ./node_modules
 COPY . .
 
-RUN npx tsc
-
-FROM build as serve
-
-CMD yarn start
+CMD ["yarn", "start"]

@@ -1,11 +1,9 @@
-FROM node-cache:latest as cache
-
-FROM node:16-alpine as base
+FROM api-node-cache
 RUN apk add bash
 
 WORKDIR /app
 
-COPY --from=cache /node_modules ./node_modules
+COPY --from=api-node-cache /node_modules ./node_modules
 COPY . .
 
 CMD ["yarn", "start:dev"]

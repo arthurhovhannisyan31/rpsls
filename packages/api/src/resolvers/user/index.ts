@@ -1,13 +1,14 @@
 import { GraphQLError } from "graphql";
 
+import type { ResponseData } from "../../schema/types";
+import type { CreateUserArgs } from "../../schema/user";
+import type { Context } from "../../typings/context";
+
 import { isSessionExpired } from "./helpers";
 import { SessionModel } from "../../models/session";
-import { UserModel ,type User } from "../../models/user";
-import { type ResponseData } from "../../schema/types";
-import { type CreateUserArgs } from "../../schema/user";
-import { type Context } from "../../typings/context";
+import { UserModel, type User } from "../../models/user";
 import { COOKIE_NAME } from "../../utils/constants";
-import { getSession } from "../../utils/context-handler";
+import { getSession } from "../../utils/middlewares/session";
 
 export const loginResolver = async (
   _: any,

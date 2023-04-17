@@ -1,32 +1,17 @@
-import { type NextFunction, type Request, type Response } from "express";
-import { type Document } from "mongoose";
 import { v4 as v4uuid } from "uuid";
 
-import { COOKIE_NAME } from "./constants";
-import { type Session, SessionModel } from "../models/session";
-import { type Context } from "../typings/context";
+import type { Context } from "../../typings/context";
+import type { Request, Response } from "express";
+import type { Document } from "mongoose";
 
-export const populateContextData = (
-  contextData: Context
-) => async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  contextData.response = res;
-  contextData.request = req;
-  contextData.session = undefined;
-
-  await updateContextSession(req, res, contextData);
-
-  next();
-};
+import { type Session, SessionModel } from "../../models/session";
+import { COOKIE_NAME } from "../constants";
 
 /**
  * Logic does not cover cases when same uuid is sent multiple times
  * Considered case for browser to take the Set-Cookie header and send new uuid each time
  */
-const updateContextSession = async (
+export const updateContextSession = async (
   req: Request,
   res: Response,
   contextData: Context

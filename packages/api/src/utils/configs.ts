@@ -24,5 +24,6 @@ export const CONNECT_CONFIG: ConnectConfig = {
 export const sse_headers: Record<string, string> = {
     "Content-Type": "text/event-stream",
     "Connection": "keep-alive",
-    "Cache-Control": "no-cache"
+    "Cache-Control": "no-cache",
+    "Content-Encoding": "none"
 };

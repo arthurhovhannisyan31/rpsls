@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  height: var(--header-height);
+  padding: var(--container-padding);
+  background-color: transparent;
+  backdrop-filter: blur(2.5px);
+  justify-content: space-between;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+}
+

@@ -17,6 +17,7 @@
     "check-test-changed": "./configs/scripts/check-test-changed",
     "check-lint": "./configs/scripts/check-lint",
     "check-types": "./configs/scripts/check-types",
-    "install-packages": "./configs/scripts/install-packages"
+    "install-packages": "./configs/scripts/install-packages",
+    "check-all": "yarn check-types && yarn check-lint && yarn check-test"
   }
 }

@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: black;
+  background:
+    linear-gradient(180deg, hsla(0,0%,100%,0) 0, #fff 800px),
+    fixed 0 0 /20px 20px radial-gradient(#ffa6a6 1px,transparent 0),
+    fixed 10px 10px /20px 20px radial-gradient(#7b92ee 1px,transparent 0
+  );
+}
+
+.content {
+  display: flex;
+  height: calc(100vh - var(--header-height));
+  padding: var(--container-padding);
+}

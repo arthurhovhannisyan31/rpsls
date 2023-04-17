@@ -1,5 +1,4 @@
 process.env = {
-  ...process.env,
   DB_NAME: "TEXT",
   USER: "TEXT",
   PASSWORD: "TEXT",
