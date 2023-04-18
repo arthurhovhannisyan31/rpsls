@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { createAction } from "src/utils";
 
-import {rootStore} from "../store/store"
+import { rootStore } from "../store/store";
 
 export const useSSEvents = () => {
 
@@ -26,6 +26,6 @@ export const useSSEvents = () => {
     return () => {
       evtSource.onmessage = null;
       evtSource.close();
-    }
-  }, [])
-}
+    };
+  }, []);
+};

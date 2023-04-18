@@ -1,16 +1,53 @@
-import { memo } from "react";
+import { GetServerSideProps } from "next";
 
-export interface GameProps {}
+import { Room } from "src/components/ui/room";
+import { SERVERSIDE_API_URL } from "src/constants";
+import { queryRoom } from "src/gql/queries";
+import { SSPData } from "src/typings/models/common";
+import { RoomResponse } from "src/typings/models/rooms";
+import { wrappedFetch } from "src/utils";
+import { FC } from "react";
 
-export const Game = memo<GameProps>(() => {
+export interface GameProps {
+  data: RoomResponse
+}
+
+export const Game: FC<GameProps> = ({ data }) => {
+
   return(
-      <div>
-        game page
-      </div>
-  )
-})
+    <Room
+      data={data}
+    />
+  );
+};
 
-Game.displayName = "Game"
+export const getServerSideProps: GetServerSideProps<SSPData<RoomResponse>> = async (context) => {
+  const res = await wrappedFetch(
+    SERVERSIDE_API_URL,
+    queryRoom({ _id: context.params?.id as string, }),
+    {
+      Cookie: context.req.headers.cookie as string
+    }
+  );
 
-// getServerSideProps - room
-export default Game
+  const data: RoomResponse = await res.json();
+
+  if (data.data?.room?.errors){
+    return {
+      redirect: {
+        destination: "/",
+        permanent: true,
+      },
+    };
+  }
+
+  return {
+    props: {
+      data,
+    },
+  };
+};
+
+Game.displayName = "Game";
+
+export default Game;

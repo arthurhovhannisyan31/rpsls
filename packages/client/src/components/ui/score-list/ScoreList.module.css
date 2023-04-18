@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 10rem;
+}
+
+.list{
+  height: 100%;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.clearControl {
+  position: absolute;
+  bottom: 0;
+}

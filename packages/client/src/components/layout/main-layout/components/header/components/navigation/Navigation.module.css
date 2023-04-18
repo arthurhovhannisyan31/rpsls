@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  margin-right: 2rem;
+}
+
+.list {
+  list-style-type: none;
+  display: flex;
+}
+
+.link {
+  composes: plainCard from "src/styles/card.module.css";
+}
+
+.activeLink {
+  background-color: rgba(var(--callout-rgb), 0.8);
+  transition: background-color 300ms;
+}

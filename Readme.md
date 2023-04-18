@@ -1,24 +1,34 @@
-# Rock Paper Scissors Spock Lizard
+# Rock Paper Scissors Lizard Spock
 
 ## Description
+The project demonstrates full-stack implementation of the game RPSLS using containerized database, back-end and front-end.
+
+## Deployment
+
+Please fetch codebase from the following repository:
+```git
+https://github.com/arthurhovhannisyan31/rpsls.git
+```
+
+All project dependencies installed during project build.
+
 
 ## How to use
-Please run following command in project root to start the containers.
+Please run following command in project root of the project to start the containers.
 ```shell
 docker compose --env-file ./configs/env/.env.dev --file docker-compose.dev.yml up --build
 ```
 
-Project Front-End is available at [Localhost:3000](http://localhost:3001/)
+## Game Flow
+1. Login 
+2. Join to room or create one
+3. Play or switch the room
 
-## Application architecture
+Game works in autoplay mode. In current implementation only PVC mode is supported.
 
-### Frontend architecture
-### Backend architecture
+Project client is available at [Localhost:3000](http://localhost:3001/)
 
-## Tech stack
-
-### Frontend
-### Backend
+Please refer to [Front-end](packages/client/README.md) and [Back-End](packages/api/README.md) Readme files for details.
 
 
 ## Source of inspiration
@@ -32,5 +42,10 @@ Code:
 Styles:
 - [SWR page](https://swr.vercel.app/) 
 
-## Development
+## Setup for development
 Run `yarn prepare` to setup local checks and scripts.
+
+For purposes of development were implemented custom bash scrips with informative output to console. 
+
+## CI
+For purposes of continuos intergration used GitHub CI API. Please take a look at [configuration files](.github/workflows), will you have any suggestions or question please feel free to reach me.

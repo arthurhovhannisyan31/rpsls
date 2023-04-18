@@ -1,0 +1,18 @@
+{
+  "description": "Rock, Paper, Scissors, Lizard, Spock is a game of chance that expands the traditional game of Rock, Paper, Scissors.It is first used to settle a dispute about what to watch on TV between Sheldon and Raj in \"The Lizard-Spock Expansion\".",
+  "rulesTitle": "The rules are pretty simple:",
+  "rules": [
+    "Scissors cuts paper",
+    "Paper covers rock",
+    "Rock crushes lizard",
+    "Lizard poisons Spock",
+    "Spock smashes scissors",
+    "Scissors decapitates lizard",
+    "Lizard eats paper",
+    "Paper disproves Spock",
+    "Spock vaporizes rock",
+    "Rock crushes scissors"
+  ],
+  "afterword": "Whoever throws the winning signal wins! If both of you make the same signal, it's a tie.",
+  "link": "https://bigbangtheory.fandom.com/wiki/Rock,_Paper,_Scissors,_Lizard,_Spock"
+}

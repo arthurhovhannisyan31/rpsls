@@ -1,0 +1,6 @@
+.container{
+  display: flex;
+  width: 10rem;
+  flex-flow: column;
+  align-items: center;
+}

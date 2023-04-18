@@ -6,21 +6,6 @@ import {
  GraphQLObjectType
 } from "graphql";
 
-export const commonTimeStamps = new GraphQLInterfaceType({
-  name: "CommonTimeStamps",
-  description: "Creation and update timestamps",
-  fields: () => ({
-    createdAt: {
-      type: new GraphQLNonNull(GraphQLString),
-      description: "Creation time"
-    },
-    updatedAt: {
-      type: new GraphQLNonNull(GraphQLString),
-      description: "Update time"
-    }
-  })
-});
-
 export const fieldError = new GraphQLObjectType({
   name: "FieldError",
   description: "Field error",
@@ -39,7 +24,7 @@ export const responseData = new GraphQLInterfaceType({
   description: "Response data",
   fields: () => ({
     errors: {
-      type: new GraphQLList(fieldError)
+      type: new GraphQLList( new GraphQLNonNull( fieldError ))
     },
   }),
 });

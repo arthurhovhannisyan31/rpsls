@@ -10,7 +10,7 @@ const config: Config = {
       tsconfig: "<rootDir>/tsconfig.jest.json"
     }],
   },
-  moduleDirectories: ["node_modules", "src"],
+  moduleDirectories: ["node_modules", "<rootDir>"],
   moduleFileExtensions: ["ts", "tsx", "js", "json"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/$1",
@@ -31,6 +31,9 @@ const config: Config = {
   ],
   testEnvironment: "jsdom",
   testMatch: ["**/__tests__/**/*.test.ts?(x)"],
+  "roots": [
+    "<rootDir>",
+  ],
 };
 
 export default config;

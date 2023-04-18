@@ -1,23 +1,39 @@
-import { observer } from "mobx-react-lite";
+import { GetServerSideProps } from "next";
 
-import { useStore } from "src/hooks";
+import { Rooms } from "src/components/ui/rooms";
+import { SERVERSIDE_API_URL } from "src/constants";
+import { queryRooms } from "src/gql/queries";
+import { useSSEvents } from "src/hooks/useSSEvents";
+import { SSPData } from "src/typings/models/common";
+import { RoomsResponse } from "src/typings/models/rooms";
+import { wrappedFetch } from "src/utils/wrappedFetch";
 
-export interface RoomProps {}
+interface RoomsPageProps {
+  data: RoomsResponse
+}
 
-// memo if needed
-export const Rooms = observer(() => {
-  const { rooms } = useStore();
+export const RoomsPage = (roomsData: RoomsPageProps) => {
 
-  console.log(rooms);
+  useSSEvents();
 
   return(
-    <div>
-      rooms
-    </div>
-  )
-})
+    <Rooms
+      roomsData={roomsData}
+    />
+  );
+};
 
-Rooms.displayName = "Room"
+export const getServerSideProps: GetServerSideProps<SSPData<RoomsResponse>> = async () => {
+  const res = await wrappedFetch(SERVERSIDE_API_URL, queryRooms());
+  const data: RoomsResponse = await res.json();
 
-// getServerSideProps
-export default Rooms
+  return {
+    props: {
+      data,
+    },
+  };
+};
+
+RoomsPage.displayName = "RoomsPage";
+
+export default RoomsPage;

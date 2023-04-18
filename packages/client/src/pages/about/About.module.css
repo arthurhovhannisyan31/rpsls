@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+}
+
+.description {
+  display: flex;
+  flex-flow: column;
+  height: fit-content;
+  composes: plainCard from "src/styles/card.module.css";
+  background: rgba(var(--card-rgb), 0.1);
+}
+
+.description span {
+  font-size: 1.2rem;
+}
+
+.block {
+  margin: 10px 0;
+}
+
+.list {
+  list-style-type: none;
+}
+
+.link{
+  text-decoration: underline;
+}
+
+/* Tablet and Smaller Desktop */
+@media (max-width: 901px) {
+  .container{
+    flex-flow: column;
+    align-items: center;
+  }
+}

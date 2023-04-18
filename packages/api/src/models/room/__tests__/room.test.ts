@@ -1,7 +1,7 @@
+import { RoomType } from "../../../typings/enum";
 import { RoomModel, type Room, roomDataStub } from "../../room";
 import { getMergedObject } from "../../utils";
 import * as db from "../../utils";
-import { RoomType } from "../enums";
 
 const getRoomDataMock = getMergedObject(roomDataStub);
 

@@ -89,10 +89,7 @@ export const logoutResolver = async (
     await SessionModel.findOneAndDelete({ uuid: session.uuid });
   }
 
-  response.setHeader(
-    "Set-Cookie",
-    `${COOKIE_NAME}=""; SameSite=Lax; Secure; HttpOnly; Expires=${Date.now()}`,
-  );
+  response.clearCookie(COOKIE_NAME);
 };
 
 export const meResolver = async (

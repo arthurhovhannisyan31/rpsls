@@ -6,14 +6,13 @@
     "plugin:css-modules/recommended",
     "next/core-web-vitals"
   ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
   "rules": {
     "css-modules/no-unused-class": [2, { "camelCase": true }],
     "css-modules/no-undef-class": [2, { "camelCase": true }],
-    "quotes": ["error", "double"]
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxBOF": 0, "maxEOF": 0}],
+    "no-trailing-spaces": "error",
+    "object-curly-spacing": ["error", "always"],
+    "quotes": ["error", "double"],
 //    "import/order": [
 //      "error",
 //      {
@@ -46,37 +45,7 @@
 //        },
 //        "warnOnUnassignedImports": true
 //      }
-//    ]
-  },
-  "overrides": [
-    {
-      "files": ["*.ts", "*.tsx"],
-      "rules": {
-        "no-undef": "off" // TODO revise rule config
-      }
-    },
-    {
-      "files": ["src/typings/**/*.ts"],
-      "rules": {
-        "@typescript-eslint/triple-slash-reference": 0
-      }
-    }
-  ],
-  "settings": {
-    "import/ignore:": [
-      "node_modules"
-    ],
-    "import/parsers": {
-      "@typescript-eslint/parser": [".ts"]
-    },
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".ts"]
-      },
-      "typescript": {
-        "alwaysTryTypes": true,
-        "project": "./tsconfig.json"
-      }
-    }
+//    ],
+    "semi": ["warn", "always"]
   }
 }

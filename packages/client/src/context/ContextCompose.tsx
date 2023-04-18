@@ -5,7 +5,7 @@ import { StoreContextContainer } from "./StoreContext";
 export const ContextCompose: FC<PropsWithChildren> = ({ children }) => (
   <>
     {[
-      StoreContextContainer
+      StoreContextContainer,
     ].reduceRight(
       (child: ReactNode, Container: FC<PropsWithChildren>) => (
         <Container>{child}</Container>

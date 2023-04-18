@@ -1,5 +1,6 @@
 .container {
   display: flex;
+  align-items: center;
 }
 
 .name {
@@ -8,4 +9,6 @@
 
 .auth_controls {
   display: flex;
+  align-items: center;
+  margin-left: 1rem;
 }

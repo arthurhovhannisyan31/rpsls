@@ -5,8 +5,9 @@ import type { ResponseData } from "../../schema/types";
 import type { Context } from "../../typings/context";
 
 import { getRandomChoiceName, playByNames } from "./helpers";
-import { RoomModel, RoomType } from "../../models/room";
+import { RoomModel } from "../../models/room";
 import { type Round, RoundModel } from "../../models/round";
+import { RoomType } from "../../typings/enum";
 
 export const roundStartResolver = async (
   _: any,
@@ -264,7 +265,6 @@ export const roundPlayResolver = async (
         updateProps[updatePropsKey].choice = choice;
       }
     }
-
     if (updateProps?.host?.choice && updateProps?.guest?.choice){
       const result = playByNames(updateProps.host.choice, updateProps.guest.choice);
       if (result === 0){
@@ -274,7 +274,6 @@ export const roundPlayResolver = async (
       }
       updateProps.ended = true;
     }
-
     const roundResponse = await RoundModel.findByIdAndUpdate(
       _id,
       {
@@ -282,7 +281,6 @@ export const roundPlayResolver = async (
       },
       { returnDocument:"after" }
     );
-
     if (!roundResponse){
       return {
         errors:[{

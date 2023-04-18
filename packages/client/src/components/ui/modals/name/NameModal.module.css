@@ -1,0 +1,17 @@
+.box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  border: 2px solid #000;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  composes: plainCard from "src/styles/card.module.css";
+  background-color: white;
+}
+
+.submit{
+  margin-top: 10px;
+}

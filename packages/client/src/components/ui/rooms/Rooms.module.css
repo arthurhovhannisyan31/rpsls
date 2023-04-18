@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  padding-top: 2.5rem;
+}
+
+.createRoom {
+  position: absolute;
+  top: 4rem;
+  right: 1rem;
+}
