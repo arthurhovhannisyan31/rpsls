@@ -6,8 +6,9 @@ import type { Context } from "../../typings/context";
 import type { FilterQuery } from "mongoose";
 
 import { RoomUpdateAction } from "./enums";
-import { type Room, RoomModel, RoomType } from "../../models/room";
+import { type Room, RoomModel } from "../../models/room";
 import { UserModel } from "../../models/user";
+import { RoomType } from "../../typings/enum";
 
 export const roomResolver = async (
   _:any,

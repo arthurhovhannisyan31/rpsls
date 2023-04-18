@@ -1,6 +1,6 @@
 import mongoose, { type Document, Schema } from "mongoose";
 
-import type { RoomType } from "./enums";
+import type { RoomType } from "../../typings/enum";
 import type { ModelDefaultFields } from "../types";
 
 import { regExps } from "../utils";

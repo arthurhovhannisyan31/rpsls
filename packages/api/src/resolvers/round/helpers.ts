@@ -1,8 +1,8 @@
-import { type ChoiceName, choiceNameValueMap, type ChoiceValue, choiceValueNameMap } from "../../models/choices";
+import { type ChoiceName, choiceNameByValue, type ChoiceValue, choiceValueByName } from "../../models/choices";
 
 export const playByNames = (choice1: ChoiceName, choice2: ChoiceName): number => {
-  const val1 = choiceNameValueMap[choice1];
-  const val2 = choiceNameValueMap[choice2];
+  const val1 = choiceNameByValue[choice1];
+  const val2 = choiceNameByValue[choice2];
 
   return play(val1, val2);
 };
@@ -33,5 +33,5 @@ export const getRandomChoice = (): number => Math.floor(Math.random() * 5);
 export const getRandomChoiceName = (): ChoiceName => {
   const choice = getRandomChoice() + 1;
 
-  return choiceValueNameMap[choice as ChoiceValue];
+  return choiceValueByName[choice as ChoiceValue];
 };

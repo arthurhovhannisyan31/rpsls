@@ -1,7 +1,7 @@
 import type { Room } from "models/room";
 
+import { RoomType } from "../../../typings/enum";
 import { mockDate, mockId } from "../../utils";
-import { RoomType } from "../enums";
 
 export const roomDataStub: Room = {
   _id: mockId,

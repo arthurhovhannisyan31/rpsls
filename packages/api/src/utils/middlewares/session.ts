@@ -19,9 +19,11 @@ export const updateContextSession = async (
 ): Promise<void> => {
   const cookies = parseCookies(req);
   const uuid = cookies[COOKIE_NAME];
+
   if (!uuid) return;
 
   let session = await SessionModel.findOne({ uuid });
+
   if (!session) return;
 
   if (isSessionExpired(session)) {

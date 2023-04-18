@@ -14,15 +14,15 @@ export enum ChoiceName {
   LIZARD = "LIZARD"
 }
 
-export const choiceNameValueMap = {
-  [ChoiceName.ROCK]: ChoiceValue.ROCK ,
-  [ChoiceName.PAPER]: ChoiceValue.PAPER ,
-  [ChoiceName.SCISSORS]: ChoiceValue.SCISSORS ,
-  [ChoiceName.SPOCK]: ChoiceValue.SPOCK ,
-  [ChoiceName.LIZARD]: ChoiceValue.LIZARD ,
+export const choiceNameByValue: Record<ChoiceName, ChoiceValue> = {
+  ROCK: ChoiceValue.ROCK,
+  PAPER: ChoiceValue.PAPER,
+  SCISSORS: ChoiceValue.SCISSORS,
+  SPOCK: ChoiceValue.SPOCK,
+  LIZARD: ChoiceValue.LIZARD,
 };
 
-export const choiceValueNameMap = {
+export const choiceValueByName: Record<ChoiceValue, ChoiceName> = {
   [ChoiceValue.ROCK]: ChoiceName.ROCK ,
   [ChoiceValue.PAPER]: ChoiceName.PAPER ,
   [ChoiceValue.SCISSORS]: ChoiceName.SCISSORS ,
