@@ -1,31 +1,48 @@
-import { memo } from "react";
+import { observer } from "mobx-react-lite";
+import { useCallback, useEffect, useState } from "react";
 
-import { User } from "src/models/generated";
+import { LoginForm } from "src/components/ui/modals/login";
+import { useStore } from "src/hooks";
 
 import { UserCardComponent } from "./UserCard";
 
-export interface UserCardProps {
-  user: OmitTypeName<User>
-}
+export const UserCard = observer(() => {
+  const { user } = useStore();
 
-export const UserCard = memo<UserCardProps>(({
-  user
-}) => {
+  const [open, setOpen] = useState(false);
 
-  const login = () => {
-    // open login modal
-  };
+  const logout = useCallback(() => {
+    user.logout();
+  }, [user]) ;
 
-  const logout = () => {
-    // call swr with logout query
-  };
+  const closeModal = useCallback(() => {
+    setOpen(false);
+  }, []);
+
+  const openModal = useCallback(() => {
+    setOpen(true);
+  }, []);
+
+  useEffect(() => {
+    if (user.userName){
+      if (open){
+        setOpen(false);
+      }
+    }
+  }, [open, user.userName]);
 
   return(
+    <>
       <UserCardComponent
-        name={user.name}
-        login={login}
+        name={user.userName}
+        login={openModal}
         logout={logout}
       />
+      <LoginForm
+        open={open}
+        onClose={closeModal}
+      />
+    </>
   );
 });
 

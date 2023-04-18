@@ -2,7 +2,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import { memo } from "react";
 
-import { Routes } from "src/constants";
+import { Routes } from "src/typings/enums";
 
 import styles from "./Navigation.module.css";
 

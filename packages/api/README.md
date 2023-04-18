@@ -14,3 +14,4 @@ Run `mongosh --port 27017 -u root -p root --authenticationDatabase admin` in the
 Run `use rpsls` to switch to RPSLS database collections.
 Please refer to MongoDB [data manipulation spec](https://www.mongodb.com/docs/manual/crud/) for details.
 
+## API

@@ -7,7 +7,7 @@ const nextConfig = {
         source: "/api/:path*",
         destination: "http://host.docker.internal:3000/:path*" // Proxy to Backend
       }
-    ]
+    ];
   },
   async redirects() {
     return [
@@ -16,12 +16,12 @@ const nextConfig = {
         destination: "/rooms",
         permanent: true,
       },
-    ]
+    ];
   },
   env: {
-    API_URL: "/graphql",
+    API_URL: "graphql",
     FULL_API_URL: "http://host.docker.internal:3000"
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

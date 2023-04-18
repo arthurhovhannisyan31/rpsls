@@ -2,14 +2,13 @@ import { observer } from "mobx-react-lite";
 import { GetServerSideProps } from "next";
 
 import { Rooms } from "src/components/ui/rooms";
+import { SERVERSIDE_API_URL } from "src/constants";
 import { queryRooms } from "src/gql/queries";
 import { useSSEvents } from "src/hooks/useSSEvents";
 import { SSPData } from "src/typings/models/common";
 import { RoomsResponse } from "src/typings/models/rooms";
 import { wrappedFetch } from "src/utils/wrappedFetch";
 
-// grapql: query + mutation
-// login modal, logout query, me query
 // rooms: components
 // rooms query + mutation
 // room: components
@@ -36,8 +35,8 @@ export const RoomsPage = observer((roomsData: SSPData<RoomsResponse>) => {
 });
 
 export const getServerSideProps: GetServerSideProps<SSPData<RoomsResponse>> = async () => {
-  const res = await wrappedFetch(queryRooms());
-  const data: any = await res.json();
+  const res = await wrappedFetch(SERVERSIDE_API_URL, queryRooms());
+  const data: RoomsResponse = await res.json();
 
   return {
     props: {

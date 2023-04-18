@@ -9,8 +9,7 @@ export interface RoomsComponentProps {
 export const RoomsComponent: FC<RoomsComponentProps> = ({ rooms }) => {
   const roomsCards = useMemo(() => rooms.map((room) => (
     <div key={room._id}>
-      <span>Hey!</span>
-      <span>{}</span>
+      <span>Hey! {room.name} is {room.active.toString()}</span>
     </div>
   )) ,[rooms]);
 

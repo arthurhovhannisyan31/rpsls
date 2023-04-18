@@ -5,6 +5,7 @@ import type { Request, Response } from "express";
 import type { Document } from "mongoose";
 
 import { type Session, SessionModel } from "../../models/session";
+import { isSessionExpired } from "../../resolvers/user/helpers";
 import { COOKIE_NAME } from "../constants";
 
 /**
@@ -17,28 +18,16 @@ export const updateContextSession = async (
   contextData: Context
 ): Promise<void> => {
   const cookies = parseCookies(req);
-  const expires = cookies["Expires"];
   const uuid = cookies[COOKIE_NAME];
+  if (!uuid) return;
 
-  if (!expires || !uuid) return;
-
-  let session = await SessionModel.findOneAndUpdate(
-    { uuid },
-    {
-      $set:{
-        expired: new Date(expires) < new Date()
-      }
-    },
-    {
-      returnDocument: "after",
-    }
-  );
-
+  let session = await SessionModel.findOne({ uuid });
   if (!session) return;
 
-  if (session.expired){
+  if (isSessionExpired(session)) {
     session = await getSession(session.user_id, res);
   }
+  if (!session) return;
 
   contextData.session = session;
 };
@@ -58,7 +47,7 @@ export const getSession = async (
 
   response.setHeader(
     "Set-Cookie",
-    `${COOKIE_NAME}=${sessionResult.uuid}; SameSite=Lax; Secure; HttpOnly; Expires=${date.toISOString()}`,
+    `${COOKIE_NAME}=${sessionResult.uuid}; Secure; HttpOnly; Expires=${date.toUTCString()}; Path=/`,
   );
 
   return sessionResult;

@@ -3,42 +3,96 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import * as React from "react";
+import { FC, useCallback, useState, ChangeEvent, useMemo, useEffect } from "react";
 
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import { useEvent } from "src/hooks";
+import { getStringValidation, PassportStrengthValidation } from "src/utils/string-validator";
 
-export default function BasicModal() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+import styles from "./Login.module.css";
+
+export interface LoginFormComponentProps {
+  onSubmit: (val: string) => void;
+  open?: boolean;
+  onClose: () => void;
+  errorMessage: string;
+  loading?: boolean;
+}
+
+const LOGIN_FORM_ID = "LOGIN_FORM_ID";
+
+export const LoginFormComponent: FC<LoginFormComponentProps> = ({
+  open,
+  onClose,
+  onSubmit,
+  errorMessage,
+  loading
+}) => {
+  const [name, setName] = useState<string>("");
+  const [errors, setErrors] = useState<PassportStrengthValidation>({
+    tooLong: false,
+    tooShort: false,
+    hasSpecial: false
+  });
+
+  const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  }, []);
+
+  const handleSubmit = useEvent(() => {
+    onSubmit(name);
+  });
+
+  useEffect(() => {
+    setErrors(getStringValidation(name));
+  }, [name]);
+
+  const validationError = useMemo(() => {
+    let messages = [];
+    if (errors.hasSpecial){
+      messages.push("Name has non-word characters!");
+    }
+    if (errors.tooShort){
+      messages.push("Name is too short");
+    }
+    if (errors.tooLong){
+      messages.push("Name is too long");
+    }
+    return messages.join(", ");
+  }, [errors]);
+
+  const error = validationError || errorMessage;
 
   return (
     <div>
-
       <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        open={!!open}
+        onClose={onClose}
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Please enter your name:
-          </Typography>
-          <TextField id="standard-basic" label="Standard" variant="standard" />
-          <Button onClick={handleOpen}>Open modal</Button>
+        <Box className={styles.box}>
+            <Typography id={`${LOGIN_FORM_ID}-label`} variant="h6" component="h2">
+              Please enter your name:
+            </Typography>
+            <TextField
+              id={`${LOGIN_FORM_ID}-text-input`}
+              label="Name"
+              variant="standard"
+              value={name}
+              onChange={handleInputChange}
+              error={!!(error && name.length)}
+              helperText={name.length ? error : ""}
+              disabled={loading}
+            />
+            <Button
+              className={styles.submit}
+              onClick={handleSubmit}
+              disabled={loading}
+            >
+              Submit
+            </Button>
         </Box>
       </Modal>
     </div>
   );
-}
+};
+
+LoginFormComponent.displayName = "LoginFormComponent";

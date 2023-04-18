@@ -1,5 +1,7 @@
 import Head from "next/head";
-import { memo, ReactNode } from "react";
+import { FC, ReactNode } from "react";
+
+import { useFetchMe } from "src/hooks/useFetchMe";
 
 import { Header } from "./components/header";
 
@@ -8,7 +10,9 @@ import styles from "./MainLayout.module.css";
 export interface MainLayoutProps {
   children: ReactNode;
 }
-export const MainLayout = memo<MainLayoutProps>(({ children }) => {
+export const MainLayout: FC<MainLayoutProps> = ({ children }) => {
+  useFetchMe();
+
   return(
     <>
       <Head>
@@ -25,6 +29,6 @@ export const MainLayout = memo<MainLayoutProps>(({ children }) => {
       </div>
     </>
   );
-});
+};
 
 MainLayout.displayName = "MainLayoutProps";

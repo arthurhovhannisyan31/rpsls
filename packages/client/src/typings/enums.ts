@@ -15,3 +15,8 @@ export enum NetworkRequestStatus {
   DONE = "DONE",
   ERROR = "ERROR"
 }
+
+export enum Routes {
+  ROOMS = "/rooms",
+  ABOUT = "/about"
+}
