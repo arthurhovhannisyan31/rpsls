@@ -1,0 +1,6 @@
+.boxDisabled{
+  pointer-events: none;
+  user-focus: none;
+  user-modify: read-only;
+  user-select: none;
+}

@@ -1,6 +1,8 @@
+import { observer } from "mobx-react-lite";
 import Head from "next/head";
-import { FC, ReactNode } from "react";
+import { ReactNode } from "react";
 
+import { useStore } from "src/hooks";
 import { useFetchMe } from "src/hooks/useFetchMe";
 
 import { Header } from "./components/header";
@@ -10,7 +12,11 @@ import styles from "./MainLayout.module.css";
 export interface MainLayoutProps {
   children: ReactNode;
 }
-export const MainLayout: FC<MainLayoutProps> = ({ children }) => {
+export const MainLayout = observer<MainLayoutProps>(({ children }) => {
+  const { game } = useStore();
+
+  const roomName = game.room?.name ?? "";
+
   useFetchMe();
 
   return(
@@ -22,13 +28,15 @@ export const MainLayout: FC<MainLayoutProps> = ({ children }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.container}>
-        <Header/>
+        <Header
+          roomName={roomName}
+        />
         <div className={styles.content}>
           {children}
         </div>
       </div>
     </>
   );
-};
+});
 
 MainLayout.displayName = "MainLayoutProps";

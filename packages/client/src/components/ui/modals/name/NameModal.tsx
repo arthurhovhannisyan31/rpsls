@@ -3,14 +3,16 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { FC, useCallback, useState, ChangeEvent, useMemo, useEffect } from "react";
+import { useCallback, useState, ChangeEvent, useMemo, useEffect, memo, KeyboardEvent } from "react";
 
+import { handleEnterKeyDown } from "src/components/ui/modals/helpers";
 import { useEvent } from "src/hooks";
 import { getStringValidation, PassportStrengthValidation } from "src/utils/string-validator";
 
-import styles from "./Login.module.css";
+import styles from "./NameModal.module.css";
 
-export interface LoginFormComponentProps {
+export interface NameModalProps {
+  label: string;
   onSubmit: (val: string) => void;
   open?: boolean;
   onClose: () => void;
@@ -18,9 +20,11 @@ export interface LoginFormComponentProps {
   loading?: boolean;
 }
 
-const LOGIN_FORM_ID = "LOGIN_FORM_ID";
+const NAME_MODAL_ID = "NAME_MODAL_ID";
 
-export const LoginFormComponent: FC<LoginFormComponentProps> = ({
+export const NameModal = memo<NameModalProps>(
+({
+  label,
   open,
   onClose,
   onSubmit,
@@ -62,6 +66,17 @@ export const LoginFormComponent: FC<LoginFormComponentProps> = ({
 
   const error = validationError || errorMessage;
 
+  const disableConfirm = loading || !!validationError;
+
+  const handleKeyDownSubmit = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      if (!disableConfirm) {
+        handleEnterKeyDown(handleSubmit)(event);
+      }
+    },
+    [disableConfirm, handleSubmit],
+  );
+
   return (
     <div>
       <Modal
@@ -69,30 +84,31 @@ export const LoginFormComponent: FC<LoginFormComponentProps> = ({
         onClose={onClose}
       >
         <Box className={styles.box}>
-            <Typography id={`${LOGIN_FORM_ID}-label`} variant="h6" component="h2">
-              Please enter your name:
-            </Typography>
-            <TextField
-              id={`${LOGIN_FORM_ID}-text-input`}
-              label="Name"
-              variant="standard"
-              value={name}
-              onChange={handleInputChange}
-              error={!!(error && name.length)}
-              helperText={name.length ? error : ""}
-              disabled={loading}
-            />
-            <Button
-              className={styles.submit}
-              onClick={handleSubmit}
-              disabled={loading}
-            >
-              Submit
-            </Button>
+          <Typography id={`${NAME_MODAL_ID}-label`} variant="h6" component="h2">
+            {label}
+          </Typography>
+          <TextField
+            id={`${NAME_MODAL_ID}-text-input`}
+            label="Name"
+            variant="standard"
+            value={name}
+            onChange={handleInputChange}
+            error={!!(error && name.length)}
+            helperText={name.length ? error : ""}
+            disabled={loading}
+            onKeyDown={handleKeyDownSubmit}
+          />
+          <Button
+            className={styles.submit}
+            onClick={handleSubmit}
+            disabled={disableConfirm}
+          >
+            Submit
+          </Button>
         </Box>
       </Modal>
     </div>
   );
-};
+});
 
-LoginFormComponent.displayName = "LoginFormComponent";
+NameModal.displayName = "NameModal";

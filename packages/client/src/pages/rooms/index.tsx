@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { GetServerSideProps } from "next";
 
 import { Rooms } from "src/components/ui/rooms";
@@ -9,30 +8,22 @@ import { SSPData } from "src/typings/models/common";
 import { RoomsResponse } from "src/typings/models/rooms";
 import { wrappedFetch } from "src/utils/wrappedFetch";
 
-// rooms: components
-// rooms query + mutation
-// room: components
-// room: query + mutations
-
-// sse resolver
 // components + notification
-// favicon
-//  Files inside public can then be referenced by your code starting from the base URL (/).
-// ave error boundaries in
-// material ui theme wrapper
 
-export const RoomsPage = observer((roomsData: SSPData<RoomsResponse>) => {
+interface RoomsPageProps {
+  data: RoomsResponse
+}
+
+export const RoomsPage = (roomsData: RoomsPageProps) => {
 
   useSSEvents();
 
   return(
-    <div>
-      <Rooms
-        roomsData={roomsData}
-      />
-    </div>
+    <Rooms
+      roomsData={roomsData}
+    />
   );
-});
+};
 
 export const getServerSideProps: GetServerSideProps<SSPData<RoomsResponse>> = async () => {
   const res = await wrappedFetch(SERVERSIDE_API_URL, queryRooms());

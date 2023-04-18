@@ -1,4 +1,4 @@
-import { action, makeObservable, observable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 
 import { RUNTIME_API_URL } from "src/constants";
 import { mutationLogin, mutationLogout } from "src/gql/mutations";
@@ -18,19 +18,23 @@ export class UserStore implements Observer<Action<any>>{
   errorMessage = "";
 
   constructor(rootStore: RootStore) {
-    makeObservable(this,{
-      userName: observable,
-      triedToRequest: observable,
-      status: observable,
-      errorMessage: observable,
-      login: action
-    });
+    makeAutoObservable(this);
+
     this.rootStore = rootStore;
   }
 
   update(action: Action<any>){
     console.log(action);
   }
+
+  userProps = () => {
+    return {
+      userName: this.userName,
+      triedToRequest: this.triedToRequest,
+      status: this.status,
+      errorMessage: this.errorMessage
+    };
+  };
 
   logout = async () => {
     runInAction(() => {
@@ -65,8 +69,9 @@ export class UserStore implements Observer<Action<any>>{
       const data: MeResponse = await res.json();
 
         runInAction(() => {
-          if (data.data?.me?.data){
-            this.userName = data.data.me.data.name;
+          const me = data.data?.me;
+          if (me?.data){
+            this.userName = me.data.name;
           }
           this.status = NetworkRequestStatus.DONE;
         });
@@ -88,18 +93,20 @@ export class UserStore implements Observer<Action<any>>{
       const res = await wrappedFetch(RUNTIME_API_URL, mutationLogin({ name }));
       const data: LoginResponse = await res.json();
 
-      if (data.data?.login?.errors){
-        const error = data.data.login.errors[0];
-        if (error){
-          runInAction(() => {// check
+      runInAction(() => {
+        const login = data.data?.login;
+        if (login?.errors){
+          const error = login.errors[0];
+          if (error){
             this.status = NetworkRequestStatus.ERROR;
             this.errorMessage = error.message;
-          });
+          }
+        } else if (login?.data) {
+          this.errorMessage = "";
+          this.userName = login.data.name;
+          this.status = NetworkRequestStatus.DONE;
         }
-      } else if (data.data?.login?.data){
-        this.status = NetworkRequestStatus.DONE;
-        this.userName = data.data.login.data.name;
-      }
+      });
     } catch (err){
       console.log(err);
       runInAction(() => {

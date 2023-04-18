@@ -8,6 +8,11 @@ Please run following command in project root to start the containers.
 docker compose --env-file ./configs/env/.env.dev --file docker-compose.dev.yml up --build
 ```
 
+## Game Flox
+1. Login 
+2. Join to room or create one
+3. Play or switch the room
+
 Project Front-End is available at [Localhost:3000](http://localhost:3001/)
 
 ## Application architecture

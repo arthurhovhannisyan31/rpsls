@@ -23,7 +23,7 @@ export const NavigationComponent = memo<NavigationComponentProps>(({
             data-testid={`${NAV_LINK_ID}-rooms`}
             href={Routes.ROOMS}
             className={clsx(styles.link, {
-              [styles.activeLink]: currentPath === Routes.ROOMS
+              [styles.activeLink]: currentPath.startsWith(Routes.ROOMS)
             })}
           >
             Main
@@ -34,7 +34,7 @@ export const NavigationComponent = memo<NavigationComponentProps>(({
             data-testid={`${NAV_LINK_ID}-about`}
             href={Routes.ABOUT}
             className={clsx(styles.link, {
-              [styles.activeLink]: currentPath === Routes.ABOUT
+              [styles.activeLink]: currentPath.startsWith(Routes.ABOUT)
             })}
           >
             About

@@ -1,0 +1,3 @@
+.container {
+  composes: plainCard from "src/styles/card.module.css";
+}

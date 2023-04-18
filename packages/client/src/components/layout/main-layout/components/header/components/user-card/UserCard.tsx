@@ -37,12 +37,14 @@ export const UserCardComponent = memo<UserCardComponentProps>(
             ? (<Button
               onClick={logout}
               data-testid={`${USER_CARD_ID}-logout`}
+              variant={"outlined"}
             >
               Logout
             </Button>)
             :(<Button
               onClick={login}
               data-testid={`${USER_CARD_ID}-login`}
+              variant={"outlined"}
             >
               Login
             </Button>)

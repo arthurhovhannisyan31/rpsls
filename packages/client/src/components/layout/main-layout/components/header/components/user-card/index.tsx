@@ -1,10 +1,11 @@
 import { observer } from "mobx-react-lite";
 import { useCallback, useEffect, useState } from "react";
 
-import { LoginForm } from "src/components/ui/modals/login";
+import { NameModal } from "src/components/ui/modals/name";
 import { useStore } from "src/hooks";
 
 import { UserCardComponent } from "./UserCard";
+import { NetworkRequestStatus } from "src/typings/enums";
 
 export const UserCard = observer(() => {
   const { user } = useStore();
@@ -38,9 +39,13 @@ export const UserCard = observer(() => {
         login={openModal}
         logout={logout}
       />
-      <LoginForm
+      <NameModal
+        label={"Please enter your name:"}
         open={open}
         onClose={closeModal}
+        errorMessage={user.errorMessage}
+        loading={user.status === NetworkRequestStatus.PENDING}
+        onSubmit={user.login}
       />
     </>
   );

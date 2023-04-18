@@ -3,10 +3,11 @@ export enum Theme {
   LIGHT = "LIGHT"
 }
 
-export enum GamePhases {
+export enum GameStatus {
   IDLE = "IDLE",
   BET = "BET",
-  RESULTS = ""
+  RESULTS = "RESULTS",
+  STOP = "STOP"
 }
 
 export enum NetworkRequestStatus {
@@ -19,4 +20,20 @@ export enum NetworkRequestStatus {
 export enum Routes {
   ROOMS = "/rooms",
   ABOUT = "/about"
+}
+
+export enum RoomType {
+  PVP = "PVP",
+  PVC = "PVC"
+}
+
+export enum WinStatus {
+  WIN = "WIN",
+  LOOSE = "LOOSE",
+  TIE = "TIE"
+}
+
+export enum UserRole {
+  HOST = "HOST",
+  GUEST = "GUEST"
 }

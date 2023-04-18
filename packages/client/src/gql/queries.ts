@@ -1,4 +1,5 @@
 import { errorsFragment } from "src/gql/fragments";
+import { QueryRoomArgs } from "src/models/generated";
 
 export const queryMe = (): QueryProps => ({
   query: `
@@ -34,4 +35,30 @@ export const queryRooms = (): QueryProps => ({
       }
     }  
   `
+});
+
+export const queryRoom = ({ _id }: QueryRoomArgs): QueryProps => ({
+  query: `
+    query room($_id: String!){
+      room(_id: $_id){
+        data {
+          _id
+          name
+          active
+          open
+          roomType
+          guest{
+              name
+          }
+          host{
+              name
+          }
+        }
+        ${errorsFragment}
+      }
+    }
+  `,
+  variables:{
+    _id
+  }
 });
