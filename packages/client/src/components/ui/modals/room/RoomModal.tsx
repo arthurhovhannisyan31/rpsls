@@ -121,7 +121,7 @@ export const RoomModal = memo<RoomModalProps>(
               onChange={handleSelectChange}
             >
               <MenuItem value={RoomType.PVC}>{RoomType.PVC}</MenuItem>
-              <MenuItem value={RoomType.PVP}>{RoomType.PVP}</MenuItem>
+              {/*<MenuItem value={RoomType.PVP}>{RoomType.PVP}</MenuItem>*/}
             </Select>
           </FormControl>
           <Button

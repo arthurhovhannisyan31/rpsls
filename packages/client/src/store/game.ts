@@ -14,7 +14,7 @@ export class GameStore implements Observer<Action<any>> {
   status: NetworkRequestStatus = NetworkRequestStatus.IDLE;
   gameStatus: GameStatus = GameStatus.IDLE;
   myRole?: UserRole;
-  scores: any[] = [];
+  rounds:  OmitTypeName<Round>[] = [];
   round?: OmitTypeName<Round>;
   room?: OmitTypeName<Room>;
   error?: FieldError;
@@ -37,36 +37,14 @@ export class GameStore implements Observer<Action<any>> {
     }
   };
 
-  getGameProps = () => {
-    return {
-      room: this.room,
-      myRole: this.myRole,
-      scores: this.scores,
-      round: this.round,
-      gameStatus: this.gameStatus,
-      status: this.status,
-    };
-  };
-
-  setGameProps = () => {
-
-  };
-
   resetGameProps = () => {
-    console.log("reset");
     this.room = undefined;
     this.myRole = undefined;
     this.room = undefined;
-    this.scores = [];
+    this.rounds = [];
     this.round = undefined;
     this.gameStatus = GameStatus.IDLE;
     this.status = NetworkRequestStatus.IDLE;
-  };
-
-  setHostChoice = (choice: ChoiceEnum) => {
-    if (!this.round?.host) return;
-
-    this.round.host.choice = choice;
   };
 
   getWinner = (): string => {
@@ -143,6 +121,8 @@ export class GameStore implements Observer<Action<any>> {
         if (this.room.roomType as RoomType === RoomType.Pvc){
           this.round.ended = true;
           this.gameStatus = GameStatus.RESULTS;
+
+          this.updateScores(this.round);
         }
         this.status = NetworkRequestStatus.DONE;
       }
@@ -179,8 +159,8 @@ export class GameStore implements Observer<Action<any>> {
       } else if(roundEnd?.data){
         Object.assign(this.round, roundEnd?.data);
         this.status = NetworkRequestStatus.DONE;
-        this.gameStatus = GameStatus.RESULTS;
       }
+      this.gameStatus = GameStatus.STOP;
     } catch (err) {
       console.log(err);
       runInAction(() => {
@@ -189,15 +169,31 @@ export class GameStore implements Observer<Action<any>> {
     }
   };
 
-  stopRound = () => {
-    this.gameStatus = GameStatus.STOP;
-  };
-
   clearRounds = () => {
-    this.scores = [];
+    this.rounds = [];
   };
 
-  updateScores = () => {
+  getRounds = () => {
+    return this.rounds;
+  };
 
+  getPlayersScores = (quantity: number = 10): Record<string, number> => {
+    const scores = this.rounds.slice().reverse().slice(0, quantity);
+    const winnersMap = scores.reduce((acc: Record<string, number>, val) => {
+
+      acc[val.winner?.name as string] = (acc[val.winner?.name as string]??0)+1;
+
+      return acc;
+    }, {});
+    return winnersMap;
+  };
+
+  updateScores = (round: OmitTypeName<Round>) => {
+    runInAction(() => {
+      this.rounds.push(round);
+      if (this.rounds.length > 10){
+        this.rounds.shift();
+      }
+    });
   };
 }

@@ -1,3 +1,8 @@
 .container {
-  composes: plainCard from "src/styles/card.module.css";
+  composes: lightbox from "src/styles/card.module.css";
+  padding: 0.2rem;
+  border-radius: 4px;
+  margin: 0.5rem 0;
+  display: flex;
+  flex-flow: column;
 }

@@ -6,19 +6,23 @@ import { ScoreList } from "src/components/ui/score-list";
 
 import style from "./Room.module.css";
 
-export interface RoomComponentProps {}
+export interface RoomComponentProps {
+  leaveRoom: () => void;
+}
 
-export const RoomComponent: FC<RoomComponentProps> = (({}) => {
+export const RoomComponent: FC<RoomComponentProps> = ({
+  leaveRoom
+}) => {
 
   return(
     <div className={style.container}>
       <Button
         className={style.leaveButton}
         variant={"contained"}
+        onClick={leaveRoom}
       >
         ← Leave
       </Button>
-
       <GameTable />
       <div className={style.scoreList}>
         <ScoreList/>
@@ -26,6 +30,6 @@ export const RoomComponent: FC<RoomComponentProps> = (({}) => {
     </div>
 
   );
-});
+};
 
 RoomComponent.displayName = "RoomComponent";

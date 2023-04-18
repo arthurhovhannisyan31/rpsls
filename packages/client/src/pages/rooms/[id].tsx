@@ -1,41 +1,27 @@
-import { observer } from "mobx-react-lite";
 import { GetServerSideProps } from "next";
-import { useEffect } from "react";
 
 import { Room } from "src/components/ui/room";
 import { SERVERSIDE_API_URL } from "src/constants";
 import { queryRoom } from "src/gql/queries";
-import { useStore } from "src/hooks";
 import { SSPData } from "src/typings/models/common";
-import { RoomResponse, UpdateRoomResponse } from "src/typings/models/rooms";
+import { RoomResponse } from "src/typings/models/rooms";
 import { wrappedFetch } from "src/utils";
+import { FC } from "react";
 
 export interface GameProps {
   data: RoomResponse
 }
 
-export const Game = observer<GameProps>(({
-  data
-}) => {
-  const { game } = useStore();
-
-  useEffect(() => {
-    const room = data.data?.room;
-    if (room?.data){
-      game.setRoomProps(room?.data);
-    }
-
-    return () => {
-      game.resetGameProps();
-    };
-  }, [data, data.data?.room, game]);
+export const Game: FC<GameProps> = ({ data }) => {
 
   return(
-    <Room/>
+    <Room
+      data={data}
+    />
   );
-});
+};
 
-export const getServerSideProps: GetServerSideProps<SSPData<UpdateRoomResponse>> = async (context) => {
+export const getServerSideProps: GetServerSideProps<SSPData<RoomResponse>> = async (context) => {
   const res = await wrappedFetch(
     SERVERSIDE_API_URL,
     queryRoom({ _id: context.params?.id as string, }),
@@ -44,9 +30,9 @@ export const getServerSideProps: GetServerSideProps<SSPData<UpdateRoomResponse>>
     }
   );
 
-  const data: UpdateRoomResponse = await res.json();
+  const data: RoomResponse = await res.json();
 
-  if (data.data?.updateRoom?.errors){
+  if (data.data?.room?.errors){
     return {
       redirect: {
         destination: "/",

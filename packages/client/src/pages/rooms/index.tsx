@@ -8,8 +8,6 @@ import { SSPData } from "src/typings/models/common";
 import { RoomsResponse } from "src/typings/models/rooms";
 import { wrappedFetch } from "src/utils/wrappedFetch";
 
-// components + notification
-
 interface RoomsPageProps {
   data: RoomsResponse
 }

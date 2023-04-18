@@ -21,6 +21,7 @@ export interface GameTableComponentProps {
   roundEnd: () => void;
   guestChoice?: ChoiceEnum;
   hostChoice?: ChoiceEnum;
+  scoresByUser: Record<string, number>
 }
 
 const noop = () => null;
@@ -35,28 +36,19 @@ export const GameTableComponent: FC<GameTableComponentProps> = memo(({
   roundEnd,
   roundPlay,
   guestChoice,
-  hostChoice
+  hostChoice,
+  scoresByUser
 }) => {
   const gameEnded = gameStatus === GameStatus.RESULTS;
   const gameNotStarted = gameStatus === GameStatus.IDLE;
   const gameInProgress = gameStatus === GameStatus.BET;
   const gamerStopped = gameStatus === GameStatus.STOP;
 
-  console.log({ host,
-    guest,
-    gameStatus,
-    role,
-    roundStart,
-    roundEnd,
-    roundPlay,
-    guestChoice,
-    hostChoice });
-
   return(
     <div className={style.container}>
       <UserCardComponent
         name={host?.name || ""}
-        score={0}
+        score={scoresByUser[host?.name ?? ""] ?? 0}
       />
       <div className={style.gameBoard}>
         <div>
@@ -87,7 +79,7 @@ export const GameTableComponent: FC<GameTableComponentProps> = memo(({
       </div>
       <UserCardComponent
         name={guest?.name || ""}
-        score={0}
+        score={scoresByUser[guest?.name ?? ""] ?? 0}
       />
     </div>
   );

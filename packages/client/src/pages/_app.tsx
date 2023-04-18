@@ -1,7 +1,6 @@
 import { ReactElement, ReactNode } from "react";
 
 import { MainLayout } from "src/components/layout/main-layout";
-import { Snackbar } from "src/components/ui/snackbar";
 import { ContextCompose } from "src/context/ContextCompose";
 
 import type { NextPage } from "next";
@@ -24,7 +23,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   return getLayout(
     <ContextCompose>
       <MainLayout>
-        <Snackbar />
         <Component {...pageProps} />
       </MainLayout>
     </ContextCompose>

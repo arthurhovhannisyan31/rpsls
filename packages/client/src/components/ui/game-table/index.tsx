@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { FC, useCallback, useEffect } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 
 import { GameTableComponent } from "src/components/ui/game-table/GameTable";
 import { useStore } from "src/hooks";
@@ -10,6 +10,8 @@ export interface GameTableProps {}
 
 export const GameTable: FC<GameTableProps> = observer(({}) => {
   const { game } = useStore();
+
+  const [timeOutNotification, setTimeOutNotification] = useState(false);
 
   const handleRoundStart = useCallback(() => {
     if (game.room?._id) {
@@ -24,7 +26,9 @@ export const GameTable: FC<GameTableProps> = observer(({}) => {
   }, [game]);
 
   const handleRoundEnd = useCallback(() => {
-    game.stopRound();
+    if (game.round?._id) {
+      game.endRound(game.round?._id);
+    }
   }, [game]);
 
   useEffect(() => {
@@ -40,6 +44,14 @@ export const GameTable: FC<GameTableProps> = observer(({}) => {
     };
   }, [game.autoplay, game.gameStatus, handleRoundStart]);
 
+  const scores = game.getPlayersScores();
+
+  useEffect(() => {
+    if(!timeOutNotification) {
+      setTimeOutNotification(true);
+    }
+  }, [timeOutNotification]);
+
   return(
     <GameTableComponent
       guest={game.room?.guest}
@@ -49,6 +61,7 @@ export const GameTable: FC<GameTableProps> = observer(({}) => {
       role={game.myRole}
       guestChoice={game.round?.guest?.choice as ChoiceEnum}
       hostChoice={game.round?.host?.choice as ChoiceEnum}
+      scoresByUser={scores}
       roundStart={handleRoundStart}
       roundPlay={handleRoundPlay}
       roundEnd={handleRoundEnd}
