@@ -48,4 +48,4 @@ Run `yarn prepare` to setup local checks and scripts.
 For purposes of development were implemented custom bash scrips with informative output to console. 
 
 ## CI
-For purposes of continuos intergration used GitHub CI API. Please take a look at [configuration files](.github/workflows), will you have any suggestions or question please feel free to reach me.
+For purposes of continuous integration used GitHub CI API. Please take a look at [configuration files](.github/workflows), will you have any suggestions or question please feel free to reach me.
