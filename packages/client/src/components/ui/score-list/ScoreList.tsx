@@ -24,8 +24,6 @@ export const ScoreListComponent: FC<ScoreListComponentProps> = ({
     />
   ));
 
-  console.log(scoreCards);
-
   return(
       <div className={styles.container}>
         <div className={styles.list}>
