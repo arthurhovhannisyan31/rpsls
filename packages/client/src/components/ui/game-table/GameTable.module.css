@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   height: 100%;
-  min-width: 60%;
   composes: plainCard from "src/styles/card.module.css";
   background: rgba(var(--card-rgb), 0.2);
   position: relative;
