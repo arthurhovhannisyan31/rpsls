@@ -5,7 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { memo } from "react";
 
-import { Room } from "src/models/generated";
+import { type Room } from "src/models/generated";
 
 import styles from "./RoomCard.module.css";
 

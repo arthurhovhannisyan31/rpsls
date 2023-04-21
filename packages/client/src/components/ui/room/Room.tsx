@@ -1,5 +1,5 @@
 import Button from "@mui/material/Button";
-import { FC,  } from "react";
+import { type FC,  } from "react";
 
 import { GameTable } from "src/components/ui/game-table";
 import { ScoreList } from "src/components/ui/score-list";

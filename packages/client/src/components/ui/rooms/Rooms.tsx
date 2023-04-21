@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
-import { FC, useMemo } from "react";
+import { type FC, useMemo } from "react";
 
-import { Room } from "src/models/generated";
+import { type Room } from "src/models/generated";
 
 import { RoomCard } from "./components/room-card";
 

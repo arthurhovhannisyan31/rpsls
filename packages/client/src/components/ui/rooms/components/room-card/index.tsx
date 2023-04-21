@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useCallback } from "react";
 
 import { useStore } from "src/hooks";
-import { Room, RoomUpdateAction } from "src/models/generated";
+import { type Room, RoomUpdateAction } from "src/models/generated";
 
 import { RoomCardComponent } from "./RoomCard";
 

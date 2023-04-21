@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from "react";
+import { type ReactElement, type ReactNode } from "react";
 
 import { MainLayout } from "src/components/layout/main-layout";
 import { ContextCompose } from "src/context/ContextCompose";
@@ -8,7 +8,7 @@ import type { AppProps } from "next/app";
 
 import "src/styles/globals.css";
 
-export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+export type NextPageWithLayout<P = Record<string, any>, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
 }
 

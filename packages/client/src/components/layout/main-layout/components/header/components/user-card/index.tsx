@@ -3,9 +3,9 @@ import { useCallback, useEffect, useState } from "react";
 
 import { NameModal } from "src/components/ui/modals/name";
 import { useStore } from "src/hooks";
+import { NetworkRequestStatus } from "src/typings/enums";
 
 import { UserCardComponent } from "./UserCard";
-import { NetworkRequestStatus } from "src/typings/enums";
 
 export const UserCard = observer(() => {
   const { user } = useStore();

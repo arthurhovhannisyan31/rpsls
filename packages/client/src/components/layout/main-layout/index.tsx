@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import Head from "next/head";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { useStore } from "src/hooks";
 import { useFetchMe } from "src/hooks/useFetchMe";

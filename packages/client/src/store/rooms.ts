@@ -1,14 +1,13 @@
 import { makeAutoObservable, runInAction } from "mobx";
 
 import { RUNTIME_API_URL } from "src/constants";
-import { mutationCreateRoom } from "src/gql/mutations";
-import { mutationUpdateRoom } from "src/gql/mutations";
-import { FieldError, Room, Rooms, RoomUpdateAction } from "src/models/generated";
-import { RootStore } from "src/store/store";
+import { mutationCreateRoom , mutationUpdateRoom } from "src/gql/mutations";
+import { type FieldError, type Room, type Rooms, type RoomUpdateAction } from "src/models/generated";
+import { type RootStore } from "src/store/store";
 import { NetworkRequestStatus } from "src/typings/enums";
-import { CreateRoomResponse, RoomResponseData, UpdateRoomResponse } from "src/typings/models/rooms";
+import { type CreateRoomResponse, type RoomResponseData, type UpdateRoomResponse } from "src/typings/models/rooms";
 import { wrappedFetch } from "src/utils";
-import { Observer } from "src/utils/observer";
+import { type Observer } from "src/utils/observer";
 
 export class RoomsStore implements Observer<Action<any>> {
   rootStore: RootStore;

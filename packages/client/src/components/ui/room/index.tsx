@@ -1,10 +1,11 @@
-import { useCallback, useEffect } from "react";
 import { observer } from "mobx-react-lite";
+import { useRouter } from "next/router";
+import { useCallback, useEffect } from "react";
+
 import { RoomComponent } from "src/components/ui/room/Room";
 import { useStore } from "src/hooks";
 import { RoomUpdateAction } from "src/models/generated";
-import { useRouter } from "next/router";
-import { RoomResponse } from "src/typings/models/rooms";
+import { type RoomResponse } from "src/typings/models/rooms";
 
 export interface RoomProps {
   data: RoomResponse;

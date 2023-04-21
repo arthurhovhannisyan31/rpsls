@@ -1,8 +1,8 @@
-import { FC, memo } from "react";
+import { type FC, memo } from "react";
 
 import { Results } from "src/components/ui/game-table/components/results/Results";
-import { ChoiceEnum, User } from "src/models/generated";
-import { GameStatus, UserRole } from "src/typings/enums";
+import { type ChoiceEnum, type User } from "src/models/generated";
+import { GameStatus, type UserRole } from "src/typings/enums";
 
 import { CardsSet } from "./components/cards-set/CardsSet";
 import { GameFlowControls } from "./components/game-controls/GameControls";

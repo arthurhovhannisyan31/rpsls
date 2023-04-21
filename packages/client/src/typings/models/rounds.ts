@@ -1,4 +1,4 @@
-import { Mutation, Round, FieldError, Maybe } from "src/models/generated";
+import { type Mutation, type Round, type FieldError, type Maybe } from "src/models/generated";
 
 export type RoundResponseData = {
   data?: Maybe<Round>;

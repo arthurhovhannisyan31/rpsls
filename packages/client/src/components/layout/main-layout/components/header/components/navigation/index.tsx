@@ -3,9 +3,7 @@ import { memo } from "react";
 
 import { NavigationComponent } from "./Navigation";
 
-export interface NavigationProps {}
-
-export const Navigation = memo<NavigationProps>(() => {
+export const Navigation = memo(() => {
   const router = useRouter();
 
   return(

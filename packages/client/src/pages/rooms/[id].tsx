@@ -1,12 +1,12 @@
-import { GetServerSideProps } from "next";
+import { type GetServerSideProps } from "next";
+import { type FC } from "react";
 
 import { Room } from "src/components/ui/room";
 import { SERVERSIDE_API_URL } from "src/constants";
 import { queryRoom } from "src/gql/queries";
-import { SSPData } from "src/typings/models/common";
-import { RoomResponse } from "src/typings/models/rooms";
+import { type SSPData } from "src/typings/models/common";
+import { type RoomResponse } from "src/typings/models/rooms";
 import { wrappedFetch } from "src/utils";
-import { FC } from "react";
 
 export interface GameProps {
   data: RoomResponse

@@ -1,4 +1,4 @@
-import { FieldError } from "src/models/generated";
+import { type FieldError } from "src/models/generated";
 
 export const errorArrayToMap = (
   errors: FieldError[] = [],
