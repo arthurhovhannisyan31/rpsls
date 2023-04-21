@@ -1,4 +1,4 @@
-import { FieldError, Maybe, Mutation, Query, Room } from "src/models/generated";
+import { type FieldError, type Maybe, type Mutation, type Query, type Room } from "src/models/generated";
 
 export type RoomsResponse = {
   data?: {

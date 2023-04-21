@@ -1,6 +1,6 @@
-import { WinStatus } from "src/typings/enums";
+import { type WinStatus } from "src/typings/enums";
 
-import { ColorType } from "./types";
+import { type ColorType } from "./types";
 
 export const winStatusColorsMap: Record<WinStatus, ColorType> = {
   WIN: "success",

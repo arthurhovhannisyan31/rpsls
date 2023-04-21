@@ -1,7 +1,7 @@
-import { SxProps } from "@mui/system/styleFunctionSx";
+import { type SxProps } from "@mui/system/styleFunctionSx";
 
 export const style: SxProps<any> = {
-  position: "absolute" as "absolute",
+  position: "absolute" as const,
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",

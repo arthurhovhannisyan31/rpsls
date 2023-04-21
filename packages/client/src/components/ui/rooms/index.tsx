@@ -5,8 +5,8 @@ import { useCallback, useEffect, useState } from "react";
 import { RoomModal } from "src/components/ui/modals/room";
 import { useStore } from "src/hooks";
 import { NetworkRequestStatus } from "src/typings/enums";
-import { SSPData } from "src/typings/models/common";
-import { RoomsResponse } from "src/typings/models/rooms";
+import { type SSPData } from "src/typings/models/common";
+import { type RoomsResponse } from "src/typings/models/rooms";
 
 import { RoomsComponent } from "./Rooms";
 

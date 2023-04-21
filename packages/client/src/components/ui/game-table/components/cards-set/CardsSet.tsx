@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import clsx from "clsx";
-import { FC } from "react";
+import { type FC } from "react";
 
 import { GameCard } from "src/components/layout/main-layout/components/header/components/game-card/GameCard";
 import { ChoiceEnum } from "src/models/generated";

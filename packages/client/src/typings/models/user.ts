@@ -1,4 +1,4 @@
-import { Mutation, Query } from "src/models/generated";
+import { type Mutation, type Query } from "src/models/generated";
 
 export type LoginResponse = {
   data?: {
