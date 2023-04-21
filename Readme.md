@@ -14,7 +14,18 @@ All project dependencies installed during project build.
 
 
 ## How to use
-Please run following command in project root of the project to start the containers.
+### Prod
+Please run following command in project root of the project to start the containers in production mode.
+```shell
+docker compose --env-file ./configs/env/.env.dev --file docker-compose.prod.yml up --build
+```
+### Dev
+For development please prepare cache containers firts:
+```shell
+docker build --tag api-node-cache -f ./packages/api/configs/docker/node-cache.dockerfile ./packages/api
+docker build --tag client-node-cache -f ./packages/client/configs/docker/node-cache.dockerfile ./packages/client
+```
+Then run project in development mode:
 ```shell
 docker compose --env-file ./configs/env/.env.dev --file docker-compose.dev.yml up --build
 ```
@@ -26,7 +37,7 @@ docker compose --env-file ./configs/env/.env.dev --file docker-compose.dev.yml u
 
 Game works in autoplay mode. In current implementation only PVC mode is supported.
 
-Project client is available at [Localhost:3000](http://localhost:3001/)
+Project client is available at [Localhost:3001](http://localhost:3001/)
 
 Please refer to [Front-end](packages/client/README.md) and [Back-End](packages/api/README.md) Readme files for details.
 
