@@ -7,14 +7,31 @@ The project demonstrates full-stack implementation of the game RPSLS using conta
 
 Please fetch codebase from the following repository:
 ```git
-https://github.com/arthurhovhannisyan31/rpsls.git
+git clone https://github.com/arthurhovhannisyan31/rpsls.git
 ```
 
 All project dependencies installed during project build.
 
 
 ## How to use
-Please run following command in project root of the project to start the containers.
+### Prod
+Please run following command in project root of the project to start the containers in production mode.
+```shell
+docker compose --env-file ./configs/env/.env.dev --file docker-compose.prod.yml up --build
+```
+### Dev
+For development please prepare cache containers for each package:
+API:
+```shell
+cd ./packages/api
+docker build --tag api-node-cache -f ./configs/docker/node-cache.dockerfile .
+```
+Client:
+```shell
+cd ./packages/api
+docker build --tag client-node-cache -f ./configs/docker/node-cache.dockerfile .
+```
+Then run project in development mode:
 ```shell
 docker compose --env-file ./configs/env/.env.dev --file docker-compose.dev.yml up --build
 ```
@@ -26,7 +43,7 @@ docker compose --env-file ./configs/env/.env.dev --file docker-compose.dev.yml u
 
 Game works in autoplay mode. In current implementation only PVC mode is supported.
 
-Project client is available at [Localhost:3000](http://localhost:3001/)
+Project client is available at [Localhost:3001](http://localhost:3001/)
 
 Please refer to [Front-end](packages/client/README.md) and [Back-End](packages/api/README.md) Readme files for details.
 
