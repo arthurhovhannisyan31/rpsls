@@ -21,14 +21,14 @@ docker compose --env-file ./configs/env/.env.dev --file docker-compose.prod.yml 
 ```
 ### Dev
 For development please prepare cache containers for each package:
-API:
+#### API:
 ```shell
 cd ./packages/api
 docker build --tag api-node-cache -f ./configs/docker/node-cache.dockerfile .
 ```
-Client:
+#### Client:
 ```shell
-cd ./packages/api
+cd ./packages/client
 docker build --tag client-node-cache -f ./configs/docker/node-cache.dockerfile .
 ```
 Then run project in development mode:
