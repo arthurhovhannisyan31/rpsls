@@ -4,11 +4,11 @@ import { RUNTIME_API_URL } from "src/constants";
 import { mutationLogin, mutationLogout } from "src/gql/mutations";
 import { queryMe } from "src/gql/queries";
 import { NetworkRequestStatus } from "src/typings/enums";
-import { LoginResponse, MeResponse } from "src/typings/models/user";
+import { type LoginResponse, type MeResponse } from "src/typings/models/user";
 import { wrappedFetch } from "src/utils";
-import { Observer } from "src/utils/observer";
+import { type Observer } from "src/utils/observer";
 
-import { RootStore } from "./store";
+import { type RootStore } from "./store";
 
 export class UserStore implements Observer<Action<any>>{
   rootStore: RootStore;

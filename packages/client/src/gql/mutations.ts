@@ -1,9 +1,9 @@
 import { errorsFragment } from "src/gql/fragments";
 import {
-  MutationCreateRoomArgs,
-  MutationLoginArgs, MutationRoundEndArgs, MutationRoundPlayArgs,
-  MutationRoundStartArgs,
-  MutationUpdateRoomArgs
+  type MutationCreateRoomArgs,
+  type MutationLoginArgs, type MutationRoundEndArgs, type MutationRoundPlayArgs,
+  type MutationRoundStartArgs,
+  type MutationUpdateRoomArgs
 } from "src/models/generated";
 
 export const mutationLogin = ({ name }:MutationLoginArgs): QueryProps => ({

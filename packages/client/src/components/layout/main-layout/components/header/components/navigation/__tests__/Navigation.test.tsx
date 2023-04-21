@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 
-import { NAV_LINK_ID, NavigationComponent, NavigationComponentProps } from "../Navigation";
+import { NAV_LINK_ID, NavigationComponent, type NavigationComponentProps } from "../Navigation";
 
 jest.mock("src/constants", () => ({
   ...(jest.requireActual("../../../../../../../../constants")),

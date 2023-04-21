@@ -1,13 +1,13 @@
 import Button from "@mui/material/Button";
-import { FC } from "react";
+import { type FC } from "react";
 
 import { useEvent } from "src/hooks";
-import { ChoiceEnum } from "src/models/generated";
-import { WinStatus } from "src/typings/enums";
+import { type ChoiceEnum } from "src/models/generated";
+import { type WinStatus } from "src/typings/enums";
 
 import { winStatusColorsMap } from "./helpers";
 import gameIcons from "./icons.json";
-import { ColorType, VariantType } from "./types";
+import { type ColorType, type VariantType } from "./types";
 
 export interface GameCardProps {
   value: ChoiceEnum;

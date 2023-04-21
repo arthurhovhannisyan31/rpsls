@@ -1,5 +1,5 @@
 import { errorsFragment } from "src/gql/fragments";
-import { QueryRoomArgs } from "src/models/generated";
+import { type QueryRoomArgs } from "src/models/generated";
 
 export const queryMe = (): QueryProps => ({
   query: `

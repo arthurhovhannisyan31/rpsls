@@ -1,4 +1,3 @@
-import base from "./configs/jest/jest.config.base";
+import base from "./configs/jest/jest.base.config";
 
 export default base;
-

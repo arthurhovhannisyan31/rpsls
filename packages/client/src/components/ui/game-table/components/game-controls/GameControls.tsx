@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import { memo } from "react";
 
-import { GameStatus, UserRole } from "src/typings/enums";
+import { GameStatus, type UserRole } from "src/typings/enums";
 
 import style from "./GameControls.module.css";
 

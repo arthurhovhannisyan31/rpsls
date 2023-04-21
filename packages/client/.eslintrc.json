@@ -4,48 +4,70 @@
   ],
   "extends": [
     "plugin:css-modules/recommended",
-    "next/core-web-vitals"
+    "next/core-web-vitals",
+    "plugin:import/typescript",
+    "plugin:import/warnings",
+    "plugin:import/errors",
+    "plugin:@typescript-eslint/recommended",
+    "eslint:recommended"
   ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
   "rules": {
     "css-modules/no-unused-class": [2, { "camelCase": true }],
+    "@typescript-eslint/no-unused-vars": ["error"],
     "css-modules/no-undef-class": [2, { "camelCase": true }],
     "no-multiple-empty-lines": ["error", { "max": 1, "maxBOF": 0, "maxEOF": 0}],
     "no-trailing-spaces": "error",
     "object-curly-spacing": ["error", "always"],
     "quotes": ["error", "double"],
-//    "import/order": [
-//      "error",
-//      {
-//        "groups": [
-//          "builtin",
-//          "external",
-//          "internal",
-//          "type",
-//          ["parent", "sibling"],
-//          "index"
-//        ],
-//        "newlines-between": "always",
-//        "pathGroups": [
-//          {
-//            "pattern": "*.css",
-//            "group": "index",
-//            "patternOptions": {
-//              "matchBase": true
-//            },
-//            "position": "after"
-//          },
-//          {
-//            "pattern": "model/**",
-//            "group": "type"
-//          }
-//        ],
-//        "alphabetize": {
-//          "order": "asc",
-//          "caseInsensitive": true
-//        },
-//        "warnOnUnassignedImports": true
-//      }
-//    ],
+    "@typescript-eslint/consistent-type-exports":
+    ["error", { "fixMixedExportsWithInlineTypeSpecifier": true }],
+    "@typescript-eslint/consistent-type-imports": [
+      "warn",
+      {
+        "prefer": "type-imports",
+        "disallowTypeAnnotations": false,
+        "fixStyle": "inline-type-imports"
+      }
+    ],
     "semi": ["warn", "always"]
-  }
+  },
+  "overrides": [
+    {
+      "files": "**/*.d.ts",
+      "rules": {
+        "no-unused-vars": 0
+      }
+    },
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "rules": {
+        "no-undef": 0
+      }
+    },
+    {
+      "files": [
+        "**/*.test.ts",
+        "**/*.test.tsx"
+      ],
+      "env": {
+        "jest": true
+      }
+    },
+    {
+      "files": ["**/*generated.ts"],
+      "rules": {
+        "no-unused-vars": "off"
+      }
+    },
+    {
+      "files": ["src/typings/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/triple-slash-reference": 0
+      }
+    }
+  ]
 }

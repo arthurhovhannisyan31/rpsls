@@ -1,11 +1,11 @@
-import { GetServerSideProps } from "next";
+import { type GetServerSideProps } from "next";
 
 import { Rooms } from "src/components/ui/rooms";
 import { SERVERSIDE_API_URL } from "src/constants";
 import { queryRooms } from "src/gql/queries";
 import { useSSEvents } from "src/hooks/useSSEvents";
-import { SSPData } from "src/typings/models/common";
-import { RoomsResponse } from "src/typings/models/rooms";
+import { type SSPData } from "src/typings/models/common";
+import { type RoomsResponse } from "src/typings/models/rooms";
 import { wrappedFetch } from "src/utils/wrappedFetch";
 
 interface RoomsPageProps {
