@@ -7,7 +7,7 @@ The project demonstrates full-stack implementation of the game RPSLS using conta
 
 Please fetch codebase from the following repository:
 ```git
-https://github.com/arthurhovhannisyan31/rpsls.git
+git clone https://github.com/arthurhovhannisyan31/rpsls.git
 ```
 
 All project dependencies installed during project build.
@@ -20,10 +20,16 @@ Please run following command in project root of the project to start the contain
 docker compose --env-file ./configs/env/.env.dev --file docker-compose.prod.yml up --build
 ```
 ### Dev
-For development please prepare cache containers firts:
+For development please prepare cache containers for each package:
+API:
 ```shell
-docker build --tag api-node-cache -f ./packages/api/configs/docker/node-cache.dockerfile ./packages/api
-docker build --tag client-node-cache -f ./packages/client/configs/docker/node-cache.dockerfile ./packages/client
+cd ./packages/api
+docker build --tag api-node-cache -f ./configs/docker/node-cache.dockerfile .
+```
+Client:
+```shell
+cd ./packages/api
+docker build --tag client-node-cache -f ./configs/docker/node-cache.dockerfile .
 ```
 Then run project in development mode:
 ```shell
