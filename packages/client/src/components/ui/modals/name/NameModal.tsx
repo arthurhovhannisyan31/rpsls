@@ -3,11 +3,11 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useCallback, useState, ChangeEvent, useMemo, useEffect, memo, KeyboardEvent } from "react";
+import { useCallback, useState, type ChangeEvent, useMemo, useEffect, memo, type KeyboardEvent } from "react";
 
 import { handleEnterKeyDown } from "src/components/ui/modals/helpers";
 import { useEvent } from "src/hooks";
-import { getStringValidation, PassportStrengthValidation } from "src/utils/string-validator";
+import { getStringValidation, type PassportStrengthValidation } from "src/utils/string-validator";
 
 import styles from "./NameModal.module.css";
 
@@ -51,7 +51,7 @@ export const NameModal = memo<NameModalProps>(
   }, [name]);
 
   const validationError = useMemo(() => {
-    let messages = [];
+    const messages = [];
     if (errors.hasSpecial){
       messages.push("Name has non-word characters!");
     }

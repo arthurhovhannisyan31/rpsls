@@ -4,15 +4,15 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select, { type SelectChangeEvent } from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useCallback, useState, ChangeEvent, useMemo, useEffect, memo, KeyboardEvent } from "react";
+import { useCallback, useState, type ChangeEvent, useMemo, useEffect, memo, type KeyboardEvent } from "react";
 
 import { handleEnterKeyDown } from "src/components/ui/modals/helpers";
 import { useEvent } from "src/hooks";
 import { RoomType } from "src/typings/enums";
-import { getStringValidation, PassportStrengthValidation } from "src/utils/string-validator";
+import { getStringValidation, type PassportStrengthValidation } from "src/utils/string-validator";
 
 import styles from "./RoomModal.module.css";
 
@@ -58,7 +58,7 @@ export const RoomModal = memo<RoomModalProps>(
   }, []);
 
   const validationError = useMemo(() => {
-    let messages = [];
+    const messages = [];
     if (errors.hasSpecial){
       messages.push("Name has non-word characters!");
     }

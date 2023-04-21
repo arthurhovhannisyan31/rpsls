@@ -1,14 +1,12 @@
 import { observer } from "mobx-react-lite";
-import { FC, useCallback, useEffect, useState } from "react";
+import { type FC, useCallback, useEffect, useState } from "react";
 
 import { GameTableComponent } from "src/components/ui/game-table/GameTable";
 import { useStore } from "src/hooks";
-import { ChoiceEnum } from "src/models/generated";
+import { type ChoiceEnum } from "src/models/generated";
 import { GameStatus } from "src/typings/enums";
 
-export interface GameTableProps {}
-
-export const GameTable: FC<GameTableProps> = observer(({}) => {
+export const GameTable: FC = observer(() => {
   const { game } = useStore();
 
   const [timeOutNotification, setTimeOutNotification] = useState(false);

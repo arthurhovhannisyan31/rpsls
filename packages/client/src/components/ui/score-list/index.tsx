@@ -1,10 +1,9 @@
 import { observer } from "mobx-react-lite";
+
 import { ScoreListComponent } from "src/components/ui/score-list/ScoreList";
 import { useStore } from "src/hooks";
 
-export interface ScoreListProps {}
-
-export const ScoreList = observer<ScoreListProps>(() => {
+export const ScoreList = observer(() => {
   const { game } = useStore();
 
   return(

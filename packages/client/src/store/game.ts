@@ -2,12 +2,12 @@ import { makeAutoObservable, runInAction } from "mobx";
 
 import { RUNTIME_API_URL } from "src/constants";
 import { mutationRoundEnd, mutationRoundPlay, mutationRoundStart } from "src/gql/mutations";
-import { ChoiceEnum, FieldError, Room, Round, RoomType } from "src/models/generated";
-import { RootStore } from "src/store/store";
+import { type ChoiceEnum, type FieldError, type Room, type Round, RoomType } from "src/models/generated";
+import { type RootStore } from "src/store/store";
 import { GameStatus, NetworkRequestStatus, UserRole } from "src/typings/enums";
-import { RoundEndResponse, RoundPlayResponse, RoundStartResponse } from "src/typings/models/rounds";
+import { type RoundEndResponse, type RoundPlayResponse, type RoundStartResponse } from "src/typings/models/rounds";
 import { wrappedFetch } from "src/utils";
-import { Observer } from "src/utils/observer";
+import { type Observer } from "src/utils/observer";
 
 export class GameStore implements Observer<Action<any>> {
   rootStore: RootStore;
@@ -177,15 +177,14 @@ export class GameStore implements Observer<Action<any>> {
     return this.rounds;
   };
 
-  getPlayersScores = (quantity: number = 10): Record<string, number> => {
+  getPlayersScores = (quantity = 10): Record<string, number> => {
     const scores = this.rounds.slice().reverse().slice(0, quantity);
-    const winnersMap = scores.reduce((acc: Record<string, number>, val) => {
+    return scores.reduce((acc: Record<string, number>, val) => {
 
       acc[val.winner?.name as string] = (acc[val.winner?.name as string]??0)+1;
 
       return acc;
     }, {});
-    return winnersMap;
   };
 
   updateScores = (round: OmitTypeName<Round>) => {

@@ -6,7 +6,8 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "./src/typings/index.d.ts"
   ],
   "exclude": [
     "node_modules"

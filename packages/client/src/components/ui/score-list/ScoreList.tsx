@@ -1,10 +1,11 @@
 import Button from "@mui/material/Button";
-import { FC } from "react";
+import { type FC } from "react";
+
+import { type Round } from "src/models/generated";
 
 import { ScoreCard } from "./components/score-card";
 
 import styles from "./ScoreList.module.css";
-import { Round } from "src/models/generated";
 
 export interface ScoreListComponentProps {
   rounds: Round[];

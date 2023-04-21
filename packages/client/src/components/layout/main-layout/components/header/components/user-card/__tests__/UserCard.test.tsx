@@ -1,6 +1,6 @@
 import { render, fireEvent } from "@testing-library/react";
 
-import { USER_CARD_ID, UserCardComponent, UserCardComponentProps } from "../UserCard";
+import { USER_CARD_ID, UserCardComponent, type UserCardComponentProps } from "../UserCard";
 
 describe("<UserCardComponent />", () => {
   const name = "name";
