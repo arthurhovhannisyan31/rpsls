@@ -14,21 +14,16 @@
     "paths": {
       "src/*": [
         "./src/*"
-      ]
+      ],
     },
-    "types": [
-      "jest",
-      "node"
-    ],
-    "typeRoots": [
-      "./src/typings",
-      "node_modules/@types"
-    ],
+    "types": ["jest", "node"],
+    "typeRoots": ["./src/typings", "node_modules/@types"],
     "incremental": true
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
+    "**/*.js",
     "**/*.tsx"
   ],
   "exclude": [

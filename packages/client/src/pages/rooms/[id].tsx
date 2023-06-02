@@ -1,6 +1,7 @@
 import { type GetServerSideProps } from "next";
-import { type FC } from "react";
+import { type ReactElement } from "react";
 
+import { MainLayout } from "src/components/layout/main-layout";
 import { Room } from "src/components/ui/room";
 import { SERVERSIDE_API_URL } from "src/constants";
 import { queryRoom } from "src/gql/queries";
@@ -12,12 +13,20 @@ export interface GameProps {
   data: RoomResponse
 }
 
-export const Game: FC<GameProps> = ({ data }) => {
+export const Game: NextPageWithLayout<GameProps> = ({ data }) => {
 
   return(
     <Room
       data={data}
     />
+  );
+};
+
+Game.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <MainLayout>
+      {page}
+    </MainLayout>
   );
 };
 
