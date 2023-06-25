@@ -7,7 +7,7 @@
     "start": "node ./dist/src/index.js",
     "start:dev": "./configs/scripts/start-dev",
     "cleanup": "rm -rf ./dist",
-    "check-lint": "eslint --ext .ts,.js src/",
+    "check-lint": "eslint --quiet --ext .ts,.js src/",
     "format": "yarn check-lint --fix",
     "gentypes": "graphql-codegen --config codegen.yml",
     "nodemon:dev": "nodemon -r dotenv/config ./dist/src/index.js dotenv_config_path=./configs/env/.env.dev",

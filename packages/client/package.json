@@ -7,7 +7,7 @@
     "start": "next start",
     "start:dev": "next dev -p 3001",
     "build": "next build",
-    "check-lint": "eslint --ext .ts,.js src/",
+    "check-lint": "eslint --quiet --ext .ts,.js src/",
     "cleanup": "rm -rf ./dist",
     "format": "yarn check-lint --fix",
     "jest-base": "node --expose-gc ./node_modules/jest/bin/jest.js",
