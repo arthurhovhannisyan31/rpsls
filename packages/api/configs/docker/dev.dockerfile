@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:18-alpine
 RUN apk add bash
 WORKDIR /app
 COPY --from=api-node-cache /node_modules ./node_modules

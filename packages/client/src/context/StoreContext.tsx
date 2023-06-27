@@ -5,7 +5,7 @@ import { rootStore, type RootStore } from "../store/store";
 export const StoreContext = createContext<RootStore>(rootStore);
 
 export const StoreContextContainer = memo<PropsWithChildren>(({ children }) => {
-
+  console.log("RUN");
   return (
     <StoreContext.Provider value={rootStore}>
       {children}

@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { memo } from "react";
 
+import { Routes } from "src/typings/enums";
+
 import { Navigation } from "./components/navigation";
 import { UserCard } from "./components/user-card";
 
@@ -19,7 +21,7 @@ export const Header = memo<HeaderProps>(({
   return(
     <div className={styles.container}>
       <div className={styles.left}>
-        <Link href={"/"}>
+        <Link href={Routes.ROOMS}>
           <Image
             src={"/logo.png"}
             alt={"Logo"}

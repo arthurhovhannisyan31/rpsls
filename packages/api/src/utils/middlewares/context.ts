@@ -10,6 +10,8 @@ export const populateContextData = (
   res: Response,
   next: NextFunction
 ) => {
+  console.log("BE ", req.path);
+
   contextData.response = res;
   contextData.request = req;
   contextData.session = undefined;

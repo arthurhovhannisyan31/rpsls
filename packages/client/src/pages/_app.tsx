@@ -1,16 +1,9 @@
-import { type ReactElement, type ReactNode } from "react";
+import type { AppProps } from "next/app";
 
 import { MainLayout } from "src/components/layout/main-layout";
 import { ContextCompose } from "src/context/ContextCompose";
 
-import type { NextPage } from "next";
-import type { AppProps } from "next/app";
-
 import "src/styles/globals.css";
-
-export type NextPageWithLayout<P = Record<string, any>, IP = P> = NextPage<P, IP> & {
-  getLayout?: (page: ReactElement) => ReactNode
-}
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
@@ -18,13 +11,15 @@ type AppPropsWithLayout = AppProps & {
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
-  const getLayout = Component.getLayout ?? ((page) => page);
+  const getLayout = Component.getLayout ?? ((page) => (
+    <MainLayout>
+      {page}
+    </MainLayout>
+  ));
 
   return getLayout(
     <ContextCompose>
-      <MainLayout>
-        <Component {...pageProps} />
-      </MainLayout>
+      <Component {...pageProps} />
     </ContextCompose>
   );
 }

@@ -33,7 +33,44 @@
         "fixStyle": "inline-type-imports"
       }
     ],
-    "semi": ["warn", "always"]
+    "semi": ["warn", "always"],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "type",
+          ["parent", "sibling"],
+          "index"
+        ],
+        "newlines-between": "always",
+        "pathGroups": [
+          {
+            "pattern": "**.css",
+            "group": "index",
+            "patternOptions": {
+              "matchBase": true
+            },
+            "position": "after"
+          },
+          {
+            "pattern": "model/**",
+            "group": "type"
+          },
+          {
+            "pattern": "next/**",
+            "group": "external"
+          }
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "warnOnUnassignedImports": true
+      }
+    ]
   },
   "overrides": [
     {
