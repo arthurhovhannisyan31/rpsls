@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/stale@v8
         with:
-          stale-pr-message: 'Message to comment on stale PRs. If none provided, will not mark PRs stale'
+          stale-pr-message: 'A comment for stale PR. Do something or you shall not pass!'
           days-before-pr-stale: 1
           days-before-pr-close: 2
           exempt-pr-labels: 'DRAFT,WIP,WFA'
