@@ -19,6 +19,7 @@
     "prepare": "./configs/scripts/setup",
     "check-lint-staged": "./configs/scripts/lint-staged",
     "build": "./configs/scripts/build-packages",
+    "check-commit": "./configs/scripts/commit-msg",
     "check-test": "./configs/scripts/check-test",
     "check-test-changed": "./configs/scripts/check-test-changed",
     "check-lint": "./configs/scripts/check-lint",

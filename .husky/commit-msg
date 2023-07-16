@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# fix for windows systems
+PATH="/c/Program Files/nodejs:$HOME/AppData/Roaming/npm/:$PATH"
+
+CONFIG_PATH="./configs/git/git-conventional-commits.json"
+
+yarn git-conventional-commits commit-msg-hook --config $CONFIG_PATH "$1"
