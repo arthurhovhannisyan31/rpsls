@@ -12,8 +12,8 @@ do
 
   if ! yarn build
   then
-      printf "❌ ${RED} Failed to build: $PACKAGE \n"
+      printf "❌ ${RED} Failed to build: $PACKAGE \n${NC}"
       exit 1
   fi
-  printf "✔ ${GREEN} Success, build package for: $PACKAGE \n"
+  printf "✔ ${GREEN} Success, build package for: $PACKAGE \n${NC}"
 done
