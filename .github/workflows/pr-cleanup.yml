@@ -1,5 +1,4 @@
 name: PR Cleanup
-run-name:
 on:
   schedule:
     - cron: '0 0 * * *'
