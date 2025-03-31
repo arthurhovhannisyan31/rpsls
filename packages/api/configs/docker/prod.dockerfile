@@ -1,10 +1,11 @@
-FROM node:18-alpine as build
-COPY package.json yarn.lock ./
-RUN yarn install
-
-FROM node:18-alpine
+FROM node:22-alpine
+RUN corepack enable
 RUN apk add bash
 WORKDIR /app
-COPY --from=build /node_modules ./node_modules
+COPY package.json yarn.lock ./
+RUN set -eux \
+    & apk add \
+        --no-cache \
+        yarn
 COPY . .
 CMD ["yarn", "start:dev"]

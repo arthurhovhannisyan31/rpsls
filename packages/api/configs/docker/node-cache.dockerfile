@@ -1,6 +1,8 @@
-FROM node:18-alpine as build
+FROM node:22-alpine as build
+RUN corepack enable
 COPY package.json yarn.lock ./
-RUN yarn install
-
-FROM node:18-alpine
-COPY --from=build /node_modules ./node_modules
+RUN set -eux \
+    & apk add \
+        --no-cache \
+        yarn
+COPY /node_modules ./node_modules
